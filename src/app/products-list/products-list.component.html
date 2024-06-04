@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <app-nav-bar></app-nav-bar>
+    <h2 id="ourProducts">NUESTROS PRODUCTOS</h2>
+    <div id="container">
+        <div id="product_item" routerLink="/products/{{product.id}}" *ngFor="let product of productsArray">
+            <img src="{{product.image}}" alt="">
+            <div id="dataContainer">
+                <h2>{{product.name}}</h2>
+            <p>{{product.category}}</p>
+            <p>${{formatNumber(product.price)}}</p>
+            </div>
+            <div id="containerButtons">
+                <button routerLink="" class="buttonProducts fa fa-credit-card" *ngIf="!isAdmin()"> COMPRAR</button>
+                <button routerLink="" class="buttonProducts fa fa-pencil-square-o" *ngIf="isAdmin()"> MODIFICAR</button>
+                <button routerLink="/products/{{product.id}}" id="watch" class="buttonProducts fa fa-eye"> VER</button>
+            </div>
+        </div>
+        <div id="addProduct" *ngIf="isAdmin()">
+            <p class="fa fa-plus-circle"></p>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</body>
+</html>

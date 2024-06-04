@@ -1,0 +1,74 @@
+#container{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1%;
+}
+#product-info{
+    font-family: "globerBold";
+    h1{
+        font-family: "real";
+        text-transform: uppercase;
+        font-style: italic;
+        letter-spacing: 2px;
+        text-align: center;
+        font-size: 40px;
+    }
+}
+#price{
+    padding: 1% 3%;
+    border: 2px solid rgb(0, 103, 168);
+    border-radius: 50px;
+    width: fit-content;
+    font-size: 35px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#feature{
+    display: flex;
+    gap: 1%;
+    height: fit-content;
+}
+#features{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    height: fit-content;
+}
+#imagen{
+    max-height: 600px;
+    justify-items: center;
+    align-self: center;
+}
+.buttonProducts{
+    background: none;
+    width: fit-content;
+    padding: 2% 2%;
+    border: 2px solid rgb(25, 25, 25);
+    font-size: 15px;
+    border-radius: 50px;
+    margin-bottom: 2%;
+    /*font-family: "Posterama 1919 W01 SemiBold";*/
+    text-transform: uppercase;
+    font-weight: 800;
+    transition: transform 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+    cursor: pointer;
+    background-color: rgb(29, 29, 29);
+    color: white;
+}
+.buttonProducts:hover{
+    transform: scale(1.05);
+    background: none;
+    color: rgb(0, 0, 0);
+}
+#containerButtons{
+    display: flex;
+    justify-content: space-around;
+    
+}
+#onCart, #add{
+    background: none;
+    color: black;
+}
+#onCart:hover, #add:hover{
+    background-color: rgb(29, 29, 29);
+    color: white;
+}

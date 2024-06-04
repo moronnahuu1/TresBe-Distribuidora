@@ -1,0 +1,105 @@
+body{
+    background-color: rgb(247, 247, 247);
+}
+#container{
+    margin-top: 2%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+    margin-bottom: 2%;
+}
+#product_item{
+    background-color: white;
+    cursor: pointer;
+    align-items: center;
+    width: 65%;
+    border: 1px solid rgb(196, 196, 196);
+    border-radius: 20px;
+    height: 450px;
+    padding: 0;
+    text-align: center;
+    font-family: "globerBold";
+    h2{
+        text-transform: uppercase;
+        font-family: "globerBold";
+        font-size: 15px;
+    }
+    img{
+        width: 70%;
+        max-height: 200px;
+    }
+    transition: transform 0.8s ease;
+}
+#product_item:hover{
+    transform: scale(1.05);
+}
+#dataContainer{
+    border-top: 3px solid rgb(167, 167, 167);
+    width: 100%;
+    box-sizing: border-box;
+    height: 180px;
+}
+#ourProducts{
+    text-align: center;
+    font-family: "real";
+    font-style: italic;
+    font-size: 35px;
+}
+.buttonProducts{
+    background: none;
+    width: 130px;
+    padding: 5% 3%;
+    border: 1px solid rgb(25, 25, 25);
+    font-size: 10px;
+    border-radius: 50px;
+    margin-bottom: 2%;
+    /*font-family: "Posterama 1919 W01 SemiBold";*/
+    text-transform: uppercase;
+    font-weight: 800;
+    transition: transform 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+    cursor: pointer;
+    background-color: rgb(29, 29, 29);
+    color: white;
+}
+.buttonProducts:hover{
+    transform: scale(1.05);
+    background: none;
+    color: rgb(0, 0, 0);
+}
+#containerButtons{
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+}
+#watch{
+    color: black;
+    background: none;
+}
+#watch:hover{
+    color: white;
+    background-color: rgb(29, 29, 29);
+}
+#addProduct{
+    color: rgb(231, 231, 231);
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 65%;
+    margin-top: 5%;
+    border: 1px solid rgb(196, 196, 196);
+    border-radius: 20px;
+    height: 450px;
+    padding: 0;
+    text-align: center;
+    transition: transform 0.8s ease;
+    p{
+        font-size: 200px;
+    }
+}
+#addProduct:hover{
+    transform: scale(1.07);
+}

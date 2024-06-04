@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <app-nav-bar></app-nav-bar>
+    <h1 id="cart">CARRITO DE COMPRAS</h1>
+    <div id="container">
+        <h1>LISTA</h1>
+        <div id="productItem" *ngFor="let product of products; let indice = index;">
+            <div id="imgSrc">
+                <img src="{{product.image}}" alt="">
+            </div>
+            <div id="dataContainer">
+                <p id="name">{{product.name}}</p>
+                <p id="description">{{product.description}}</p>
+                <button class="fa fa-trash-o" (click)="deleteProduct(indice)"> BORRAR</button>
+            </div>
+            <p>${{product.price}}</p>
+
+        </div>
+    </div>
+    <app-footer></app-footer>
+</body>
+</html>

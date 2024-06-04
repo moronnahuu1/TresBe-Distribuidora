@@ -1,0 +1,59 @@
+body{
+    background-color: rgb(247, 247, 247);
+}
+#container{
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    height: fit-content;
+    margin-left: 2%;
+    width: 50%;
+}
+#productItem{
+    display: flex;
+    gap: 2%;
+    height: 250px;
+    max-height: 250px;
+    max-width: 650px;
+    margin-bottom: 5%;
+    border-radius: 20px;
+    padding: 2%;
+    background-color: white;
+    border: 1px solid rgb(193, 193, 193);
+}
+#name{
+    font-family: "real";
+    font-style: italic;
+    text-transform: uppercase;
+}
+#description{
+    font-family: "globerBold";
+    font-size: 12px;
+}
+#imgSrc{
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+    img{
+        width: 100%;
+    }
+}
+button{
+    cursor: pointer;
+    border: 0;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 20px;
+    width: fit-content;
+    height: fit-content;
+    padding: 3% 10%;
+    background-color: rgb(0, 111, 148);
+    color: white;
+}
+h1{
+    font-family: "real";
+    font-style: italic;
+}
+#cart{
+    text-align: center;
+}

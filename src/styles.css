@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+/*@font-face {
+    font-family: 'yolkBold';
+    src: url('./assets/Yolk-SemiBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}*/
+@font-face {
+    font-family: 'glober';
+    src: url('./assets/GloberThinFree.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'globerBold';
+    src: url('./assets/GloberSemiBoldFree.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Posterama 1919 W01 SemiBold";
+    src: url("https://db.onlinewebfonts.com/t/c12aba80d407f92b5e7a8e5e434f96ff.eot");
+    src: url("https://db.onlinewebfonts.com/t/c12aba80d407f92b5e7a8e5e434f96ff.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/c12aba80d407f92b5e7a8e5e434f96ff.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/c12aba80d407f92b5e7a8e5e434f96ff.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/c12aba80d407f92b5e7a8e5e434f96ff.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/c12aba80d407f92b5e7a8e5e434f96ff.svg#Posterama 1919 W01 SemiBold")format("svg");
+}
+/*@font-face {
+    font-family: 'real';
+    src: url('./assets/Real\ Head\ Web\ W01\ Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}*/
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }

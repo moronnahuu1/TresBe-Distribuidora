@@ -1,0 +1,54 @@
+GET http://localhost:3000/api/categories
+###
+GET http://localhost:3001/api/products
+###
+###
+DELETE http://localhost:3000/api/fuelXprice/1
+###
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+    "name": "Martillo",
+    "category": "Herramientas",
+    "price": 20,
+    "image": "",
+    "stock": 200,
+    "description": "aaasss"
+}
+###
+POST http://localhost:3000/api/operations
+Content-Type: application/json
+
+{
+    "fuelAmount": 1200,
+    "fuelPrice": 1100,
+    "actualDate": "2024-04-09",
+    "type": "venta",
+    "totalPrice": 1320000,
+    "profit": 120000
+}
+
+###
+PATCH http://localhost:3000/api/fuelXprice/2
+Content-Type: application/json
+
+{
+    "fuelPrice": 1100
+}
+###
+PATCH http://localhost:3000/api/operations/2
+Content-Type: application/json
+
+{
+    "actualDate": "2024-10-15"
+}
+###
+GET http://localhost:3000/api/savedOp
+###
+POST http://localhost:3000/api/savedOp
+Content-Type: application/json
+
+{
+    "idSelected": 4
+}
