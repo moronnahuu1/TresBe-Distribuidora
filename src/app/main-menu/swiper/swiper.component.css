@@ -3,7 +3,7 @@
     width: 100%;
 }
 #slide{
-    img{
+    :is(img){
         width: 100%;
         height: 800px;
 

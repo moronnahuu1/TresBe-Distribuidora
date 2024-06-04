@@ -8,7 +8,7 @@
 .product-item{
     margin-top: 2%;
     margin-bottom: 5%;
-    img{
+    :is(img){
         width: 350px;
         height: 350px;
     }

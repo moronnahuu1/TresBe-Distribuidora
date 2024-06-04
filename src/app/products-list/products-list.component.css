@@ -20,12 +20,12 @@ body{
     padding: 0;
     text-align: center;
     font-family: "globerBold";
-    h2{
+    :is(h2){
         text-transform: uppercase;
         font-family: "globerBold";
         font-size: 15px;
     }
-    img{
+    :is(img){
         width: 70%;
         max-height: 200px;
     }
@@ -96,7 +96,7 @@ body{
     padding: 0;
     text-align: center;
     transition: transform 0.8s ease;
-    p{
+    :is(p){
         font-size: 200px;
     }
 }

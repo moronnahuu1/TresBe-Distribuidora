@@ -13,7 +13,7 @@
     bottom: 0;
     color: rgb(255, 255, 255);
     font-family: "globerBold";
-    p{
+    :is(p){
         position: absolute;
         bottom: 0;
         text-transform: uppercase;

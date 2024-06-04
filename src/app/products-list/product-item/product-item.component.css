@@ -5,7 +5,7 @@
 }
 #product-info{
     font-family: "globerBold";
-    h1{
+    :is(h1){
         font-family: "real";
         text-transform: uppercase;
         font-style: italic;

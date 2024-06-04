@@ -1,6 +1,6 @@
 GET http://localhost:3000/api/categories
 ###
-GET http://localhost:3001/api/products
+GET http://localhost:3000/api/products
 ###
 ###
 DELETE http://localhost:3000/api/fuelXprice/1
