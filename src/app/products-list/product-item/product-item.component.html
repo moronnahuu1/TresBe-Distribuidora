@@ -14,6 +14,7 @@
             <h1>{{productSelected.name}}</h1>
             <p>Categoria: {{productSelected.category}}</p>
             <p>Descripcion: {{productSelected.description}}</p>
+            <p>STOCK: {{productSelected.stock}}</p>
             <h2>CARACTERISTICAS</h2>
             <div id="features">
                 <div id="feature" *ngFor="let feature of productSelected.features">
@@ -23,7 +24,7 @@
             </div>
             <p id="price">${{formatNumber(productSelected.price)}}</p>
             <div id="containerButtons">
-                <button class="buttonProducts fa fa-credit-card" *ngIf="!isAdmin()"> COMPRAR</button>
+                <button class="buttonProducts fa fa-credit-card" *ngIf="!isAdmin()" (click)="addToCart()" [routerLink]="['/checkout']"> COMPRAR</button>
                 <button routerLink="" class="buttonProducts fa fa-pencil-square-o" *ngIf="isAdmin()"> MODIFICAR</button>
                 <button routerLink="/products" class="buttonProducts fa fa-pencil-square-o" *ngIf="isAdmin()"> ELIMINAR</button>
                 <button id="add" (click)="addToCart()" class="buttonProducts fa fa-shopping-cart" *ngIf="!isOnCart() && !isAdmin()"> AÑADIR AL CARRITO</button>

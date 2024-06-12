@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/services/product.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Feature } from 'src/app/models/Feature';
 import { FeatureService } from 'src/app/services/feature.service';
 import { CartService } from 'src/app/services/cart.service';
@@ -16,7 +16,7 @@ export class ProductItemComponent implements OnInit{
   featureService = inject(FeatureService);
   cartService = inject(CartService);
   cartProducts: Array<Product> = [];
-  productSelected: Product = new Product('','',0,'',0,'',);
+  productSelected: Product = new Product('','',0,'',0,'', 1);
   allFeatures: Feature[]= [];
   activeRoute = inject(ActivatedRoute);
   async ngOnInit(): Promise<void> {
@@ -72,8 +72,10 @@ export class ProductItemComponent implements OnInit{
     this.productSelected.features = featuresSelected;
   }
   addToCart(){
-    this.cartService.addNewProduct(this.productSelected);
-    
+    if(!this.isOnCart()){
+      this.productSelected.quantity = 1;
+      this.cartService.addNewProduct(this.productSelected);
+    }
   }
   formatNumber(number: number): string {
     return number.toLocaleString(); // Esto añadirá separadores de miles

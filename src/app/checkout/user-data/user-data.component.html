@@ -1,0 +1,42 @@
+<div id="container">
+    <p id="orderMessage">TU ORDEN</p>
+
+    <div id="cartDetail">
+        <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of products; let indice = index;">
+                <td>
+                  <div class="product-info">
+                    <p id="productName">{{ product.name }}</p>
+                    <p id="productQuant">x{{ product.quantity }}</p>
+                  </div>
+                </td>
+
+                <td id="price">${{ product.price * product.quantity }}</td>
+              </tr>
+
+              <tr>
+                <td>
+                    <p>SUBTOTAL</p>
+                </td>
+                <td>ARS ${{subtotal}}</td>
+              </tr>
+
+              <tr>
+                <td>
+                    <p>TOTAL</p>
+                </td>
+                <td>ARS ${{total}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    <app-pay></app-pay>
+
+</div>

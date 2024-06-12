@@ -25,12 +25,12 @@
     url("https://db.onlinewebfonts.com/t/c12aba80d407f92b5e7a8e5e434f96ff.ttf")format("truetype"),
     url("https://db.onlinewebfonts.com/t/c12aba80d407f92b5e7a8e5e434f96ff.svg#Posterama 1919 W01 SemiBold")format("svg");
 }
-/*@font-face {
+@font-face {
     font-family: 'real';
-    src: url('./assets/Real\ Head\ Web\ W01\ Bold.ttf') format('truetype');
+    src: url('./assets/RealHeadWebW01Bold.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-}*/
+}
 body, html {
     margin: 0;
     padding: 0;

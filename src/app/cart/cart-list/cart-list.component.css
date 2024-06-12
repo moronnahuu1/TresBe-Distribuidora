@@ -1,0 +1,71 @@
+.cart {
+    background-color: #fff;
+    width: 100vh;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding-left: 8vh;
+    padding-right: 8vh;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+    min-height: 48vh;
+  }
+  
+  table {
+    width: 100vh;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  thead th {
+    text-align: left;
+    padding-bottom: 10px;
+  }
+  
+  tbody td {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    vertical-align: middle;
+  }
+  
+  img {
+    width: 10vh;
+    margin-right: 1vh;
+  }
+  
+  .product-info {
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .quantity-btn, .remove-btn {
+    background-color: #002855;
+    color: #fff;
+    border: none;
+    width: 4.5vh;
+    height: 4vh;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .quantity-btn:hover, .remove-btn:hover {
+    background-color: #001f40;
+  }
+
+  #decrement, .remove-btn{
+    background-color: rgb(231, 231, 231);
+    color: black;
+    transition: background-color 1s;
+  }
+
+  #decrement:hover, .remove-btn:hover{
+    background-color: rgb(220, 220, 220);
+  }
+
+  #productName, #price{
+    font-family: 'globerBold';
+  }
+  #productCategory{
+    font-family: 'globerBold';
+    font-size: 12px;
+  }

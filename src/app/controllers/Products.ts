@@ -37,9 +37,9 @@ export const updateProduct = async(req: Request, res: Response) => {
     const { id } = req.params;
     const productAux = await Products.findByPk(id);
     if(productAux){
-        productAux.update(body);
+        productAux.update(body);        
         res.json({
-            message: 'Product updated',
+            message: 'Product updated SUCCESS',
         })
     } else {
         res.status(404).json({message: 'Error, product not found'})

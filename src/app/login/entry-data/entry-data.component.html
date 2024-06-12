@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<div id="align">
     <div id="container">
+        <p id="loginMessage">LOGIN NOW</p>
+    
         <label for="email">Email</label>
-        <br>
         <input type="email" name="email" id="emailInp" required placeholder="juan@gmail.com">
-        <br>
+    
         <label for="password">Contraseña</label>
-        <br>
         <input type="password" name="password" id="passwordInp" required>
+    
+        <button id="login" (click)="validateUser()">LOGIN</button>
 
-        <button id="login" (click)="validateUser()">Iniciar sesión</button>
+        <app-user-options></app-user-options>
     </div>
-</body>
-</html>
+</div>

@@ -21,9 +21,12 @@ const Products = db.define('Products', {
     stock: {
         type: DataTypes.INTEGER
     },
+    quantity: {
+        type: DataTypes.INTEGER
+    },
     description: {
         type: DataTypes.STRING
-    },
+    }
 })
 
 export default Products;

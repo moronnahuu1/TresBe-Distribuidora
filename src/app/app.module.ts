@@ -18,6 +18,15 @@ import { CartComponent } from './cart/cart.component';
 import { LoginComponent } from './login/login.component';
 import { EntryDataComponent } from './login/entry-data/entry-data.component';
 import { AddProductsComponent } from './add-products/add-products.component';
+import { UserOptionsComponent } from './login/user-options/user-options.component';
+import { CartListComponent } from './cart/cart-list/cart-list.component';
+import { CheckoutOptionsComponent } from './cart/cart-list/checkout-options/checkout-options.component';
+import { CheckoutButtonsComponent } from './cart/cart-list/checkout-options/checkout-buttons/checkout-buttons.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { ShipmentComponent } from './checkout/shipment/shipment.component';
+import { UserDataComponent } from './checkout/user-data/user-data.component';
+import { PayComponent } from './checkout/user-data/pay/pay.component';
+import { OrderPlacedComponent } from './order-placed/order-placed.component';
 
 @NgModule({
   declarations: [
@@ -36,11 +45,20 @@ import { AddProductsComponent } from './add-products/add-products.component';
     LoginComponent,
     EntryDataComponent,
     AddProductsComponent,
+    UserOptionsComponent,
+    CartListComponent,
+    CheckoutOptionsComponent,
+    CheckoutButtonsComponent,
+    CheckoutComponent,
+    ShipmentComponent,
+    UserDataComponent,
+    PayComponent,
+    OrderPlacedComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

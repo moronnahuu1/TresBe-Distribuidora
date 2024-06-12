@@ -3,18 +3,19 @@ GET http://localhost:3000/api/categories
 GET http://localhost:3000/api/products
 ###
 ###
-DELETE http://localhost:3000/api/fuelXprice/1
+DELETE http://localhost:3000/api/products/aa
 ###
 POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-    "name": "Martillo",
+    "id": "",
+    "name": "Autoperforantes",
     "category": "Herramientas",
-    "price": 20,
+    "price": 500,
     "image": "",
-    "stock": 200,
-    "description": "aaasss"
+    "stock": 100,
+    "description": "autoperforantes tel"
 }
 ###
 POST http://localhost:3000/api/operations
@@ -30,11 +31,11 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/api/fuelXprice/2
+PATCH http://localhost:3000/api/products/5e5730c8-178f-11ef-a6ce-dd2b3fbae759
 Content-Type: application/json
 
 {
-    "fuelPrice": 1100
+    "stock": 209
 }
 ###
 PATCH http://localhost:3000/api/operations/2

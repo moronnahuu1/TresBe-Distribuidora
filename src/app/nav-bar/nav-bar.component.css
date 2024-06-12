@@ -32,8 +32,8 @@
         color: rgb(0, 40, 150);
     }
     img{
-        width: 100%;
-        height: auto;
+        width: 20vh;
+        height: 6vh;
         margin: 0;
     }
 }

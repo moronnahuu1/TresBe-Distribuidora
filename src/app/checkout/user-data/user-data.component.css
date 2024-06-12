@@ -1,0 +1,40 @@
+#container{
+    background-color: rgb(225, 225, 225);
+    padding-top: 1vh;
+    padding-bottom: 5vh;
+    padding-left: 5vh;
+    padding-right: 5vh;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    min-height: 80vh;
+}
+#orderMessage{
+    font-family: 'globerBold';
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+#cartDetail{
+    background-color: white;
+    padding: 3vh;
+}
+table {
+    width: 60vh;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-family: 'globerBold';
+  }
+  
+  thead th {
+    text-align: left;
+    padding-bottom: 10px;
+  }
+  
+  tbody td {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    vertical-align: middle;
+  }
+.product-info{
+    display: flex;
+    gap: 10px;
+}

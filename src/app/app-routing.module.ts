@@ -11,6 +11,9 @@ import { AddProductsComponent } from './add-products/add-products.component';
 import { loginGuard } from './guards/login.guard';
 import { loggedGuard } from './guards/logged.guard';
 import { adminGuard } from './guards/admin.guard';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { checkoutGuard } from './guards/checkout.guard';
+import { OrderPlacedComponent } from './order-placed/order-placed.component';
 
 const routes: Routes = [
   {
@@ -41,12 +44,20 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [loggedGuard]
-  }
-  ,
+  },
   {
     path: 'add/product',
     component: AddProductsComponent,
     canActivate: [adminGuard]
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    canActivate: [checkoutGuard]
+  },
+  {
+    path: 'placed',
+    component: OrderPlacedComponent
   }
 ]
 @NgModule({

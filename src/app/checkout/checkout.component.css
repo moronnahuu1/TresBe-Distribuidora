@@ -1,0 +1,6 @@
+.details{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10vh;
+    margin-left: 10vh;
+}

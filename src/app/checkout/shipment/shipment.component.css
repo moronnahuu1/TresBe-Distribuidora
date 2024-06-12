@@ -1,0 +1,20 @@
+#container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    width: 60vh;
+    height: 60vh;
+    margin-left: 2vh;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 25vh;
+}
+input, select{
+    width: 25vh;
+    height: 4vh;
+    border: 1px solid rgb(227, 227, 227);
+    background: none;
+    background-color: rgb(255, 255, 255);
+}

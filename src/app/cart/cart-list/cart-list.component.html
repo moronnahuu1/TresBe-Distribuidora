@@ -1,0 +1,34 @@
+<div class="cart">
+  <table>
+    <thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Cantidad</th>
+        <th>Eliminar</th>
+        <th>Precio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products; let indice = index;">
+        <td>
+          <img [src]="product.image" [alt]="product.description">
+          <div class="product-info">
+            <p id="productName">{{ product.name }}</p>
+            <p id="productCategory">Categoria: {{ product.category }}</p>
+          </div>
+        </td>
+        <td >
+          <button class="quantity-btn" (click)="incrementQuantity(product, indice)">+</button>
+          <span id="quantity">  {{ product.quantity }}  </span>
+          <button class="quantity-btn" id="decrement" (click)="decrementQuantity(product, indice)">-</button>
+        </td>
+        <td><button class="remove-btn" (click)="deleteProduct(indice)">x</button></td>
+        <td id="price">${{ product.price }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-checkout-options></app-checkout-options>
+
+  <app-checkout-buttons></app-checkout-buttons>
+</div>

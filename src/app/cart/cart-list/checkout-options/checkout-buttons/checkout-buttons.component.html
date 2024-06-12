@@ -1,0 +1,11 @@
+<p id="messageCode">Si tenes un codigo de descuento, por favor ingresalo aqui:</p>
+<div id="container">
+    <div id="discount">
+        <input type="text" name="promoCode" id="promoCodeInp" placeholder="Por favor ingrese el codigo de descuento">
+        <button>Aplicar Descuento</button>
+    </div>
+    <div id="buttons">
+        <button [routerLink]="['/checkout']">Comprar</button>
+        <button [routerLink]="['/products']" id="keepWatching">Continuar Viendo</button>
+    </div>
+</div>
