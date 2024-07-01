@@ -9,7 +9,8 @@
         <a href="/categories">Catalogo</a>
         <a href="/brands">Marcas</a>
         <a href="/login" *ngIf="!isLogged()">Login</a>
-        <a href="" *ngIf="isLogged()" (click)="logout()">Logout</a>
+        <a href="" *ngIf="isLogged()" (click)="logout()">Salir</a>
         <p routerLink="/cart" class="fa fa-shopping-cart"> {{products.length}}</p>
+        <i class="fa fa-user fa-2x" aria-hidden="true" [routerLink]="['/user']"></i>
     </div>
 </body>
