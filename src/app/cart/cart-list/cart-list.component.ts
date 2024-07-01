@@ -34,7 +34,7 @@ export class CartListComponent {
     /* Cuando el usuario hace click en el boton +, se llama a esta funcion para que primero recorra la lista de productos, luego
     encuentre el producto y una vez que lo encuentra le cambia la cantidad, en este caso incrementando, pero realiza comprobaciones
     antes para no caer en fallos como por ejemplo revisar que la cantidad que el usuario desea no sea mayor a la del stock disponible */
-    if(product.quantity < product.stock){
+    //if(product.quantity < product.stock){
       let i=0;
       let access = false;
       while(i<this.products.length && !access){
@@ -48,7 +48,7 @@ export class CartListComponent {
         this.products[i].quantity = this.products[i].quantity + 1;
         this.cartService.updateProduct(index, this.products[i]);
       }
-    }
+    //}
   }
 
   decrementQuantity(product: Product, index: number){

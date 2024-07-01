@@ -73,6 +73,8 @@ export class RegisterDataComponent {
       this.userService.saveUser(newUser).subscribe(() => {
       })
       this.dataCreated = true;
+      localStorage.setItem('userCreated', JSON.stringify(true));
+      window.location.href = `signup/shipmentdata/${newUser.id}`
     }
   }
   getString(name: string){

@@ -18,6 +18,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { SendVoucherComponent } from './order-placed/send-voucher/send-voucher.component';
 import { BrandsComponent } from './brands/brands.component';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { ShipmentInformationComponent } from './sign-up/shipment-information/shipment-information.component';
+import { userdataGuard } from './guards/userdata.guard';
 
 const routes: Routes = [
   {
@@ -84,11 +86,15 @@ const routes: Routes = [
   {
     path: 'brands/products/:brand',
     component: ProductsListComponent,
-  }
-  ,
+  },
   {
     path: 'user',
     component: UserInfoComponent,
+  },
+  {
+    path: 'signup/shipmentdata/:id',
+    component: ShipmentInformationComponent,
+    canActivate: [loggedGuard, userdataGuard]
   }
 ]
 @NgModule({

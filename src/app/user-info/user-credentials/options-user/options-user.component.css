@@ -1,0 +1,15 @@
+#container{
+    position: relative;
+}
+#items{
+    display: flex;
+    flex-direction: column;
+}
+:is(p){
+    font-family: "Posterama 1919 W01 SemiBold";
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgb(0, 25, 93);
+    transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+}

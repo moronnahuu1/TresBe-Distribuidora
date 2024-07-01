@@ -102,7 +102,7 @@ export class PayComponent {
     /* La funcion es la principal del componente, cuando el usuario reserva la orden se llama a esta funcion, y la funcion se encarga
     de llamar a las demas funciones para realizar las acciones que correspondan */
     if(localStorage.getItem("dataCreated")){ //Verifica que el carrito tenga productos cargados
-      this.modifyStock();
+      ///this.modifyStock();
       let orderID = this.createOrder();
       this.cartService.saveCartAfterOrder();
       this.router.navigate([`/checkout/${orderID}`]); //Se redirecciona a la ruta del componente 'placed' para informarle al usuario que su orden fue creada

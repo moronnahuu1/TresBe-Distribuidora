@@ -43,6 +43,14 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { BrandsComponent } from './brands/brands.component';
 import { BrandInfoComponent } from './brands/brand-info/brand-info.component';
 import { BrandsDataComponent } from './brands/brands-data/brands-data.component';
+import { UserCredentialsComponent } from './user-info/user-credentials/user-credentials.component';
+import { OptionsUserComponent } from './user-info/user-credentials/options-user/options-user.component';
+import { MyAccountComponent } from './user-info/user-credentials/my-account/my-account.component';
+import { MyBoughtsComponent } from './user-info/user-credentials/my-boughts/my-boughts.component';
+import { PrivacityComponent } from './user-info/user-credentials/privacity/privacity.component';
+import { ShipmentDataComponent } from './user-info/user-credentials/shipment-data/shipment-data.component';
+import { TechSupportComponent } from './user-info/user-credentials/tech-support/tech-support.component';
+import { ShipmentInformationComponent } from './sign-up/shipment-information/shipment-information.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +93,14 @@ import { BrandsDataComponent } from './brands/brands-data/brands-data.component'
     BrandsComponent,
     BrandInfoComponent,
     BrandsDataComponent,
+    UserCredentialsComponent,
+    OptionsUserComponent,
+    MyAccountComponent,
+    MyBoughtsComponent,
+    PrivacityComponent,
+    ShipmentDataComponent,
+    TechSupportComponent,
+    ShipmentInformationComponent,
   ],
   imports: [
     BrowserModule,
