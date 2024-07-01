@@ -19,6 +19,14 @@ export class ProductService {
   getProduct(id: string): Observable<Product> {
     return this.http.get<Product>(this.myAppUrl + this.myApiUrl + id); 
   }
+  getProductsByBrand(brand: string): Observable<Product[]> {
+    let urlAux = this.myAppUrl + this.myApiUrl + 'brand/'
+    return this.http.get<Product[]>(urlAux + brand); 
+  }
+  getProductsByCategory(category: string): Observable<Product[]> {
+    let urlAux = this.myAppUrl + this.myApiUrl + 'category/'
+    return this.http.get<Product[]>(urlAux + category); 
+  }
   deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
   }

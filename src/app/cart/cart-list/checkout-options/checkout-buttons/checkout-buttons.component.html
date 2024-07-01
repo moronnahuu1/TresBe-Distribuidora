@@ -5,7 +5,7 @@
         <button>Aplicar Descuento</button>
     </div>
     <div id="buttons">
-        <button [routerLink]="['/checkout']">Comprar</button>
+        <button (click)="verifyOrders()">Comprar</button>
         <button [routerLink]="['/products']" id="keepWatching">Continuar Viendo</button>
     </div>
 </div>

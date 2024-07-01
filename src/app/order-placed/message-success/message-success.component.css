@@ -1,0 +1,25 @@
+#container{
+    display: flex;
+    flex-direction: column;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    font-family: sans-serif;
+    text-align: center;
+    width: 114.5vh;
+    height: 80vh;
+    background-color: rgb(50, 191, 126);
+    color: white;
+    h1{
+        letter-spacing: 3px;
+    }
+}
+#mailSent{
+    margin-top: -2vh;
+}
+#check{
+    padding-top: 10vh;
+}
+#bankData{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}

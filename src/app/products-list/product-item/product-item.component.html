@@ -3,36 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{productSelected.name}} | Tresbe Distribuidora</title>
 </head>
 <body>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <app-nav-bar></app-nav-bar>
     <div id="container">
-        <div id="product-info">
-            <h1>{{productSelected.name}}</h1>
-            <p>Categoria: {{productSelected.category}}</p>
-            <p>Descripcion: {{productSelected.description}}</p>
-            <p>STOCK: {{productSelected.stock}}</p>
-            <h2>CARACTERISTICAS</h2>
-            <div id="features">
-                <div id="feature" *ngFor="let feature of productSelected.features">
-                    <p>{{feature.name}}:</p>
-                    <p>{{feature.value}}</p>
+      <img src="{{productSelected.image}}" alt="">
+      <div class="product-page">
+        <div class="product-title">{{productSelected.name}}</div>
+        <div class="product-code">Categoría: {{productSelected.category}}</div>
+        <div class="reviews"><span>★★★★★</span> <a href="#" class="reviews">2 reviews</a></div>
+        <div class="price">${{productSelected.price}}</div>
+        <div class="add-to-bag" *ngIf="!isOnCart()" (click)="addToCart()">Añadir al carrito</div>
+        <div class="add-to-bag" *ngIf="isOnCart()" [routerLink]="['/cart']">En carrito</div>
+        <div class="product-options">
+            <div class="option-title">DESCRIPCIÓN</div>
+            <div id="description">{{productSelected.description}}</div>
+        </div>
+        <div class="product-options">
+            <div class="option-title">CARACTERISTICAS</div>
+            <div class="size-options">
+                <div *ngFor="let feature of productSelected.features">
+                  <p>{{feature.name}}</p>
+                  <p>{{feature.value}}</p>
                 </div>
             </div>
-            <p id="price">${{formatNumber(productSelected.price)}}</p>
-            <div id="containerButtons">
-                <button class="buttonProducts fa fa-credit-card" *ngIf="!isAdmin()" (click)="addToCart()" [routerLink]="['/checkout']"> COMPRAR</button>
-                <button routerLink="" class="buttonProducts fa fa-pencil-square-o" *ngIf="isAdmin()"> MODIFICAR</button>
-                <button routerLink="/products" class="buttonProducts fa fa-pencil-square-o" *ngIf="isAdmin()"> ELIMINAR</button>
-                <button id="add" (click)="addToCart()" class="buttonProducts fa fa-shopping-cart" *ngIf="!isOnCart() && !isAdmin()"> AÑADIR AL CARRITO</button>
-                <button id="onCart" routerLink="/cart" class="buttonProducts fa fa-shopping-cart" *ngIf="isOnCart() && !isAdmin()" > EN EL CARRITO</button>
-            </div>
         </div>
-        <img id="imagen" src="{{productSelected.image}}" alt="">
+        <div class="delivery-info">Envíos gratis a Mar Del Plata</div>
     </div>
+    </div>    
     <app-footer></app-footer>
 </body>
 </html>

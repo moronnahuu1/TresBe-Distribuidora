@@ -8,12 +8,15 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CartComponent } from './cart/cart.component';
 import { LoginComponent } from './login/login.component';
 import { AddProductsComponent } from './add-products/add-products.component';
-import { loginGuard } from './guards/login.guard';
 import { loggedGuard } from './guards/logged.guard';
 import { adminGuard } from './guards/admin.guard';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { checkoutGuard } from './guards/checkout.guard';
 import { OrderPlacedComponent } from './order-placed/order-placed.component';
+import { HasOrderComponent } from './has-order/has-order.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { SendVoucherComponent } from './order-placed/send-voucher/send-voucher.component';
+import { BrandsComponent } from './brands/brands.component';
 
 const routes: Routes = [
   {
@@ -56,8 +59,30 @@ const routes: Routes = [
     canActivate: [checkoutGuard]
   },
   {
-    path: 'placed',
-    component: OrderPlacedComponent
+    path: 'checkout/:id',
+    component: OrderPlacedComponent,
+    data: { title: 'TRESBE | CHECKOUT' }
+  },
+  {
+    path: 'checkout/orderExist/:id',
+    component: HasOrderComponent,
+  },
+  {
+    path: 'signup',
+    component: SignUpComponent,
+    canActivate: [loggedGuard]
+  },
+  {
+    path: 'voucher',
+    component: SendVoucherComponent,
+  },
+  {
+    path: 'brands',
+    component: BrandsComponent,
+  },
+  {
+    path: 'brands/products/:brand',
+    component: ProductsListComponent,
   }
 ]
 @NgModule({

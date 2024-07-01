@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms'; // Importar FormsModule
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +28,21 @@ import { ShipmentComponent } from './checkout/shipment/shipment.component';
 import { UserDataComponent } from './checkout/user-data/user-data.component';
 import { PayComponent } from './checkout/user-data/pay/pay.component';
 import { OrderPlacedComponent } from './order-placed/order-placed.component';
+import { MessageSuccessComponent } from './order-placed/message-success/message-success.component';
+import { OrderButtonsComponent } from './order-placed/order-buttons/order-buttons.component';
+import { OrderProgressComponent } from './order-progress/order-progress.component';
+import { HasOrderComponent } from './has-order/has-order.component';
+import { MessageErrorComponent } from './has-order/message-error/message-error.component';
+import { OrderDetailComponent } from './order-placed/order-detail/order-detail.component';
+import { ButtonsDetailComponent } from './order-placed/order-detail/buttons-detail/buttons-detail.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { RegisterDataComponent } from './sign-up/register-data/register-data.component';
+import { SendVoucherComponent } from './order-placed/send-voucher/send-voucher.component';
+import { InfoSentComponent } from './order-placed/send-voucher/info-sent/info-sent.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { BrandsComponent } from './brands/brands.component';
+import { BrandInfoComponent } from './brands/brand-info/brand-info.component';
+import { BrandsDataComponent } from './brands/brands-data/brands-data.component';
 
 @NgModule({
   declarations: [
@@ -54,11 +70,27 @@ import { OrderPlacedComponent } from './order-placed/order-placed.component';
     UserDataComponent,
     PayComponent,
     OrderPlacedComponent,
+    MessageSuccessComponent,
+    OrderButtonsComponent,
+    OrderProgressComponent,
+    HasOrderComponent,
+    MessageErrorComponent,
+    OrderDetailComponent,
+    ButtonsDetailComponent,
+    SignUpComponent,
+    RegisterDataComponent,
+    SendVoucherComponent,
+    InfoSentComponent,
+    UserInfoComponent,
+    BrandsComponent,
+    BrandInfoComponent,
+    BrandsDataComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule, // Asegúrate de incluir FormsModule en los imports
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/categories
+GET https://apis.datos.gob.ar/georef/api/provincias
 ###
 GET http://localhost:3000/api/products
 ###
@@ -35,7 +35,7 @@ PATCH http://localhost:3000/api/products/5e5730c8-178f-11ef-a6ce-dd2b3fbae759
 Content-Type: application/json
 
 {
-    "stock": 209
+    "stock": 199
 }
 ###
 PATCH http://localhost:3000/api/operations/2

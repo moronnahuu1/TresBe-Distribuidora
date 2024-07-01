@@ -18,3 +18,61 @@ input, select{
     background: none;
     background-color: rgb(255, 255, 255);
 }
+button{
+    border: 0;
+    width: 25vh;
+    height: 5vh;
+    cursor: pointer;
+    background-color: #002855;
+    color: white;
+    transition: transform 1s ease;
+}
+button:hover{
+    transform: scale(1.07);
+}
+#checked{
+    display: flex;
+    width: 35vh;
+    p{
+        margin-top: 0.3vh;
+        margin-left: 1vh;
+        font-family: sans-serif;
+        font-size: 13px;
+    }
+}
+
+#toggleButton {
+    width: 2vh;
+    height: 2vh;
+    cursor: pointer;
+  }
+  
+  #toggleButton[data-checked="true"] {
+    background-color: green;
+    color: white;
+  }
+  
+  #toggleButton[data-checked="false"] {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(219, 219, 219);
+    color: black;
+  }
+  #cityContainer{
+    background-color: white;
+    position: absolute;
+    margin-top: 7vh;
+    max-height: 15vh;
+    width: 25vh;
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+  .cityData{
+    margin: 0;
+    background-color: white;
+    border-bottom: 1px solid rgb(232, 232, 232);
+    font-family: sans-serif;
+    cursor: pointer;
+  }
+  .cityData:hover{
+    background-color: rgb(240, 240, 240);
+  }

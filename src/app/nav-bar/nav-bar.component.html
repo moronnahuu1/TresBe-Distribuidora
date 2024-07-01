@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navigation Bar</title>
-</head>
+
 <body>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -13,10 +7,9 @@
         <a href="">Inicio</a>
         <a href="/products">Productos</a>
         <a href="/categories">Catalogo</a>
-        <a href="">Nosotros</a>
+        <a href="/brands">Marcas</a>
         <a href="/login" *ngIf="!isLogged()">Login</a>
         <a href="" *ngIf="isLogged()" (click)="logout()">Logout</a>
         <p routerLink="/cart" class="fa fa-shopping-cart"> {{products.length}}</p>
     </div>
 </body>
-</html>

@@ -1,16 +1,15 @@
 export class User{
-    id: string | undefined;
+    id: string;
     email: string;
     password: string;
     username: string;
-    firstname: string;
-    lastname: string;
+    priceList: number;
 
-    constructor(email: string, password: string, username: string, firstname: string, lastname: string){
+    constructor(id: string, email: string, password: string, username: string, priceList: number){
+        this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.priceList = priceList; //Para saber que lista de precios va a tener el usuario
     }
 }

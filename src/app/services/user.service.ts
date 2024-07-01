@@ -20,6 +20,10 @@ export class UserService {
   getUser(id: string): Observable<User> {
     return this.http.get<User>(this.myAppUrl + this.myApiUrl + id); 
   }
+  getUserByEmail(email: string): Observable<User> {
+    let urlAux = this.myAppUrl + this.myApiUrl + "/email/";
+    return this.http.get<User>(urlAux + email); 
+  }
   deleteUser(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
   }
