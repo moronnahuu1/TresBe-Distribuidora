@@ -9,7 +9,7 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <app-nav-bar></app-nav-bar>
-    <h2 id="ourProducts">NUESTROS PRODUCTOS</h2>
+    <app-poster-info></app-poster-info>
     <div id="container">
         <div id="product_item" routerLink="/products/{{product.id}}" *ngFor="let product of productsArray">
             <img src="{{product.image}}" alt="">

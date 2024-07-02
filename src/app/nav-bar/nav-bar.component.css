@@ -27,7 +27,11 @@
         color: rgb(0, 25, 93);
         transition: transform 0.5s ease;
     }
-    a:hover,p:hover{
+    i{
+        cursor: pointer;
+        transition: transform 0.5s ease;
+    }
+    a:hover,p:hover, i:hover{
         transform: scale(1.07); /* Escala el div al 120% del tamaño original */
         color: rgb(0, 40, 150);
     }

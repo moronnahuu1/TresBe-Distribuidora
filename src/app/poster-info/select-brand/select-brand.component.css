@@ -1,0 +1,31 @@
+#containsAll{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1vi;
+    h2{
+        font-family: sans-serif;
+        letter-spacing: 2px;
+    }
+}
+#container{
+    display: flex;
+    align-items: center;
+    justify-self: center;
+}
+.brands{
+    background-color: rgb(32, 113, 199);
+    border: 1px solid black;
+    font-family: sans-serif;
+    letter-spacing: 2px;
+    font-size: 13px;
+    text-align: center;
+    width: 8vi;
+    padding: 1vi;
+    cursor: pointer;
+    transition: background-color 1s ease;
+}
+.brands:hover{
+    background-color: rgb(163, 233, 50);
+    color: black;
+}

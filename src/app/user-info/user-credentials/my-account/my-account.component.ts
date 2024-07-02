@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { User } from 'src/app/models/User';
+import { Userdata } from 'src/app/models/Userdata';
+import { UserDisplayService } from 'src/app/services/user-display.service';
+import { UserdataService } from 'src/app/services/userdata.service';
 
 @Component({
   selector: 'app-my-account',
@@ -7,16 +10,42 @@ import { User } from 'src/app/models/User';
   styleUrls: ['./my-account.component.css']
 })
 export class MyAccountComponent implements OnInit{
+  displayService = inject(UserDisplayService);
+  userdataService = inject(UserdataService);
+  displayed = this.displayService.displayed;
   user: User = new User('','','','',0);
-  ngOnInit(): void {
+  userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
+
+  async ngOnInit() {
       this.user = this.getUser();
+      const usersAux = await this.getUserData();
+      if(usersAux != undefined){
+        this.userdata = usersAux;
+      }
   }
+
+  changeDisplay(name: string){
+    this.displayService.changeDisplay(name);
+  }
+
   getUser(){
-    let userInfo: User = new User('','','','',0);
     let userAux = localStorage.getItem('userLogged');
+    let userParsed: User = new User('','','','',0);
     if(userAux){
-      userInfo = JSON.parse(userAux);
+      userParsed = JSON.parse(userAux);
     }
-    return userInfo;
+    return userParsed;
+  }
+
+  async getUserData(){
+    /* La funcion se conecta con el servicio de userdata para leer la base de datos de la informacion del envio para los usuarios */
+    try {
+      const data = await this.userdataService.getUserdataByUserID(this.user.id).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
   }
 }

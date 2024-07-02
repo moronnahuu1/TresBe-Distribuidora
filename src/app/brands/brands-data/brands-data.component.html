@@ -1,6 +1,6 @@
 <h2>MARCAS</h2>
     <div id="container">
-        <div routerLink="/brands/products/{{brand.name}}" id="brand-item" *ngFor="let brand of brandsArray" [ngStyle]="{'background-image': 'linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)), url(' + brand.image + ')'}">
+        <div routerLink="/brands/products/{{brand.name}}" id="brand-item" *ngFor="let brand of brandsArray" [ngStyle]="{'background-image': 'url(' + brand.image + ')'}">
             <p>{{brand.name}}</p>
         </div>
     </div>

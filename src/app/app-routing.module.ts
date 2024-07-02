@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainMenuComponent } from './main-menu/main-menu.component';
-import { ProductsComponent } from './main-menu/products/products.component';
 import { ProductItemComponent } from './products-list/product-item/product-item.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { CategoriesComponent } from './categories/categories.component';
@@ -20,6 +19,7 @@ import { BrandsComponent } from './brands/brands.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { ShipmentInformationComponent } from './sign-up/shipment-information/shipment-information.component';
 import { userdataGuard } from './guards/userdata.guard';
+import { loginGuard } from './guards/login.guard';
 
 const routes: Routes = [
   {
@@ -64,11 +64,12 @@ const routes: Routes = [
   {
     path: 'checkout/:id',
     component: OrderPlacedComponent,
-    data: { title: 'TRESBE | CHECKOUT' }
+    canActivate: [loginGuard]
   },
   {
     path: 'checkout/orderExist/:id',
     component: HasOrderComponent,
+    canActivate: [loginGuard]
   },
   {
     path: 'signup',
@@ -90,6 +91,7 @@ const routes: Routes = [
   {
     path: 'user',
     component: UserInfoComponent,
+    canActivate: [loginGuard]
   },
   {
     path: 'signup/shipmentdata/:id',

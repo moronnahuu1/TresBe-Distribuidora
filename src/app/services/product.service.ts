@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Product } from '../models/Product';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   private myAppUrl: string;
   private myApiUrl: string;
+  private products: Array<Product> = [];
+  private _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([])
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Products/'

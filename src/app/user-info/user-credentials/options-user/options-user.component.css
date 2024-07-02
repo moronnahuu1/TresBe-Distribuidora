@@ -1,15 +1,41 @@
 #container{
     position: relative;
+    margin-left: 1vi;
 }
 #items{
     display: flex;
     flex-direction: column;
 }
 :is(p){
-    font-family: "Posterama 1919 W01 SemiBold";
+    /*font-family: "Posterama 1919 W01 SemiBold";
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: rgb(0, 25, 93);
+    color: rgb(0, 25, 93);*/
     transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+    cursor: pointer;
 }
+p:hover{
+    transform: scale(1.05);
+}
+.sidebar {
+    background-color: #f0f0f5;
+    padding: 20px;
+    width: 20vi;
+    height: 42vi;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+  }
+  
+  .sidebar ul li {
+    margin-bottom: 3vi;
+  }
+  
+  .sidebar ul li p {
+    text-decoration: none;
+    width: fit-content;
+    color: #333;
+    font-weight: bold;
+  }

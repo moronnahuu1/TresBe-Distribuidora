@@ -51,6 +51,10 @@ import { PrivacityComponent } from './user-info/user-credentials/privacity/priva
 import { ShipmentDataComponent } from './user-info/user-credentials/shipment-data/shipment-data.component';
 import { TechSupportComponent } from './user-info/user-credentials/tech-support/tech-support.component';
 import { ShipmentInformationComponent } from './sign-up/shipment-information/shipment-information.component';
+import { UserDetailsComponent } from './user-info/user-credentials/my-account/user-details/user-details.component';
+import { PosterInfoComponent } from './poster-info/poster-info.component';
+import { SelectBrandComponent } from './poster-info/select-brand/select-brand.component';
+import { SearchBarComponent } from './poster-info/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +105,10 @@ import { ShipmentInformationComponent } from './sign-up/shipment-information/shi
     ShipmentDataComponent,
     TechSupportComponent,
     ShipmentInformationComponent,
+    UserDetailsComponent,
+    PosterInfoComponent,
+    SelectBrandComponent,
+    SearchBarComponent,
   ],
   imports: [
     BrowserModule,

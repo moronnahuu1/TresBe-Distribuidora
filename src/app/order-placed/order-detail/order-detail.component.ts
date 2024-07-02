@@ -34,7 +34,7 @@ export class OrderDetailComponent implements OnInit{
 
 
   async ngOnInit(): Promise<void> {
-    this.getUser();
+      this.user = this.getUser();
       this.id = this.activeRoute.snapshot.params['id'];      
       await this.readOXP();
       await this.getProducts();
@@ -45,11 +45,8 @@ export class OrderDetailComponent implements OnInit{
       }
       const usersAux = await this.getUserData();
       if(usersAux != undefined){
-        for(let i=0; i<usersAux.length; i++){
-          this.users.push(usersAux[i]);
-        }
+        this.userdata = usersAux;
       }
-        this.getUserdataInfo();
   }
   checkOrderByUser(){
     /* Con esta funcion se verifica que la orden creada pertenezca al usuario logueado */
@@ -64,9 +61,11 @@ export class OrderDetailComponent implements OnInit{
     /* Funcion para leer el usuario logueado, si el usuario esta logueado deberia cargarlo de forma correcta, 
     sino, las funciones del componente cuando llamen a esta funcion se van a encargar de redireccionar a otro sitio de la pagina */
     let userAux = localStorage.getItem("userLogged");
+    let userParsed: User = new User("", "", "", "",0); //USER va a ser el usuario logueado en el momento
     if(userAux){
-      this.user = JSON.parse(userAux);
+      userParsed = JSON.parse(userAux);
     }
+    return userParsed;
   }
 async getOrder(){
   /* La funcion se conecta directamente con el servicio de ordenes para leer la base de datos 
@@ -116,28 +115,12 @@ try {
   throw error; // Puedes manejar el error de acuerdo a tus necesidades
 }
 }
-getUserdataInfo(){
-  /* La funcion va a recorrer el arreglo que contiene la informacion de envio de todos los usuarios y va a buscar la informacion
-  de envio que corresponda al usuario logueado */
-  let i = 0;
-  let access: boolean = false;
-  while(i<this.users.length && !access){ //Se recorre el arreglo de informacion del usuario hasta que se otorgue acceso, osea, se encuentra el que se busca
-    if(this.user.id == this.users[i].userID){ //Si coinciden los ID, tanto el de el usuario logueado como el de informacion del usuario, entra aca y otorga acceso
-      access = true;
-    }else{ // Si los ID no coinciden, entra aca e incrementa la variable para buscar otro usuario
-      i++;
-    }
-  }
-  if(access){ //Si el acceso esta concedido una vez finalizado el bucle, significa que encontró el usuario buscado
-    this.userdata = this.users[i]; //Entra aca y le asigna a la variable global de USERDATA la informacion de usuario que coincide con lo buscado
-  }
-}
 
 async getUserData(){
   /* La funcion se conecta con el servicio de userdata para leer la base de datos de la informacion del envio para los usuarios */
   try {
-    const data = await this.userdataService.getUsersdata().toPromise();
-    console.log(data?.length);
+    const data = await this.userdataService.getUserdataByUserID(this.user.id).toPromise();
+    console.log(data);
     return data;
   } catch (error) {
     console.error('Error obteniendo datos:', error);
