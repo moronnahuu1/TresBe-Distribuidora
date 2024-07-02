@@ -1,7 +1,7 @@
 <div id="containsAll">
     <h2>BUSCÁ POR MARCAS</h2>
     <div id="container">
-        <div class="brands">TODOS</div>
-        <div class="brands" *ngFor="let brand of brandsArray">{{brand.name.toUpperCase()}}</div>
+        <div class="brands" (click)="onSelectBrand('all')">TODOS</div>
+        <div class="brands" *ngFor="let brand of brandsArray" (click)="onSelectBrand(brand.name)">{{brand.name.toUpperCase()}}</div>
     </div>
 </div>
