@@ -30,11 +30,16 @@ export class ProductService {
           productsAux = await this.getByBrands(value);
         }
         break;
-       case 'category':
+      case 'category':
         if(value != null){
           productsAux = await this.getByCategory(value);
         }
-          break;
+        break;
+      case 'search':
+        if(value){
+          productsAux = await this.searchProducts(value);
+        }
+        break;
       default:
         productsAux = await this.setProducts();
         break;
@@ -122,12 +127,47 @@ export class ProductService {
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
+
+  async searchProducts(name: string){
+    try {
+      const data = await this.getProductSearch(name).toPromise();
+      console.log(data?.length);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
+
+  async returnOneProduct(id: string){
+    let productAux = await this.getOneProduct(id);
+    let productReturn: Product = new Product('','','','',0,'',0,'',0);
+    if(productAux != undefined){
+      productReturn = productAux;
+    }
+    return productReturn;
+  }
+
+  async getOneProduct(id: string){
+    try {
+      const data = await this.getProduct(id).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
   
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl); 
   }
   getProduct(id: string): Observable<Product> {
     return this.http.get<Product>(this.myAppUrl + this.myApiUrl + id); 
+  }
+  getProductSearch(name: string): Observable<Product[]> {
+    let urlAux = this.myAppUrl + this.myApiUrl + 'search/';
+    return this.http.get<Product[]>(urlAux + name); 
   }
   getProductsByBrand(brand: string): Observable<Product[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'brand/'

@@ -55,6 +55,7 @@ import { UserDetailsComponent } from './user-info/user-credentials/my-account/us
 import { PosterInfoComponent } from './poster-info/poster-info.component';
 import { SelectBrandComponent } from './poster-info/select-brand/select-brand.component';
 import { SearchBarComponent } from './poster-info/search-bar/search-bar.component';
+import { OrdersInfoComponent } from './user-info/user-credentials/orders-info/orders-info.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { SearchBarComponent } from './poster-info/search-bar/search-bar.componen
     PosterInfoComponent,
     SelectBrandComponent,
     SearchBarComponent,
+    OrdersInfoComponent,
   ],
   imports: [
     BrowserModule,

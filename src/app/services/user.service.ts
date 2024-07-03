@@ -14,6 +14,14 @@ export class UserService {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Users/'
   }
+  getUserLogged(){
+    let userAux = localStorage.getItem('userLogged');
+    let userdata: User = new User('', '', '', '', 0);
+    if(userAux){
+       userdata = JSON.parse(userAux);
+    }
+    return userdata;
+  }
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.myAppUrl + this.myApiUrl); 
   }

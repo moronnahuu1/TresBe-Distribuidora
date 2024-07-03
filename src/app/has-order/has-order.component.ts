@@ -10,7 +10,7 @@ import { Order } from '../models/Order';
 })
 export class HasOrderComponent implements OnInit{
   orderService = inject(OrdersService);
-    order: Order = new Order("", "", 0, 0, 0, 0, "");
+    order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "");
     activeRoute = inject(ActivatedRoute); //Ruta actual de la pagina
     id = this.activeRoute.snapshot.params['id']; //Se lee el parametro de la ruta actual, en este caso 'id'
     async ngOnInit() {

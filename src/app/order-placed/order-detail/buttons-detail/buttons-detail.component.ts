@@ -19,7 +19,7 @@ export class ButtonsDetailComponent implements OnInit{
   oxpService = inject(OrdersXProductsService);
   router = inject(Router);
   orderID: string = "";
-  order: Order = new Order("","",0,0,0,0,"");
+  order: Order = new Order("","",0,0,0,0,new Date(),"");
   activeRoute = inject(ActivatedRoute);
   oxp: Array<OrderXproducts> = [];
   userdataArray: Array<Userdata> = [];

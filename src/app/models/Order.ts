@@ -1,4 +1,3 @@
-import { Product } from "./Product";
 
 export class Order{
     id: string;
@@ -7,9 +6,10 @@ export class Order{
     delivery: number;
     subtotal: number;
     total: number;
+    orderDate: Date;
     userID: string;
 
-    constructor(id: string, code: string, discount: number, delivery: number, subtotal: number, total: number, userID: string){
+    constructor(id: string, code: string, discount: number, delivery: number, subtotal: number, total: number, orderDate: Date, userID: string){
         this.id = id;
         this.code = code;
         this.discount = discount;
@@ -17,5 +17,6 @@ export class Order{
         this.subtotal = subtotal;
         this.total = total;
         this.userID = userID;
+        this.orderDate = orderDate; // TO DO
     }
 }
