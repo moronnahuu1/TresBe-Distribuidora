@@ -19,7 +19,7 @@ export class ButtonsDetailComponent implements OnInit{
   oxpService = inject(OrdersXProductsService);
   router = inject(Router);
   orderID: string = "";
-  order: Order = new Order("","",0,0,0,0,new Date(),"");
+  order: Order = new Order("","",0,0,0,0,new Date(),"", "");
   activeRoute = inject(ActivatedRoute);
   oxp: Array<OrderXproducts> = [];
   userdataArray: Array<Userdata> = [];
@@ -124,5 +124,8 @@ export class ButtonsDetailComponent implements OnInit{
       console.error('Error obteniendo datos:', error);
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
+  }
+  setLater(){
+    localStorage.setItem('userOrders', JSON.stringify(true));
   }
 }

@@ -1,39 +1,30 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Order } from 'src/app/models/Order';
-import { OrderXproducts } from 'src/app/models/OrderXproduct';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
-import { Product } from 'src/app/models/Product';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
-import { OrdersXProductsService } from 'src/app/services/orders-x-products.service';
 import { OrdersService } from 'src/app/services/orders.service';
-import { ProductService } from 'src/app/services/product.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
 
 @Component({
-  selector: 'app-orders-info',
-  templateUrl: './orders-info.component.html',
-  styleUrls: ['./orders-info.component.css']
+  selector: 'app-orders-info-completed',
+  templateUrl: './orders-info-completed.component.html',
+  styleUrls: ['./orders-info-completed.component.css']
 })
-export class OrdersInfoComponent implements OnInit{
+export class OrdersInfoCompletedComponent {
   orderService = inject(OrdersService);
   orders: Order[] = [];
   orderxproductsxoxpService = inject(OrderXProductsXOxpService);
   ordersAndProducts: OrdersAndProducts[] = [];
-  oxpHtml: OrdersAndProducts[] = [];
   displayService = inject(UserDisplayService);
   
   async ngOnInit() {
-      (await this.orderxproductsxoxpService.getProducts()).subscribe(products => {
+      /*(await this.orderxproductsxoxpService.getProducts()).subscribe(products => {
         this.ordersAndProducts = products;
-      })
-    this.orderxproductsxoxpService.ordenacionPorInsercion();
-      this.limitOxp();
+      })*/
+     this.ordersAndProducts = this.orderxproductsxoxpService.orderAndproducts;
   }
-  limitOxp(){
-    for(let i=0; i<3; i++){
-      this.oxpHtml.push(this.ordersAndProducts[i]);
-    }
-  }
+
+  
 
   changeDisplay(name: string, orderID: string){
     this.orderxproductsxoxpService.selectOrder(orderID);

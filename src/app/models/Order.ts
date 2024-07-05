@@ -8,8 +8,9 @@ export class Order{
     total: number;
     orderDate: Date;
     userID: string;
+    userdataId: string;
 
-    constructor(id: string, code: string, discount: number, delivery: number, subtotal: number, total: number, orderDate: Date, userID: string){
+    constructor(id: string, code: string, discount: number, delivery: number, subtotal: number, total: number, orderDate: Date, userID: string, userdataId: string){
         this.id = id;
         this.code = code;
         this.discount = discount;
@@ -18,5 +19,6 @@ export class Order{
         this.total = total;
         this.userID = userID;
         this.orderDate = orderDate; // TO DO
+        this.userdataId = userdataId;
     }
 }

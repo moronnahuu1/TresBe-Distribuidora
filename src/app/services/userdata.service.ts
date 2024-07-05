@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Userdata } from '../models/Userdata';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,9 +10,47 @@ import { environment } from 'src/environments/environment';
 export class UserdataService {
   private myAppUrl: string;
   private myApiUrl: string;
+  userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
+  _userData: BehaviorSubject<Userdata> = new BehaviorSubject<Userdata>(this.userdata);
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/userdata/'
+  }
+  async returnUserdata(userID: string){
+    let userdataAux = await this.setUserdataID(userID);
+    if(userdataAux){
+      this.userdata = userdataAux;
+      this._userData.next(this.userdata);
+    }
+    return this._userData.asObservable();
+  }
+  async returnUserID(id: string){
+    let userdataAux = await this.getUserdataByID(id);
+    if(userdataAux){
+      this.userdata = userdataAux;
+      this._userData.next(this.userdata);
+    }
+    return this._userData.asObservable();
+  }
+  async getUserdataByID(id: string){
+    try {
+      const data = await this.getUserdata(id).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
+  async setUserdataID(userID: string){
+    try {
+      const data = await this.getUserdataByUserID(userID).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
   }
   getUsersdata(): Observable<Userdata[]> {
     return this.http.get<Userdata[]>(this.myAppUrl + this.myApiUrl); 

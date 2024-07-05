@@ -1,1 +1,36 @@
-<p>my-boughts works!</p>
+<main class="profile">
+    <section class="profile-header">
+      <div class="profile-info">
+        <h1>#{{selectedOrder.code}}</h1>
+        <p>{{getDates(selectedOrder.orderDate)}}</p>
+        <p>${{selectedOrder.total}}</p>
+      </div>
+    </section>
+    <section class="personal-info">
+      <h2>Información de la orden</h2>
+      <div class="info-row" *ngFor="let product of selectedProducts">
+        <span>{{product.name}}</span>
+        <span>x{{product.quantity}}</span>
+      </div>
+    </section>
+    <section class="address-info">
+      <h2>Dirección de envio</h2>
+      <div class="info-row">
+        <span>País</span>
+        <span>{{userdata.country}}</span>
+      </div>
+      <div class="info-row">
+        <span>Provincia</span>
+        <span>{{userdata.province}}</span>
+      </div>
+      <div class="info-row">
+        <span>Ciudad/Estado</span>
+        <span>{{userdata.city}}</span>
+      </div>
+      <div class="info-row">
+        <span>Calle</span>
+        <span>{{userdata.street}} {{userdata.streetNumb}}</span>
+      </div>
+    </section>
+  </main>
+  

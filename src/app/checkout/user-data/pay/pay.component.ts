@@ -9,6 +9,8 @@ import { OrderXproducts } from 'src/app/models/OrderXproduct';
 import { OrdersXProductsService } from 'src/app/services/orders-x-products.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/User';
+import { Userdata } from 'src/app/models/Userdata';
+import { UserdataService } from 'src/app/services/userdata.service';
 
 @Component({
   selector: 'app-pay',
@@ -21,6 +23,8 @@ export class PayComponent {
   productService = inject(ProductService);
   orderService = inject(OrdersService);
   oxpService = inject(OrdersXProductsService);
+  userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
+  userdataService = inject(UserdataService);
   cartProducts: Array<Product> = [];
   products: Array<Product> = [];
   subtotal: number = 0;
@@ -28,7 +32,7 @@ export class PayComponent {
   dataCreated: boolean = false;
   user: User = new User("", "", "", "",0);
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.getUser();
     this.cartService.getProducts().subscribe(products => {
       this.cartProducts = products;
@@ -44,7 +48,12 @@ export class PayComponent {
 
     this.cartService.getTotal().subscribe(total => {
       this.total = total;
-    })
+    });
+
+    (await this.userdataService.returnUserdata(this.user.id)).subscribe(userdata => {
+      this.userdata = userdata;
+    });
+
   }
 
   getUser(){
@@ -89,7 +98,7 @@ export class PayComponent {
   createOrder(){
     /* La funcion se encarga de manejar la base de datos creando la nueva orden del usuario y agregandola a la base de datos */
     let orderID = this.generateRandomId(); //Se crea un ID de la orden
-    let order: Order = new Order(orderID, this.generateRandomCode(), 0, 0, this.subtotal, this.total, new Date(), this.user.id); //Se crea la orden con los datos de la reserva
+    let order: Order = new Order(orderID, this.generateRandomCode(), 0, 0, this.subtotal, this.total, new Date(), this.user.id, this.userdata.id); //Se crea la orden con los datos de la reserva
     this.orderService.saveOrder(order).subscribe(() => {}); //Se guarda la orden creada en la base de datos
     for(let i=0; i<this.cartProducts.length; i++){ //Se recorre el arreglo de productos DEL CARRITO
       let oxpAux: OrderXproducts = new OrderXproducts(this.generateRandomId(), orderID, this.cartProducts[i].id, this.cartProducts[i].quantity); //Se agregan los productos a una tabla de la base de datos (SOLO EL ID DEL PRODUCTO) y se lo relaciona con la orden de la misma manera (SOLO EL ID DE LA ORDEN)

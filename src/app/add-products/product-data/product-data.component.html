@@ -1,0 +1,43 @@
+<body>
+    <div id="added" *ngIf="added"><i class="fa fa-check-circle fa-3x" aria-hidden="true"></i><p> Producto cargado con exito</p></div>
+    <div id="container">
+        <h1>CARGA DE PRODUCTOS</h1>
+        <div id="data">
+            <div class="dataText">
+                <label for="name">Nombre de Producto</label>
+                <input type="text" name="name" id="nameInp">
+    
+                <label for="category">Categoría</label>
+                <input type="text" name="category" id="categoryInp">
+    
+                <label for="brand">Marca</label>
+                <select name="brand" id="brandSelect">
+                    <option value="" *ngFor="let brand of brands">{{brand.name}}</option>
+                </select>
+    
+                <label for="image">Imagen</label>
+                <input type="text" name="image" id="imageInp">
+    
+                <label for="Stock">Stock</label>
+                <input type="number" name="Stock" id="stockInp">
+            </div>
+    
+            <div id="prices">
+                <label for="price1">Precio Lista 1</label>
+                <input type="number" name="price1" id="price1Inp">
+    
+                <label for="price2">Precio Lista 2</label>
+                <input type="number" name="price2" id="price2Inp">
+    
+                <label for="price3">Precio Lista 3</label>
+                <input type="number" name="price3" id="price3Inp">
+    
+                <label for="price4">Precio Lista 4</label>
+                <input type="number" name="price4" id="price4Inp">
+    
+                <button (click)="addNewProduct()">AGREGAR</button>
+            </div>
+        </div>
+    </div>
+    
+</body>

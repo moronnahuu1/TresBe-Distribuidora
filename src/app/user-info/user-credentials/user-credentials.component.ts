@@ -1,4 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
+import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
 
 @Component({
@@ -9,9 +11,19 @@ import { UserDisplayService } from 'src/app/services/user-display.service';
 export class UserCredentialsComponent implements OnInit{
   displayService = inject(UserDisplayService);
   displayed: string = '';
-  ngOnInit(): void {
+  async ngOnInit() {
     this.displayService._displayed.subscribe(data => {
       this.displayed = data;
-    })
+    });
+    this.getParameters();
+  }
+  getParameters(){
+    if(localStorage.getItem('userOrders')){
+      this.displayService.changeDisplay("myOrders");
+      localStorage.removeItem("userOrders");
+      return true;
+    }else{
+      return false;
+    }
   }
 }

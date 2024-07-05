@@ -24,7 +24,7 @@
                 <button routerLink="/products/{{product.id}}" id="watch" class="buttonProducts fa fa-eye"> VER</button>
             </div>
         </div>
-        <div id="addProduct" *ngIf="isAdmin()">
+        <div id="addProduct" *ngIf="isAdmin()" [routerLink]="['/add/product']">
             <p class="fa fa-plus-circle"></p>
         </div>
     </div>

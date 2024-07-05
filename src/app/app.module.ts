@@ -56,6 +56,8 @@ import { PosterInfoComponent } from './poster-info/poster-info.component';
 import { SelectBrandComponent } from './poster-info/select-brand/select-brand.component';
 import { SearchBarComponent } from './poster-info/search-bar/search-bar.component';
 import { OrdersInfoComponent } from './user-info/user-credentials/orders-info/orders-info.component';
+import { OrdersInfoCompletedComponent } from './user-info/user-credentials/orders-info-completed/orders-info-completed.component';
+import { ProductDataComponent } from './add-products/product-data/product-data.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +113,8 @@ import { OrdersInfoComponent } from './user-info/user-credentials/orders-info/or
     SelectBrandComponent,
     SearchBarComponent,
     OrdersInfoComponent,
+    OrdersInfoCompletedComponent,
+    ProductDataComponent,
   ],
   imports: [
     BrowserModule,
