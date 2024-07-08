@@ -20,6 +20,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { ShipmentInformationComponent } from './sign-up/shipment-information/shipment-information.component';
 import { userdataGuard } from './guards/userdata.guard';
 import { loginGuard } from './guards/login.guard';
+import { AdminSupportComponent } from './user-info/user-credentials/admin-support/admin-support.component';
 
 const routes: Routes = [
   {

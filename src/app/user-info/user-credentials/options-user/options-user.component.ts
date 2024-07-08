@@ -1,8 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { User } from 'src/app/models/User';
-import { Userdata } from 'src/app/models/Userdata';
 import { UserDisplayService } from 'src/app/services/user-display.service';
-import { UserdataService } from 'src/app/services/userdata.service';
 
 @Component({
   selector: 'app-options-user',
@@ -15,5 +12,13 @@ export class OptionsUserComponent{
 
   changeDisplay(name: string){
     this.displayService.changeDisplay(name);
+  }
+
+  isAdmin(){
+    if(localStorage.getItem('admin')){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

@@ -11,4 +11,7 @@
         <p *ngIf="oap.products.length > 2">Ver todos los productos</p>
         <p>PRECIO TOTAL: {{oap.order.total}}</p>
     </div>
+    <div *ngIf="ordersAndProducts.length == 0" id="noOrders">
+        <p>No tenes ninguna compra realizada hasta el momento</p>
+    </div>
 </div>

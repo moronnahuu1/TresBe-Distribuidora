@@ -26,4 +26,11 @@ export class UserCredentialsComponent implements OnInit{
       return false;
     }
   }
+  isAdmin(){
+    if(localStorage.getItem('admin')){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

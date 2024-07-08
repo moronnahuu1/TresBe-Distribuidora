@@ -58,6 +58,7 @@ import { SearchBarComponent } from './poster-info/search-bar/search-bar.componen
 import { OrdersInfoComponent } from './user-info/user-credentials/orders-info/orders-info.component';
 import { OrdersInfoCompletedComponent } from './user-info/user-credentials/orders-info-completed/orders-info-completed.component';
 import { ProductDataComponent } from './add-products/product-data/product-data.component';
+import { AdminSupportComponent } from './user-info/user-credentials/admin-support/admin-support.component';
 
 @NgModule({
   declarations: [
@@ -115,6 +116,7 @@ import { ProductDataComponent } from './add-products/product-data/product-data.c
     OrdersInfoComponent,
     OrdersInfoCompletedComponent,
     ProductDataComponent,
+    AdminSupportComponent,
   ],
   imports: [
     BrowserModule,
