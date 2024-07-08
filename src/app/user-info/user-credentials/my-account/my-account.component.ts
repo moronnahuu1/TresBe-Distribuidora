@@ -36,6 +36,13 @@ export class MyAccountComponent implements OnInit{
     }
     return userParsed;
   }
+  isAdmin(){
+    if(localStorage.getItem('admin')){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   async getUserData(){
     /* La funcion se conecta con el servicio de userdata para leer la base de datos de la informacion del envio para los usuarios */

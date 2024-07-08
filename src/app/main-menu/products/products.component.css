@@ -28,6 +28,7 @@ h1{
     border: 2px solid rgb(25, 25, 25);
     border-radius: 50px;
     margin-bottom: 2%;
+    margin-top: 1vi;
     font-family: "Posterama 1919 W01 SemiBold";
     text-transform: uppercase;
     transition: transform 0.5s ease, background-color 0.5s ease, color 0.5s ease;

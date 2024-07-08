@@ -111,15 +111,54 @@ export class PayComponent {
     }
     return orderID; //Se retorna el ID de la orden creada
   }
+  async verifyDebts(){
+    try {
+      const data = await this.orderService.getOrdersNotPayed().toPromise();
+      console.log(data?.length);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
+
+  async getDebts(){
+    let ordersAux = await this.verifyDebts();
+    let totalDebt = 0;
+    if(ordersAux){
+      for(let i = 0; i<ordersAux.length; i++){
+        totalDebt += ordersAux[i].total;
+      }
+    }
+    return totalDebt;
+  }
+  noDebt(totalDebt: number){
+    if(totalDebt < 2000){
+      let totalAmount = totalDebt + this.total;
+      if(totalAmount < 2000){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+  }
 
   async placeOrder(){
     /* La funcion es la principal del componente, cuando el usuario reserva la orden se llama a esta funcion, y la funcion se encarga
     de llamar a las demas funciones para realizar las acciones que correspondan */
     if(localStorage.getItem("dataCreated")){ //Verifica que el carrito tenga productos cargados
       ///this.modifyStock();
-      let orderID = this.createOrder();
-      this.cartService.saveCartAfterOrder();
-      this.router.navigate([`/checkout/${orderID}`]); //Se redirecciona a la ruta del componente 'placed' para informarle al usuario que su orden fue creada
+      let totalDebt = await this.getDebts();
+      if(this.noDebt(totalDebt)){
+        let orderID = this.createOrder();
+        this.cartService.saveCartAfterOrder();
+        this.router.navigate([`/checkout/${orderID}`]); //Se redirecciona a la ruta del componente 'placed' para informarle al usuario que su orden fue creada
+      }else{
+        this.router.navigate([`/checkout/amount/exceeded`])
+      }
+      
     }else{
       alert("Por favor, guarde los datos de envio antes de confirmar el pedido");
     }

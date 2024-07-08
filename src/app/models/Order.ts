@@ -9,6 +9,7 @@ export class Order{
     orderDate: Date;
     userID: string;
     userdataId: string;
+    payed: boolean = false;
 
     constructor(id: string, code: string, discount: number, delivery: number, subtotal: number, total: number, orderDate: Date, userID: string, userdataId: string){
         this.id = id;

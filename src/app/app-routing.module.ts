@@ -68,7 +68,7 @@ const routes: Routes = [
     canActivate: [loginGuard]
   },
   {
-    path: 'checkout/orderExist/:id',
+    path: 'checkout/amount/exceeded',
     component: HasOrderComponent,
     canActivate: [loginGuard]
   },

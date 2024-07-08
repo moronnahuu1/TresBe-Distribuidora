@@ -5,7 +5,7 @@
       <li><p (click)="changeDisplay('privacity')"><i class="fa fa-eye-slash" aria-hidden="true"></i> Privacidad</p></li>
       <li><p (click)="changeDisplay('shipment')"><i class="fa fa-truck" aria-hidden="true"></i> Informacion de envío</p></li>
       <li *ngIf="!isAdmin()"><p (click)="changeDisplay('support')"><i class="fa fa-info-circle" aria-hidden="true"></i> Soporte Técnico</p></li>
-      <li *ngIf="isAdmin()"><p (click)="changeDisplay('adminSupport')"><i class="fa fa-info-circle" aria-hidden="true"></i> Buscar usuario</p></li>
+      <li *ngIf="isAdmin()"><p (click)="changeDisplay('adminSupport')"><i class="fa fa-search" aria-hidden="true"></i> Buscar usuario</p></li>
     </ul>
   </aside>
   

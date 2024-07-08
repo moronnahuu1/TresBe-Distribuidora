@@ -59,6 +59,7 @@ import { OrdersInfoComponent } from './user-info/user-credentials/orders-info/or
 import { OrdersInfoCompletedComponent } from './user-info/user-credentials/orders-info-completed/orders-info-completed.component';
 import { ProductDataComponent } from './add-products/product-data/product-data.component';
 import { AdminSupportComponent } from './user-info/user-credentials/admin-support/admin-support.component';
+import { NoCartComponent } from './cart/no-cart/no-cart.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { AdminSupportComponent } from './user-info/user-credentials/admin-suppor
     OrdersInfoCompletedComponent,
     ProductDataComponent,
     AdminSupportComponent,
+    NoCartComponent,
   ],
   imports: [
     BrowserModule,

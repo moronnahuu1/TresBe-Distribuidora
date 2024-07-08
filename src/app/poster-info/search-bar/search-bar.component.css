@@ -17,6 +17,8 @@ button{
     border: 0;
     background-color: rgb(169, 234, 72);
     transition: transform 1s ease;
+    letter-spacing: 1px;
+    font-family: sans-serif;
 }
 button:hover{
     transform: scale(1.07);

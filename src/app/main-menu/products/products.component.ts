@@ -10,21 +10,8 @@ export class ProductsComponent implements OnInit {
   productsArray: Array<Product> = [];
   productService = inject(ProductService);
   async ngOnInit() {
-    const productsAux = await this.getProducts();
-    if(productsAux != undefined){
-      for(let i=0; i<productsAux.length; i++){
-        this.productsArray.push(productsAux[i]);
-      }
-    }
-  }
-  async getProducts(): Promise<Product[] | undefined>{
-    try {
-      const data = await this.productService.getProducts().toPromise();
-      console.log(data?.length);
-      return data;
-    } catch (error) {
-      console.error('Error obteniendo datos:', error);
-      throw error; // Puedes manejar el error de acuerdo a tus necesidades
-    }
+    (await this.productService.readProducts('rand', null)).subscribe(products => {      
+      this.productsArray = products;
+    })
   }
 }

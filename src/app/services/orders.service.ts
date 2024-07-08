@@ -58,6 +58,10 @@ export class OrdersService {
   getOrder(id: string): Observable<Order> {
     return this.http.get<Order>(this.myAppUrl + this.myApiUrl + id); 
   }
+  getOrdersNotPayed(): Observable<Order[]> {
+    let urlAux = this.myAppUrl + this.myApiUrl + 'user/debt/'
+    return this.http.get<Order[]>(urlAux + this.user.id); 
+  }
   getOrdersByID(){
     let urlAux = this.myAppUrl + this.myApiUrl + 'user/'
     return this.http.get<Order[]>(urlAux + this.user.id); 

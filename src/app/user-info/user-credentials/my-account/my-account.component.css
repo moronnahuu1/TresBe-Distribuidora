@@ -28,6 +28,10 @@
     margin-bottom: 5px;
     color: #666;
   }
+
+  #admin{
+    color: rgb(76, 109, 243);
+  }
   
   .edit-button {
     background-color: #007bff;

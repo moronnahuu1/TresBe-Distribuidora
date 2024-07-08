@@ -1,0 +1,42 @@
+.cart {
+    background-color: #fff;
+    width: 100vh;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding-left: 8vh;
+    padding-right: 8vh;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+    min-height: 48vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  p{
+    font-family: sans-serif;
+    letter-spacing: 2px;
+    font-size: 20px;
+    font-weight: 800;
+  }
+  button{
+    width: fit-content;
+    padding: 1% 2%;
+    border: 2px solid rgb(240, 240, 240);
+    border-radius: 50px;
+    background-color: rgb(188, 237, 40);
+    color: rgb(0, 0, 0);
+    margin-bottom: 2%;
+    margin-top: 1vi;
+    font-family: "Posterama 1919 W01 SemiBold";
+    font-size: 15px;
+    text-transform: uppercase;
+    transition: transform 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+    cursor: pointer;
+  }
+  button:hover{
+    transform: scale(1.05);
+    background-color: rgb(25, 115, 206);
+    color: white;
+  }

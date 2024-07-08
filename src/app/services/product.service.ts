@@ -40,6 +40,9 @@ export class ProductService {
           productsAux = await this.searchProducts(value);
         }
         break;
+      case 'rand':
+        productsAux = await this.getRand();        
+        break;
       default:
         productsAux = await this.setProducts();
         break;
@@ -68,6 +71,17 @@ export class ProductService {
   async getByBrands(brand: string){
     try {
       const data = await this.getProductsByBrand(brand).toPromise();
+      console.log(data?.length);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
+
+  async getRand(){
+    try {
+      const data = await this.getRandomProducts().toPromise();      
       console.log(data?.length);
       return data;
     } catch (error) {
@@ -161,6 +175,10 @@ export class ProductService {
   
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl); 
+  }
+
+  getRandomProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl + 'random');
   }
   getProduct(id: string): Observable<Product> {
     return this.http.get<Product>(this.myAppUrl + this.myApiUrl + id); 
