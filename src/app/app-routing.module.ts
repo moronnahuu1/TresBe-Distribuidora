@@ -58,6 +58,11 @@ const routes: Routes = [
     canActivate: [adminGuard]
   },
   {
+    path: 'modify/product/:id',
+    component: AddProductsComponent,
+    canActivate: [adminGuard]
+  },
+  {
     path: 'checkout',
     component: CheckoutComponent,
     canActivate: [checkoutGuard]

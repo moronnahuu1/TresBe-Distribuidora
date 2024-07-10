@@ -1,41 +1,75 @@
 <body>
-    <div id="added" *ngIf="added"><i class="fa fa-check-circle fa-3x" aria-hidden="true"></i><p> Producto cargado con exito</p></div>
+    <div id="added" class="alerts" *ngIf="added"><i class="fa fa-check-circle fa-3x" aria-hidden="true"></i><p> Producto cargado con exito</p></div>
+    <div id="modified" class="alerts" *ngIf="modified && !toModify"><i class="fa fa-check-circle fa-3x" aria-hidden="true"></i><p> Producto modificado con exito</p></div>
     <div id="container">
         <h1>CARGA DE PRODUCTOS</h1>
-        <div id="data">
+        <div class="data">
             <div class="dataText">
                 <label for="name">Nombre de Producto</label>
-                <input type="text" name="name" id="nameInp">
+                <input type="text" class="productInfo" name="name" [value]="getValue('name')" id="nameInp">
     
                 <label for="category">Categoría</label>
-                <input type="text" name="category" id="categoryInp">
+                <input type="text" class="productInfo" name="category" [value]="getValue('category')" id="categoryInp">
     
                 <label for="brand">Marca</label>
-                <select name="brand" id="brandSelect">
-                    <option value="" *ngFor="let brand of brands">{{brand.name}}</option>
+                <select [(ngModel)]="brand" name="brand" class="productInfo" id="brandSelect">
+                    <option *ngIf="onModify">{{getValue('brand')}}</option>
+                    <option *ngFor="let brand of brands" >{{brand.name}}</option>
                 </select>
     
                 <label for="image">Imagen</label>
-                <input type="text" name="image" id="imageInp">
+                <input type="text" name="image" class="productInfo" [value]="getValue('image')" id="imageInp">
     
                 <label for="Stock">Stock</label>
-                <input type="number" name="Stock" id="stockInp">
+                <input type="number" name="Stock" class="productInfo" [value]="getValue('stock')" id="stockInp">
             </div>
     
             <div id="prices">
                 <label for="price1">Precio Lista 1</label>
-                <input type="number" name="price1" id="price1Inp">
+                <input type="number" name="price1" class="productInfo" [value]="getValue('price1')" id="price1Inp">
     
                 <label for="price2">Precio Lista 2</label>
-                <input type="number" name="price2" id="price2Inp">
+                <input type="number" name="price2" class="productInfo" [value]="getValue('price2')" id="price2Inp">
     
                 <label for="price3">Precio Lista 3</label>
-                <input type="number" name="price3" id="price3Inp">
+                <input type="number" name="price3" class="productInfo" [value]="getValue('price3')" id="price3Inp">
     
                 <label for="price4">Precio Lista 4</label>
-                <input type="number" name="price4" id="price4Inp">
+                <input type="number" name="price4" class="productInfo" [value]="getValue('price4')" id="price4Inp">
     
-                <button (click)="addNewProduct()">AGREGAR</button>
+                <button *ngIf="(!onModify)" (click)="addNewProduct()">AGREGAR</button>
+                <button *ngIf="onModify && !toModify" (click)="modify()">MODIFICAR</button>
+                <button *ngIf="toModify" (click)="modifyOneProduct()">CAMBIAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="featureData">
+        <div class="features">
+            <div *ngFor="let feature of features; let indice = index" class="feature">
+                <div>
+                    <label for="name">Caracteristica</label>
+                    <input type="text" class="productInfo"  name="name" value="{{feature.name}}" id="{{feature.name}}">
+                </div>
+                <div>
+                    <label for="value">Valor</label>
+                    <input type="text" class="productInfo" name="value" value="{{feature.value}}" id="{{feature.value}}">
+                </div>
+                <div id="buttons">
+                    <button (click)="modifyFeatures(feature, indice)">Modificar</button>
+                    <button id="delete" (click)="deleteFeature(feature.id, indice)">Eliminar</button>
+                </div>
+            </div>
+            <div class="feature">
+                <div>
+                    <label for="name">Caracteristica</label>
+                    <input type="text" name="name" id="featureInp">
+                </div>
+                <div>
+                    <label for="value">Valor</label>
+                    <input type="text" name="value" id="featureValueInp">
+                </div>
+                <button (click)="addFeature()">Agregar</button>
             </div>
         </div>
     </div>

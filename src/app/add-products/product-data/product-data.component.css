@@ -9,7 +9,10 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: fit-content;
+    gap: 2vi;
+    padding-top: 2vi;
+    padding-bottom: 2vi;
     overflow: hidden;
     position: relative;
 }
@@ -36,16 +39,22 @@ body::after {
     left: -300px;
 }
 
-#added{
+.alerts{
     display: flex;
     gap: 10px;
-    background-color: rgb(142, 243, 142);
     width: 20vi;
     padding: 2vi;
     text-align: center;
     font-family: sans-serif;
     letter-spacing: 1px;
     margin-bottom: 1vi;
+}
+#added{
+    background-color: rgb(142, 243, 142);
+}
+
+#modified{
+    background-color: rgb(241, 243, 142);
 }
 
 /* Contenedor principal */
@@ -71,7 +80,7 @@ body::after {
 }
 
 /* Estilo para los datos */
-#data {
+.data {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -124,6 +133,39 @@ button {
 button:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
+}
+.featureData{
+    padding-top: 2vi;
+    background-color: white;
+    border-radius: 10px;
+    z-index: 1;
+    max-height: 43vi;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.feature{
+    display: flex;
+    width: 60vi;
+    justify-content: space-around;
+    align-items: center;
+    button{
+        width: fit-content;
+        padding: 0.5vi 1vi;
+        height: fit-content;
+        font-size: 12px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        border: 1px solid #007bff;
+    }
+    #delete{
+        background-color: white;
+        color: black;
+    }
+}
+#buttons{
+    display: flex;
+    gap: 1vi;
 }
 
 /* Adaptabilidad para pantallas más pequeñas */

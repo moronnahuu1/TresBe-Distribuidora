@@ -133,7 +133,7 @@ export class PayComponent {
     return totalDebt;
   }
   noDebt(totalDebt: number){
-    if(totalDebt < 2000){
+    if(totalDebt < 50000000){
       let totalAmount = totalDebt + this.total;
       if(totalAmount < 2000){
         return true;

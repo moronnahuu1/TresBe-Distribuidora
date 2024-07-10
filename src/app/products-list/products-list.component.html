@@ -20,7 +20,7 @@
             </div>
             <div id="containerButtons">
                 <button routerLink="" class="buttonProducts fa fa-credit-card" *ngIf="!isAdmin()"> COMPRAR</button>
-                <button routerLink="" class="buttonProducts fa fa-pencil-square-o" *ngIf="isAdmin()"> MODIFICAR</button>
+                <button routerLink="/modify/product/{{product.id}}" class="buttonProducts fa fa-pencil-square-o" *ngIf="isAdmin()"> MODIFICAR</button>
                 <button routerLink="/products/{{product.id}}" id="watch" class="buttonProducts fa fa-eye"> VER</button>
             </div>
         </div>
