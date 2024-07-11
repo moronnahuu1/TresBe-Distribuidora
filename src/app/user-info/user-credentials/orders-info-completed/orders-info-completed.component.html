@@ -1,5 +1,6 @@
 <div id="container">
     <h1>ULTIMAS COMPRAS</h1>
+    <p *ngIf="isAdmin()">Usuario: {{user.username}}</p>
     <div class="items" *ngFor="let oap of ordersAndProducts" (click)="changeDisplay('myOrders', oap.order.id)">
         <div id="dateCode">
             <p>#{{oap.order.code}}</p>

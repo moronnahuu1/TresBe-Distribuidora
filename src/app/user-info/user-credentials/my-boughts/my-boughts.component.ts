@@ -41,4 +41,12 @@ export class MyBoughtsComponent implements OnInit{
 
     return `${day}/${month}/${year}`;
 }
+
+  isAdmin(){
+    if(localStorage.getItem('admin')){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }

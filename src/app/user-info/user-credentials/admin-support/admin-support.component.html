@@ -1,1 +1,12 @@
-<p>admin-support works!</p>
+<div id="container">
+    <div id="searchbar">
+        <input type="text" name="user" id="userInp">
+        <button (click)="searchUser()">Buscar Usuario</button>
+    </div>
+
+    <div id="userinfo">
+        <p>{{user.username}}</p>
+    </div>
+
+    <app-orders-info-completed></app-orders-info-completed>
+</div>

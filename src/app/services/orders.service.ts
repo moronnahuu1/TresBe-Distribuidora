@@ -18,6 +18,7 @@ export class OrdersService {
   private _orders: BehaviorSubject<Order[]> = new BehaviorSubject<Order[]>([]);
   userService = inject(UserService);
   user: User = this.userService.getUserLogged();
+  _user: BehaviorSubject<User> = new BehaviorSubject<User>(this.user);
   oxpService = inject(OrdersXProductsService);
   oxps: OrderXproducts[] = [];
   _oxps: BehaviorSubject<OrderXproducts[]> = new BehaviorSubject<OrderXproducts[]>([]);
@@ -25,10 +26,25 @@ export class OrdersService {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Orders/'
   }
+  changeUser(userAux: User){
+    this.user = userAux;
+    this._user.next(this.user);
+  }
+  returnUser(){
+    return this._user.asObservable();
+  }
   async readOrders(){
     let ordersAux = await this.findUserOrders();
     if(ordersAux != undefined){
-      this.orders = ordersAux;
+      if(ordersAux.length > 0){
+        this.orders = ordersAux;
+        this._orders.next(this.orders);
+      }else{
+      this.orders = [];
+      this._orders.next(this.orders);
+      }
+    }else{
+      this.orders = [];
       this._orders.next(this.orders);
     }
     return this._orders.asObservable();

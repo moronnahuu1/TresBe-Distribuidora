@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { Order } from 'src/app/models/Order';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
+import { User } from 'src/app/models/User';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
@@ -11,17 +11,22 @@ import { UserDisplayService } from 'src/app/services/user-display.service';
   styleUrls: ['./orders-info-completed.component.css']
 })
 export class OrdersInfoCompletedComponent {
-  orderService = inject(OrdersService);
-  orders: Order[] = [];
   orderxproductsxoxpService = inject(OrderXProductsXOxpService);
   ordersAndProducts: OrdersAndProducts[] = [];
   displayService = inject(UserDisplayService);
+  orderService = inject(OrdersService);
+  user: User = new User('','','','',0);
   
   async ngOnInit() {
       /*(await this.orderxproductsxoxpService.getProducts()).subscribe(products => {
         this.ordersAndProducts = products;
       })*/
-     this.ordersAndProducts = this.orderxproductsxoxpService.orderAndproducts;
+     this.orderxproductsxoxpService.getOap().subscribe(products => {
+      this.ordersAndProducts = products;
+     });
+     this.orderService.returnUser().subscribe(user => {
+      this.user = user
+     })
   }
 
   
@@ -42,5 +47,13 @@ export class OrdersInfoCompletedComponent {
     let year = newDate.getFullYear().toString();
 
     return `${day}/${month}/${year}`;
+}
+
+isAdmin(){
+  if(localStorage.getItem('admin')){
+    return true;
+  }else{
+    return false;
+  }
 }
 }

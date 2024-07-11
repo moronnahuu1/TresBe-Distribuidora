@@ -28,6 +28,10 @@ export class OrderXProductsXOxpService {
     (await this.orderService.readOrders()).subscribe(orders => {
       this.orders = orders;
     });
+    if(this.orders.length == 0){
+      this.orderAndproducts = [];
+      this._orderAndproducts.next(this.orderAndproducts);
+    }
     
     for(let i=0; i<this.orders.length; i++){
       let productsArray: Product[] = [];
@@ -46,6 +50,9 @@ export class OrderXProductsXOxpService {
       this._orderAndproducts.next(this.orderAndproducts);
     }
     this.ordenacionPorInsercion();
+    return this._orderAndproducts.asObservable();
+  }
+  getOap(){
     return this._orderAndproducts.asObservable();
   }
   selectOrder(orderID: string){
