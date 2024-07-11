@@ -39,6 +39,7 @@ export class SelectBrandComponent implements OnInit{
       (await this.productService.readProducts('all', null)).subscribe(products => {
       });
     }else{
+      this.brandService.changeSelected(brand);
       (await this.productService.readProducts('brand', brand)).subscribe(products => {
       });
     }

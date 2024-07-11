@@ -46,7 +46,13 @@ export class CartService {
     this._products.next(this.cartProducts);
     this.subTotal = 0;
     for(let i=0; i<this.cartProducts.length; i++){
-      this.subTotal += (this.cartProducts[i].price * this.cartProducts[i].quantity);
+      let priceProduct = 0;
+      if(this.cartProducts[i].discount > 0){
+        priceProduct = this.cartProducts[i].priceDiscount;
+      }else{
+        priceProduct = this.cartProducts[i].price;
+      }
+      this.subTotal += (priceProduct * this.cartProducts[i].quantity);
       this._subTotal.next(this.subTotal);
     }
     this.total = 0;
@@ -60,7 +66,13 @@ export class CartService {
     this._products.next(this.cartProducts);
     this.subTotal = 0;
     for(let i=0; i<this.cartProducts.length; i++){
-      this.subTotal += (this.cartProducts[i].price * this.cartProducts[i].quantity);
+      let priceProduct = 0;
+      if(this.cartProducts[i].discount > 0){
+        priceProduct = this.cartProducts[i].priceDiscount;
+      }else{
+        priceProduct = this.cartProducts[i].price;
+      }
+      this.subTotal += (priceProduct * this.cartProducts[i].quantity);
       this._subTotal.next(this.subTotal);
     }
     this.total = 0;
@@ -70,7 +82,13 @@ export class CartService {
   getSubtotal(){
     this.subTotal = 0;
     for(let i=0; i<this.cartProducts.length; i++){
-      this.subTotal += (this.cartProducts[i].price * this.cartProducts[i].quantity);
+      let priceProduct = 0;
+      if(this.cartProducts[i].discount > 0){
+        priceProduct = this.cartProducts[i].priceDiscount;
+      }else{
+        priceProduct = this.cartProducts[i].price;
+      }
+      this.subTotal += (priceProduct * this.cartProducts[i].quantity);
       this._subTotal.next(this.subTotal);
     }
     this.total = 0;

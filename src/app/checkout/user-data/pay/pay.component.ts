@@ -150,7 +150,7 @@ export class PayComponent {
     de llamar a las demas funciones para realizar las acciones que correspondan */
     if(localStorage.getItem("dataCreated")){ //Verifica que el carrito tenga productos cargados
       ///this.modifyStock();
-      let totalDebt = await this.getDebts();
+      let totalDebt = 0///await this.getDebts();
       if(this.noDebt(totalDebt)){
         let orderID = this.createOrder();
         this.cartService.saveCartAfterOrder();

@@ -21,6 +21,7 @@ import { ShipmentInformationComponent } from './sign-up/shipment-information/shi
 import { userdataGuard } from './guards/userdata.guard';
 import { loginGuard } from './guards/login.guard';
 import { AdminSupportComponent } from './user-info/user-credentials/admin-support/admin-support.component';
+import { DiscountsComponent } from './discounts/discounts.component';
 
 const routes: Routes = [
   {
@@ -103,6 +104,11 @@ const routes: Routes = [
     path: 'signup/shipmentdata/:id',
     component: ShipmentInformationComponent,
     canActivate: [loggedGuard, userdataGuard]
+  },
+  {
+    path: 'products/set/discounts',
+    component: DiscountsComponent,
+    canActivate: [adminGuard]
   }
 ]
 @NgModule({

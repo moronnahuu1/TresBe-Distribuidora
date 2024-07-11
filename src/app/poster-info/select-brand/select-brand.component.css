@@ -15,6 +15,7 @@
 }
 .brands{
     background-color: rgb(32, 113, 199);
+    color: white;
     border: 1px solid black;
     font-family: sans-serif;
     letter-spacing: 2px;

@@ -16,7 +16,8 @@
             <div id="dataContainer">
                 <h2>{{product.name}}</h2>
             <p>{{product.category}}</p>
-            <p>${{formatNumber(product.price)}}</p>
+            <p id="price">${{formatNumber(product.price)}}</p>
+            <p *ngIf="product.discount != 0">${{formatNumber(product.priceDiscount)}}</p>
             </div>
             <div id="containerButtons">
                 <button routerLink="" class="buttonProducts fa fa-credit-card" *ngIf="!isAdmin()"> COMPRAR</button>
@@ -24,8 +25,13 @@
                 <button routerLink="/products/{{product.id}}" id="watch" class="buttonProducts fa fa-eye"> VER</button>
             </div>
         </div>
-        <div id="addProduct" *ngIf="isAdmin()" [routerLink]="['/add/product']">
+        <div id="addProduct" class="admin" *ngIf="isAdmin()" [routerLink]="['/add/product']">
             <p class="fa fa-plus-circle"></p>
+        </div>
+        <div id="setDiscounts" class="admin" *ngIf="isAdmin()" [routerLink]="['/products/set/discounts']">
+            <p><i class="fa fa-angle-double-down fa-5x" aria-hidden="true"></i>
+            </p>
+            <p>Agregar Descuentos</p>
         </div>
     </div>
     <app-footer></app-footer>

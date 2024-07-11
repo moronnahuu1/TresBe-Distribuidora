@@ -27,6 +27,7 @@ export class ProductItemComponent implements OnInit{
   async ngOnInit(): Promise<void> {
     this.user = this.getUser();
     await this.readProduct();
+    this.productSelected.priceDiscount = (this.productSelected.price - (this.productSelected.price * this.productSelected.discount));
     await this.readFeatures();
     this.assignFeatures();
     this.cartService.getProducts().subscribe(cartProducts => {

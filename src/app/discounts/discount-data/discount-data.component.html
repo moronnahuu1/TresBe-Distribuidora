@@ -1,0 +1,10 @@
+<div>
+    <h2>Seleccione la opcion a la que quiera aplicar descuentos</h2>
+    <app-select-brand></app-select-brand>
+    <div *ngFor="let product of products">
+        <p>{{product.name}}</p>
+    </div>
+    <input type="number" name="discount" id="discountInp">
+    <button (click)="setDiscount()">Aplicar descuento</button>
+    <button (click)="deleteDiscounts()">Eliminar todos los descuentos</button>
+</div>

@@ -12,6 +12,8 @@ export class BrandsService {
   private myApiUrl: string;
   brandsArray: Array<Brand> = [];
   _brandsArray: BehaviorSubject<Brand[]> = new BehaviorSubject<Brand[]>(this.brandsArray);
+  brandSelected: string = '';
+  _brandSelected: BehaviorSubject<string> = new BehaviorSubject<string>(this.brandSelected);
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/brands/'
@@ -26,6 +28,15 @@ export class BrandsService {
         this._brandsArray.next(this.brandsArray);
       }
       return this._brandsArray.asObservable();
+  }
+
+  changeSelected(brand: string){
+    this.brandSelected = brand;
+    this._brandSelected.next(this.brandSelected);
+  }
+
+  getBrandSelected(){
+    return this._brandSelected.asObservable();
   }
 
   async setBrands(){

@@ -12,13 +12,22 @@ import { User } from '../models/User';
 export class ProductService {
   private myAppUrl: string;
   private myApiUrl: string;
-  private products: Array<Product> = [];
-  private _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
+   products: Array<Product> = [];
+   _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   productXpriceService = inject(PricesService);
   user: User = new User('', '', '', '', 0);
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Products/'
+  }
+  returnObservable(){
+    return this._products.asObservable();
+  }
+  getDiscounts(productAux: Product){
+    if(productAux.discount != 0){
+      productAux.priceDiscount = (productAux.price - (productAux.price * productAux.discount));
+    }
+    return productAux.priceDiscount;
   }
   async readProducts(type: string, value: string | null){
     this.user = this.getUser();
@@ -50,6 +59,7 @@ export class ProductService {
       if(productsAux != undefined){
         for(let i=0; i<productsAux.length; i++){
           productsAux[i].price = await this.setProductPrice(productsAux[i].id);
+          productsAux[i].priceDiscount = this.getDiscounts(productsAux[i]);
           this.products.push(productsAux[i]);
         }
         this._products.next(this.products);

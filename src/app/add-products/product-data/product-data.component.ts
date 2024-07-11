@@ -36,27 +36,27 @@ export class ProductDataComponent implements OnInit{
 
   async ngOnInit() {
     this.modified = false;
-    this.featureModify = false;
-    if (this.activeRoute.snapshot.params.hasOwnProperty('id')) {
-      this.productID = this.activeRoute.snapshot.params['id'];
+    this.featureModify = false; //Se pone estos dos atributos en falso para garantizar que no se pueda modificar si se esta buscando agregar un nuevo producto
+    if (this.activeRoute.snapshot.params.hasOwnProperty('id')) { //Se comprueba que la ruta contenga el ID del producto a modificar
+      this.productID = this.activeRoute.snapshot.params['id']; //Si el parametro existe se lo asigna al product ID
     }
-    if(this.productID != ''){
-      this.onModify = await this.readProduct();
-      if(this.onModify){
-        this.productList = await this.setProductPrice(this.productID);
+    if(this.productID != ''){ //Si el product ID tiene informacion
+      this.onModify = await this.readProduct(); //Se busca el producto, si lo encuentra retorna verdadero, por lo que se busca modificar. Si no lo encuentra retorna falso, por lo que se lleva a agregar
+      if(this.onModify){ //Si se retorna verdadero en la funcion de read product significa que puede modificar y entra aca
+        this.productList = await this.setProductPrice(this.productID); //Se busca las listas de precios de ESE producto encontrado
         (await this.featureService.readProductFeatures(this.productID)).subscribe(featuresAux => {
-          this.features = featuresAux;
+          this.features = featuresAux; //Se buscan y se retornan las caracteristicas
         });
-        this.enableOrDisableInputs();
+        this.enableOrDisableInputs(); //Se ponen los input en formato READ ONLY 
       }
     }
-    this.added = false;
+    this.added = false; //Propiedad para los mensajes de la pagina
       (await this.brandService.readBrands()).subscribe(brands => {
-        this.brands = brands;
+        this.brands = brands; //Se leen las marcas para seleccionar
       });
   }
   
-  getString(name: string): string{
+  getString(name: string): string{ //La funcion sirve para leer cada uno de los input del html, siempre y cuando sean string
     let divAux = document.getElementById(name) as HTMLInputElement;
     let miDiv = "";
     if(divAux){
@@ -65,7 +65,7 @@ export class ProductDataComponent implements OnInit{
     return miDiv;
   }
 
-  getNumber(name: string){
+  getNumber(name: string){ //Misma funcion que la de arriba pero para los numeros
     let divAux = document.getElementById(name) as HTMLInputElement;
     let miDiv = 0;
     if(divAux){
@@ -74,7 +74,7 @@ export class ProductDataComponent implements OnInit{
     return miDiv;
   }
 
-  generateRandomId(length: number = 16): string {
+  generateRandomId(length: number = 16): string { //Genera un codigo random de 16 caracteres y lo devuelve. Sirve para los ID
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     const charactersLength = characters.length;
@@ -86,22 +86,22 @@ export class ProductDataComponent implements OnInit{
     return result;
 }
 
-getItemsProduct(){
+getItemsProduct(){ //Lee los input del producto, crea ese producto y lo retorna
   if(!this.onModify){
     this.productID = this.generateRandomId(16);
   }
   let name = this.getString('nameInp');
   let image = this.getString('imageInp');
-  let stock = this.getNumber('stockInp');
+  let discount  = this.getNumber('discountInp');
   let category = this.getString('categoryInp');
   let description = this.getString("descriptionInp");
 
-  let productAux = new Product(this.productID, name, category, this.brand, 0, image, stock, description, 1);
+  let productAux = new Product(this.productID, name, category, this.brand, 0, image, discount, description, 1);
 
   return productAux;
 }
 
-getItemsPrice(){
+getItemsPrice(){ //Lee los input de la lista de precios del producto, crea una nueva lista de precios y la retorna
   if(!this.onModify){
     this.pricesID = this.generateRandomId(16);
   }else{
@@ -116,53 +116,53 @@ getItemsPrice(){
   return pricesAux;
 }
 
-  addNewProduct(){
+  addNewProduct(){ //La funcion solo sirve para cuando se va a agregar un nuevo producto, NO sirve para MODIFICAR
     let productAux: Product = this.getItemsProduct();
     let pricesAux: PriceXproduct = this.getItemsPrice();
 
     this.productService.saveProduct(productAux).subscribe(() => {});
     this.pricesService.saveProduct(pricesAux).subscribe(() => {});
-    this.added = true;
+    this.added = true; //Al estar en verdadero se activara el mensaje de producto cargado
   }
 
-  enableOrDisableInputs(){
-    const productInfo = document.querySelectorAll('.productInfo');
-    productInfo.forEach(input => {
-      if(this.toModify == false){
-        input.setAttribute('disabled', 'disabled');
-      }else{
-        input.removeAttribute('disabled');
+  enableOrDisableInputs(){ ///Se habilitan o deshabilitan los input de la parte de PRODUCTO, NO CONFUNDIR, SOLO PRODUCTO, NO CARACTERISTICAS
+    const productInfo = document.querySelectorAll('.productInfo'); //se seleccionan todos los input con esa clase
+    productInfo.forEach(input => { //Para cada uno de los input...
+      if(this.toModify == false){ //Si no se quiere modificar y el boton de modificar no se apreta...
+        input.setAttribute('disabled', 'disabled'); //Se deshabilita la escritura del input
+      }else{ //Si se quiere modificar y el boton de modificar se apreta...
+        input.removeAttribute('disabled');  //Se habilita la escritura del input
       }
     });
   }
 
-  modify(){
-    this.toModify = true;
-    this.modified = false;
-    this.enableOrDisableInputs();
+  modify(){ //Funcion que se invoca cuando se apreta el boton de modificar el producto
+    this.toModify = true; //Se quiere modificar, por lo que a modificar va a ser verdadero
+    this.modified = false; //Todavia no se ha modificado nada, por lo que esto queda en falso
+    this.enableOrDisableInputs(); //Se llama a la funcion para que habilite la escritura de los input SOLO de producto
   }
 
-  modifyOneProduct(){
-    let productAux: Product = this.getItemsProduct();
-    let pricesAux: PriceXproduct = this.getItemsPrice();
-    this.pricesService.updateProduct(pricesAux.id, pricesAux).subscribe(()=> {});
+  modifyOneProduct(){ //Funcion que se invoca cuando se apreta el boton de cambiar, para este paso ya se ha apretado el boton de modificar
+    let productAux: Product = this.getItemsProduct(); //Se crea un nuevo producto y se le asignan los input a travez de esa funcion
+    let pricesAux: PriceXproduct = this.getItemsPrice(); //Mismo paso que el anterior pero con las listas de precios
+    this.pricesService.updateProduct(pricesAux.id, pricesAux).subscribe(()=> {}); 
     this.productService.updateProduct(this.productID, productAux).subscribe(()=>{});
-    this.toModify = false;
-    this.modified = true;
-    this.enableOrDisableInputs();
+    this.toModify = false; //Despues de modificar todo, el a modificar queda en falso, ya que ya modificó lo que quiso y lo guardó
+    this.modified = true; //Despues de modificar todo, el modificado queda en verdadero, para que el html detecte esto y ponga el mensaje de modificacion correcta
+    this.enableOrDisableInputs(); //Se vuelve a cambiar la habilitacion de los inputs del producto, en este caso se van a deshabilitar nuevamente
   }
 
-  async readProduct(){
+  async readProduct(){ //Lee el producto que se trae POR PARAMETRO unicamente si lo que se desea es MODIFICAR
     let productAux = await this.getProduct();
     if(productAux){
-      this.modifyProduct = productAux;
-      return true;
+      this.modifyProduct = productAux; //El modify product queda asignado como el producto a modificar, todos los datos del producto tomado por parametro son los datos que van a quedar en esta variable
+      return true; //Si el producto existe retorna verdadero para saber que se va a modificar algo existente
     }else{
-      return false;
+      return false; //Si el producto no existe retorna falso y no deja modificar, solo agregar
     }
   }
 
-  async getProduct(){
+  async getProduct(){ //Funcion para traer el producto desde la base de datos pasando primero por el servicio del producto
     try {
       const data = await this.productService.getProduct(this.productID).toPromise();
       console.log(data);
@@ -173,7 +173,7 @@ getItemsPrice(){
     }
   }
 
-  getValue(name: string){
+  getValue(name: string){ //Para la informacion de los inputs si vas a modificar un producto
     if(name != "" && this.modifyProduct.id != ''){
       switch(name){
         case "name": 
@@ -188,8 +188,8 @@ getItemsPrice(){
         case "image": 
         return this.modifyProduct.image;
 
-        case "stock": 
-        return this.modifyProduct.stock;
+        case "discount": 
+        return this.modifyProduct.discount;
 
         case "price1": 
         return this.productList.priceList1;
