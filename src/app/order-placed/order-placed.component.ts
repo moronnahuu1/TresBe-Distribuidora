@@ -14,6 +14,7 @@ export class OrderPlacedComponent implements OnInit{
     activeRoute = inject(ActivatedRoute);
     id = this.activeRoute.snapshot.params['id'];
     async ngOnInit() {
+      window.scrollTo(0, 0);
       try {
         const data = await this.orderService.getOrder(this.id).toPromise();
         if(data != undefined){          

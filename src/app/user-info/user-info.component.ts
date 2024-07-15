@@ -11,6 +11,7 @@ export class UserInfoComponent implements OnInit{
   orderxproductsxoxpService = inject(OrderXProductsXOxpService);
   ordersAndProducts: OrdersAndProducts[] = [];
   async ngOnInit() {
+    window.scrollTo(0, 0);
     (await this.orderxproductsxoxpService.getProducts()).subscribe(products => {
       this.ordersAndProducts = products;
     })

@@ -87,3 +87,6 @@ img{
 p, #description{
     font-size: 13px;
 }
+select{
+    width: 20vi;
+}

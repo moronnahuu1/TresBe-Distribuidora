@@ -1,0 +1,45 @@
+button {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 1s ease;
+  }
+button:hover{
+    transform: scale(1.07);
+}
+  
+  .apply-btn {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .reset-btn {
+    background-color: #f8f9fa;
+    color: #007bff;
+    border: 1px solid #007bff;
+  }
+
+#discountEnter{
+    display: flex;
+    flex-direction: column;
+    width: 25vi;
+    gap: 10px;
+    align-items: center;
+    padding: 1vi;
+}
+input{
+    width: 20vi;
+    height: 2vi;
+    border: 0;
+    border-radius: 5px;
+    padding-left: 0.5vi;
+}
+label{
+    width: 20vi;
+    font-size: 14px;
+}
+#buttonsDiscount{
+    display: flex;
+    gap: 10px;
+}

@@ -15,6 +15,7 @@ export class ProductsListComponent implements OnInit{
   category: string = "";
   brand: string = "";
   async ngOnInit() {
+    window.scrollTo(0, 0);
     await this.filters();
   }
 

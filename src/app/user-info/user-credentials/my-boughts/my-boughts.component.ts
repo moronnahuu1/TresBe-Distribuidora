@@ -2,8 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Order } from 'src/app/models/Order';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
 import { Product } from 'src/app/models/Product';
+import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
+import { OrdersService } from 'src/app/services/orders.service';
 import { UserdataService } from 'src/app/services/userdata.service';
 
 @Component({
@@ -18,7 +20,12 @@ export class MyBoughtsComponent implements OnInit{
   selectedProducts: Product[] = [];
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   userdataService = inject(UserdataService);
+  orderService = inject(OrdersService);
+  user: User = new User('','','','',0);
   async ngOnInit() {
+    this.orderService.returnUser().subscribe(user => {
+      this.user = user;
+    });
     this.ordersAndProductsService.selectedDefault().subscribe(oxpSelected => {
       this.selectedOXP = oxpSelected;
       this.selectedOrder = this.selectedOXP.order;
@@ -26,7 +33,7 @@ export class MyBoughtsComponent implements OnInit{
     });
     (await this.userdataService.returnUserID(this.selectedOrder.userdataId)).subscribe(userdata => {
       this.userdata = userdata;
-    })
+    });
   }
 
   getDates(orderDate: Date): string {
@@ -47,6 +54,13 @@ export class MyBoughtsComponent implements OnInit{
       return true;
     }else{
       return false;
+    }
+  }
+  async deleteUserOrder(orderID: string){
+    let confirmation = confirm(`Esta seguro que desea borrar la orden #${orderID}?`);
+    if(confirmation){
+      await this.orderService.deleteOrder(this.selectedOrder.id).toPromise();
+      alert('Orden de compra borrada exitosamente');
     }
   }
 }

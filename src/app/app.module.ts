@@ -62,6 +62,12 @@ import { AdminSupportComponent } from './user-info/user-credentials/admin-suppor
 import { NoCartComponent } from './cart/no-cart/no-cart.component';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { DiscountDataComponent } from './discounts/discount-data/discount-data.component';
+import { UserAccountComponent } from './user-info/user-credentials/user-account/user-account.component';
+import { HeaderComponent } from './discounts/header/header.component';
+import { DiscountButtonsComponent } from './discounts/discount-buttons/discount-buttons.component';
+import { DiscountProductsComponent } from './discounts/discount-products/discount-products.component';
+import { DiscountMessagesComponent } from './discounts/discount-messages/discount-messages.component';
+import { NoOrdersComponent } from './user-info/user-credentials/my-boughts/no-orders/no-orders.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +129,12 @@ import { DiscountDataComponent } from './discounts/discount-data/discount-data.c
     NoCartComponent,
     DiscountsComponent,
     DiscountDataComponent,
+    UserAccountComponent,
+    HeaderComponent,
+    DiscountButtonsComponent,
+    DiscountProductsComponent,
+    DiscountMessagesComponent,
+    NoOrdersComponent,
   ],
   imports: [
     BrowserModule,

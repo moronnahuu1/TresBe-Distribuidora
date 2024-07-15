@@ -20,7 +20,6 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { ShipmentInformationComponent } from './sign-up/shipment-information/shipment-information.component';
 import { userdataGuard } from './guards/userdata.guard';
 import { loginGuard } from './guards/login.guard';
-import { AdminSupportComponent } from './user-info/user-credentials/admin-support/admin-support.component';
 import { DiscountsComponent } from './discounts/discounts.component';
 
 const routes: Routes = [
@@ -82,6 +81,16 @@ const routes: Routes = [
     path: 'signup',
     component: SignUpComponent,
     canActivate: [loggedGuard]
+  },
+  {
+    path: 'admin/signup',
+    component: SignUpComponent,
+    canActivate: [adminGuard]
+  },
+  {
+    path: 'admin/signup/shipmentData/:id',
+    component: ShipmentInformationComponent,
+    canActivate: [adminGuard]
   },
   {
     path: 'voucher',

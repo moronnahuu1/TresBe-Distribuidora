@@ -18,19 +18,13 @@ export class OrdersInfoCompletedComponent {
   user: User = new User('','','','',0);
   
   async ngOnInit() {
-      /*(await this.orderxproductsxoxpService.getProducts()).subscribe(products => {
-        this.ordersAndProducts = products;
-      })*/
      this.orderxproductsxoxpService.getOap().subscribe(products => {
       this.ordersAndProducts = products;
      });
      this.orderService.returnUser().subscribe(user => {
-      this.user = user
-     })
+      this.user = user;
+     });
   }
-
-  
-
   changeDisplay(name: string, orderID: string){
     this.orderxproductsxoxpService.selectOrder(orderID);
     this.displayService.changeDisplay(name);

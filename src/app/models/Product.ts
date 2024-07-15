@@ -13,6 +13,7 @@ export class Product{
     features: Feature[] = [];
     discount: number;
     priceDiscount: number = 0;
+    optionSelected: string = "";
 
     constructor(id: string, name: string, category: string, brand: string, price: number, image: string, discount: number, description: string, quantity: number){
         this.id = id;

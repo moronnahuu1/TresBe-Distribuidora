@@ -14,6 +14,7 @@ export class RegisterDataComponent {
   searchTerm: string = '';
   passTerm: string = '';
   usernameTerm: string = '';
+  priceTerm: string = '';
   noPass: boolean = false;
   noMail: boolean = false;
   noUsername: boolean = false;
@@ -58,7 +59,7 @@ export class RegisterDataComponent {
       return undefined;
     }
   }
-  createUser(){
+  async createUser(){
     if(this.passTerm == ''){
       this.noPass = true;
     }
@@ -69,12 +70,23 @@ export class RegisterDataComponent {
       this.noUsername = true;
     }
     if(this.searchTerm != '' && this.passTerm != '' && this.usernameTerm != '' && !this.emailRepeated && this.passwordFormat){
-      let newUser = new User(this.generateRandomId(16), this.getString('emailInp'), this.getString('passwordInp'), this.getString('usernameInp'), 1);
-      this.userService.saveUser(newUser).subscribe(() => {
-      })
+      let priceList = 1;
+      if(this.isAdmin()){
+        priceList = this.getNumber('priceListInp');
+      }
+      let newUser = new User(this.generateRandomId(16), this.getString('emailInp'), this.getString('passwordInp'), this.getString('usernameInp'), priceList);
+      if(this.isAdmin()){
+        newUser.client = true;
+      }
+      ///this.userService.saveUser(newUser).subscribe(() => {});
+      await this.userService.saveUser(newUser).toPromise();      
       this.dataCreated = true;
       localStorage.setItem('userCreated', JSON.stringify(true));
-      window.location.href = `signup/shipmentdata/${newUser.id}`
+      if(this.isAdmin()){
+        window.location.href = `/admin/signup/shipmentData/${newUser.id}`;
+      }else{
+        window.location.href = `signup/shipmentdata/${newUser.id}`
+      }
     }
   }
   getString(name: string){
@@ -82,6 +94,14 @@ export class RegisterDataComponent {
     let input: string = "";
     if(inpAux){
       input = inpAux.value;
+    }
+    return input;
+  }
+  getNumber(name: string){
+    let inpAux = document.getElementById(name) as HTMLInputElement;
+    let input: number = 0;
+    if(inpAux){
+      input = parseInt(inpAux.value);
     }
     return input;
   }
@@ -95,5 +115,12 @@ export class RegisterDataComponent {
     }
 
     return result;
+}
+isAdmin(){
+  if(localStorage.getItem('admin')){
+    return true;
+  }else{
+    return false;
+  }
 }
 }

@@ -18,17 +18,12 @@
 .messages{
     display: flex;
     flex-direction: column;
-    position: absolute;
+    position: relative;
     color: rgb(231, 79, 79);
-    margin-top: 0.7vh;
     font-family: sans-serif;
     font-size: 12px;
-}
-#usernameMessages{
-    margin-top: 13vh;
-}
-#passwordMessages{
-    margin-top: 25.5vh;
+    height: fit-content;
+    padding: 0;
 }
 #align{
     display: flex;
@@ -51,6 +46,11 @@ label{
 input, label{
     font-family: 'globerBold';
     letter-spacing: 1px;
+}
+#priceDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 #login{
     width: 50vh;

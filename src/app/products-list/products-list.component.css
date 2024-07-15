@@ -28,6 +28,9 @@ body{
         text-transform: uppercase;
         font-family: "globerBold";
         font-size: 15px;
+        padding-left: 2vi;
+        padding-right: 2vi;
+        text-align: center;
     }
     :is(img){
         width: 70%;
@@ -124,3 +127,25 @@ body{
     transition: transform 0.8s ease;
     font-family: sans-serif;
 }
+@media (min-width: 1200px) {}
+@media (min-width: 768px) and (max-width: 1199px) {
+    #container{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    #containerButtons{
+        flex-direction: column;
+        align-items: center;
+    }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+    #container{
+        grid-template-columns: repeat(1, 1fr);
+        height: max-content;
+    }
+    #containerButtons{
+        flex-direction: column;
+        align-items: center; 
+    }
+}
+@media (max-width: 480px) and (min-width: 280px) {}
+@media (max-width: 279px) {}

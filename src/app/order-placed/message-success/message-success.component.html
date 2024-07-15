@@ -16,5 +16,5 @@
     <p>Recordá que tenes un límite de 24 horas para realizar la transferencia, si pasadas las 24 horas no recibimos el comprobante de transferencia la orden quedará desestimada</p>
     <p>Si ya hiciste la transferencia no te olvides de avisarnos!</p>
 
-    <app-order-progress></app-order-progress>
+    <app-order-progress *ngIf="!(user.client)"></app-order-progress>
 </div>

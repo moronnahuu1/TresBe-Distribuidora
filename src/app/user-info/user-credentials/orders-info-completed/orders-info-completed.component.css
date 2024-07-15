@@ -39,6 +39,8 @@ h1{
     justify-content: space-between;
 }
 #noOrders{
+    display: flex;
+    flex-direction: column;
     background-color: white;
     height: 100%;
     text-align: center;

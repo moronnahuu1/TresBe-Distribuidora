@@ -4,6 +4,7 @@ export class User{
     password: string;
     username: string;
     priceList: number;
+    client: boolean = false;
 
     constructor(id: string, email: string, password: string, username: string, priceList: number){
         this.id = id;

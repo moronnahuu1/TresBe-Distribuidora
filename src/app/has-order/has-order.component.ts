@@ -9,6 +9,7 @@ import { Order } from '../models/Order';
   styleUrls: ['./has-order.component.css']
 })
 export class HasOrderComponent implements OnInit{
-    async ngOnInit() {
+    ngOnInit() {
+      window.scrollTo(0, 0);
     }
 }

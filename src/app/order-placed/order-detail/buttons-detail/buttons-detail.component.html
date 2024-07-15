@@ -1,4 +1,5 @@
 <div id="container">
-    <button *ngIf="user.email != ''" (click)="setLater()" [routerLink]="['/user']">Ver mis pedidos</button>
+    <button *ngIf="!(user.client)">Ya hice la transferencia</button>
+    <button *ngIf="user.email != '' && user.client" (click)="setLater()" [routerLink]="['/user']">Ver mis pedidos</button>
     <button id="cancel" (click)="cancelOrder()">Quiero cancelar mi pedido</button>
 </div>

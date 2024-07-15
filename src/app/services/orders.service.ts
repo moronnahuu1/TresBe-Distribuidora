@@ -28,6 +28,7 @@ export class OrdersService {
   }
   changeUser(userAux: User){
     this.user = userAux;
+    localStorage.setItem('searchedUser', JSON.stringify(true));
     this._user.next(this.user);
   }
   returnUser(){

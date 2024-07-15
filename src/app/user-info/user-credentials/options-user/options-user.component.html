@@ -1,7 +1,8 @@
 <aside class="sidebar">
     <ul>
       <li><p (click)="changeDisplay('myAccount')"><i class="fa fa-user" aria-hidden="true"></i> Mi Cuenta</p></li>
-      <li><p (click)="changeDisplay('myOrders')"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Mis Ordenes</p></li>
+      <li *ngIf="!isAdmin()"><p (click)="changeDisplay('myOrders')"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Mis Ordenes</p></li>
+      <li *ngIf="isAdmin()"><p (click)="changeDisplay('myOrders')"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Ordenes Del Usuario</p></li>
       <li><p (click)="changeDisplay('privacity')"><i class="fa fa-eye-slash" aria-hidden="true"></i> Privacidad</p></li>
       <li><p (click)="changeDisplay('shipment')"><i class="fa fa-truck" aria-hidden="true"></i> Informacion de envío</p></li>
       <li *ngIf="!isAdmin()"><p (click)="changeDisplay('support')"><i class="fa fa-info-circle" aria-hidden="true"></i> Soporte Técnico</p></li>

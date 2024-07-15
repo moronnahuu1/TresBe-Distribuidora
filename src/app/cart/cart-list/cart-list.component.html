@@ -11,9 +11,9 @@
     <tbody>
       <tr *ngFor="let product of products; let indice = index;">
         <td>
-          <img [src]="product.image" [alt]="product.description">
+          <img [src]="product.image" [alt]="product.description" draggable="false">
           <div class="product-info">
-            <p id="productName">{{ product.name }}</p>
+            <p id="productName">{{ product.name }} {{ product.optionSelected }}</p>
             <p id="productCategory">Categoria: {{ product.category }}</p>
           </div>
         </td>

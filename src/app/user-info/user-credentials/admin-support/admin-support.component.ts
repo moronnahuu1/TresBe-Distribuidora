@@ -4,6 +4,7 @@ import { User } from 'src/app/models/User';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserService } from 'src/app/services/user.service';
+import { UserdataService } from 'src/app/services/userdata.service';
 
 @Component({
   selector: 'app-admin-support',
@@ -16,6 +17,7 @@ export class AdminSupportComponent{
   orderService = inject(OrdersService);
   userService = inject(UserService);
   user: User = new User('','','','',0);
+  userdataService = inject(UserdataService);
 
   async searchUser(){
     let userID = this.getInput('userInp');
@@ -25,6 +27,8 @@ export class AdminSupportComponent{
       (await this.orderxproductsxoxpService.getProducts()).subscribe(products => {
         this.ordersAndProducts = products;
       });
+      (await this.userdataService.returnUserdata(this.user.id)).subscribe(userdata => {
+      }); ///LA INFO DE USUARIO SE ACTUAlIZA PARA VER LA INFO DEL USUARIO BUSCADO
     }
   }
 

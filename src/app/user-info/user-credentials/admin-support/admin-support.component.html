@@ -1,12 +1,10 @@
 <div id="container">
     <div id="searchbar">
+        <p>Buscar usuario por ID</p>
+        <br>
         <input type="text" name="user" id="userInp">
         <button (click)="searchUser()">Buscar Usuario</button>
     </div>
 
-    <div id="userinfo">
-        <p>{{user.username}}</p>
-    </div>
-
-    <app-orders-info-completed></app-orders-info-completed>
+    <app-user-account></app-user-account>
 </div>

@@ -1,9 +1,11 @@
-<main class="profile">
+<main class="profile" *ngIf="selectedOrder.code != ''">
+  <p *ngIf="isAdmin()">Estas viendo una orden del usuario: {{user.username}}</p>
     <section class="profile-header">
       <div class="profile-info">
         <h1>#{{selectedOrder.code}}</h1>
         <p>{{getDates(selectedOrder.orderDate)}}</p>
         <p>${{selectedOrder.total}}</p>
+        <p *ngIf="!(selectedOrder.payed) && !(user.client) && !isAdmin()">Transferencia pendiente</p>
       </div>
     </section>
     <section class="personal-info">
@@ -33,6 +35,17 @@
       </div>
     </section>
 
-    <button *ngIf="isAdmin()">Eliminar</button>
+    <button *ngIf="isAdmin()" (click)="deleteUserOrder(selectedOrder.code)">Eliminar</button>
+    <button *ngIf="!(user.client) && !(selectedOrder.payed) && !isAdmin()">Ya hice la transferencia</button>
   </main>
-  
+  <div id="containerNoOrders" *ngIf="selectedOrder.code == ''">
+    <div id="noOrders">
+      <i class="fa fa-exclamation-circle fa-5x" aria-hidden="true"></i>
+      <p>En este apartado vas a encontrar el detalle de la orden que selecciones</p>
+
+      <div id="select">
+        <p>Seleccioná una orden </p> 
+        <i class="fa fa-arrow-circle-right fa-3x" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>

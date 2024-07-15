@@ -25,8 +25,9 @@ export class CartService {
     return this._products.asObservable();
   }
 
-  addNewProduct(product: Product){
-    this.cartProducts.push(product);
+  addNewProduct(productAux: Product, optionSeleted: string){
+    productAux.optionSelected = optionSeleted;
+    this.cartProducts.push(productAux);
     localStorage.removeItem("cart");
     localStorage.setItem("cart", JSON.stringify(this.cartProducts));
     this._products.next(this.cartProducts);

@@ -16,6 +16,7 @@ export class UserdataService {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/userdata/'
   }
+
   async returnUserdata(userID: string){
     let userdataAux = await this.setUserdataID(userID);
     if(userdataAux){

@@ -11,6 +11,7 @@ export class CartComponent implements OnInit{
   cartService = inject(CartService);
   cartProducts: Array<Product> = [];
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.cartService.getProducts().subscribe(products => {
       this.cartProducts = products;
     })

@@ -12,6 +12,7 @@ export class OptionsUserComponent{
 
   changeDisplay(name: string){
     this.displayService.changeDisplay(name);
+    window.scrollTo(0,0);
   }
 
   isAdmin(){
