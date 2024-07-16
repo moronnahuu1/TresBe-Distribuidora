@@ -15,8 +15,8 @@
         <div class="reviews"><span>★★★★★</span> <a href="#" class="reviews">2 reviews</a></div>
         <div class="price" *ngIf="productSelected.discount == 0">${{productSelected.price}}</div>
         <div class="price" *ngIf="productSelected.discount > 0">${{productSelected.priceDiscount}}</div>
-        <div class="add-to-bag" *ngIf="!isOnCart()" (click)="addToCart()">Añadir al carrito</div>
-        <div class="add-to-bag" *ngIf="isOnCart()" [routerLink]="['/cart']">En carrito</div>
+        <div class="add-to-bag" (click)="addToCart()" *ngIf="!onCart">Añadir al carrito</div>
+        <div class="add-to-bag"  [routerLink]="['/cart']" *ngIf="onCart">En carrito</div>
         <div class="product-options">
             <select *ngIf="options.length > 0" name="options" (change)="isOnCart()" id="prodOptions">
                 <option *ngFor="let option of options" value="{{option.name}}">{{option.name}}</option>

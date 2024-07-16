@@ -73,5 +73,28 @@
             </div>
         </div>
     </div>
+
+    <div class="optionData">
+        <div class="options">
+            <div *ngFor="let option of options; let indice = index">
+                <div>
+                    <label for="name">Opción</label>
+                    <input type="text" class="productInfo"  name="name" value="{{option.name}}" id="{{option.id}}">
+                </div>
+                <div id="buttons">
+                    <button (click)="modifyOptions(option, indice)">Modificar</button>
+                    <button id="delete" (click)="deleteFeature(option.id, indice)">Eliminar</button>
+                </div>
+            </div>
+
+            <div class="option">
+                <div>
+                    <label for="name">Opción</label>
+                    <input type="text" name="name" id="optionInp">
+                </div>
+                <button (click)="addOption()">Agregar</button>
+            </div>
+        </div>
+    </div>
     
 </body>

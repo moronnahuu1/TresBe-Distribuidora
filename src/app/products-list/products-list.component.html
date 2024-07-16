@@ -22,7 +22,8 @@
             <div id="containerButtons">
                 <button routerLink="" class="buttonProducts fa fa-credit-card" *ngIf="!isAdmin()"> COMPRAR</button>
                 <button routerLink="/modify/product/{{product.id}}" class="buttonProducts fa fa-pencil-square-o" *ngIf="isAdmin()"> MODIFICAR</button>
-                <button routerLink="/products/{{product.id}}" id="watch" class="buttonProducts fa fa-eye"> VER</button>
+                <button routerLink="/products/{{product.id}}" id="watch" class="buttonProducts fa fa-eye" *ngIf="!isAdmin()"> VER</button>
+                <button routerLink="/products" id="delete" class="buttonProducts fa fa-eye" (click)="deleteProduct(product.id)" *ngIf="isAdmin()"> ELIMINAR</button>
             </div>
         </div>
         <div id="addProduct" class="admin" *ngIf="isAdmin()" [routerLink]="['/add/product']">

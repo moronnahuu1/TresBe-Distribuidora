@@ -80,7 +80,11 @@ async getOrder(){
 }
 async getProducts(): Promise<void>{
   /* La funcion se conecta con el servicio de productos para leer la base de datos y traer los productos que pertenezcan a la orden creada */
-  try {
+  let cartAux = localStorage.getItem("cartResolved");
+  if(cartAux){
+    this.products = JSON.parse(cartAux);
+  }
+  /*try {
     for(let i=0; i<this.oxp.length; i++){
       let productAux: Product | undefined;
       productAux = await this.productService.getProduct(this.oxp[i].productId).toPromise();
@@ -92,7 +96,7 @@ async getProducts(): Promise<void>{
   } catch (error) {
     console.error('Error obteniendo datos:', error);
     throw error; // Puedes manejar el error de acuerdo a tus necesidades
-  }
+  }*/
 }
 
 async readOXP(): Promise<void> {

@@ -95,11 +95,11 @@ export class PayComponent {
 
     return result;
 }
-  createOrder(){
+  async createOrder(){
     /* La funcion se encarga de manejar la base de datos creando la nueva orden del usuario y agregandola a la base de datos */
     let orderID = this.generateRandomId(); //Se crea un ID de la orden
     let order: Order = new Order(orderID, this.generateRandomCode(), 0, 0, this.subtotal, this.total, new Date(), this.user.id, this.userdata.id); //Se crea la orden con los datos de la reserva
-    this.orderService.saveOrder(order).subscribe(() => {}); //Se guarda la orden creada en la base de datos
+    await this.orderService.saveOrder(order).toPromise(); //Se guarda la orden creada en la base de datos
     let emailData = {
       to: this.user.email,
       subject: 'Orden de compra',
@@ -135,7 +135,7 @@ export class PayComponent {
   noDebt(totalDebt: number){
     if(totalDebt < 50000000){
       let totalAmount = totalDebt + this.total;
-      if(totalAmount < 2000){
+      if(totalAmount < 50000000){
         return true;
       }else{
         return false;
@@ -152,7 +152,7 @@ export class PayComponent {
       ///this.modifyStock();
       let totalDebt = 0///await this.getDebts();
       if(this.noDebt(totalDebt)){
-        let orderID = this.createOrder();
+        let orderID = await this.createOrder();
         this.cartService.saveCartAfterOrder();
         this.router.navigate([`/checkout/${orderID}`]); //Se redirecciona a la ruta del componente 'placed' para informarle al usuario que su orden fue creada
       }else{

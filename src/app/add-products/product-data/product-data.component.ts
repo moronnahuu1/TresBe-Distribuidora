@@ -2,10 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Brand } from 'src/app/models/Brand';
 import { Feature } from 'src/app/models/Feature';
+import { Options } from 'src/app/models/Options';
 import { PriceXproduct } from 'src/app/models/PriceXproduct';
 import { Product } from 'src/app/models/Product';
 import { BrandsService } from 'src/app/services/brands.service';
 import { FeatureService } from 'src/app/services/feature.service';
+import { OptionsService } from 'src/app/services/options.service';
 import { PricesService } from 'src/app/services/prices.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -33,6 +35,8 @@ export class ProductDataComponent implements OnInit{
   featureModify: boolean = false;
   features: Array<Feature> = [];
   featureService = inject(FeatureService);
+  options: Options[] = [];
+  optionService = inject(OptionsService);
 
   async ngOnInit() {
     this.modified = false;
@@ -54,6 +58,10 @@ export class ProductDataComponent implements OnInit{
       (await this.brandService.readBrands()).subscribe(brands => {
         this.brands = brands; //Se leen las marcas para seleccionar
       });
+    
+      this.optionService.getProductOptions(this.productID).subscribe(options => {
+        this.options = options;
+      })
   }
   
   getString(name: string): string{ //La funcion sirve para leer cada uno de los input del html, siempre y cuando sean string
@@ -259,5 +267,15 @@ getItemsPrice(){ //Lee los input de la lista de precios del producto, crea una n
     let featureValue = this.getString('featureValueInp');
     let featureAux = new Feature(this.generateRandomId(16), featureName, featureValue, this.productID);
     this.featureService.createFeature(featureAux);
+  }
+  modifyOptions(optionAux: Options, index: number){
+    let optionName = this.getString(optionAux.id);
+    optionAux.name = optionName;
+    this.optionService.updateOneOption(index, optionAux);
+  }
+  addOption(){
+    let optionName = this.getString('optionInp');
+    let optionAux = new Options(this.generateRandomId(16), optionName, this.productID);
+    this.optionService.createOption(optionAux);
   }
 }

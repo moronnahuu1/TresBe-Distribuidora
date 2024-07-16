@@ -19,29 +19,29 @@ export class ProductsListComponent implements OnInit{
     await this.filters();
   }
 
-  async filters(){
-    const categoryAux = this.activeRoute.snapshot.params['category'];
+  async filters(){ //Funcion para filtrar los productos, puede ser por categoria o por marca
+    const categoryAux = this.activeRoute.snapshot.params['category']; //En ambos casos se leen los parametros de la ruta para ver si se trata de una marca o una categoria
     const brandAux = this.activeRoute.snapshot.params['brand'];
-    if(brandAux){
-      this.brand = brandAux;
-      (await this.productService.readProducts('brand', this.brand)).subscribe(products => {
+    if(brandAux){ //Si es una marca
+      this.brand = brandAux; //Se asigna la marca a una variable global para manejarla luego en el html
+      (await this.productService.readProducts('brand', this.brand)).subscribe(products => { //Se leen los productos desde el servicio con la marca registrada como parametro
         this.productsArray = products;
       });
     }
-    if(categoryAux){
-      this.category = categoryAux;
-      (await this.productService.readProducts('category', this.category)).subscribe(products =>{
+    if(categoryAux){ //Si es una categoria
+      this.category = categoryAux; //Se asigna la categoria a una variable global para manejarla luego en el html
+      (await this.productService.readProducts('category', this.category)).subscribe(products =>{ //Se leen los productos desde el servicio con la categoria registrada como parametro
         this.productsArray = products;
       }
       );
     }
-    if(!brandAux && !categoryAux){
+    if(!brandAux && !categoryAux){ //Si no hay parametros, ni marca ni categoria, se leen todos los productos
       (await this.productService.readProducts("all", null)).subscribe(products => {
         this.productsArray = products;
       });
     }
   }
-  isAdmin(){
+  isAdmin(){ //funcion para detectar si el usuario logueado es administrador
     let access = localStorage.getItem("admin");
     let admin = false;
     if(access){
@@ -49,7 +49,13 @@ export class ProductsListComponent implements OnInit{
     }
     return admin;
   }
-  formatNumber(number: number): string {
+  formatNumber(number: number): string { //Funcion de front, se usa en HTML para mostrar los numeros grandes de forma mas legible.
     return number.toLocaleString(); // Esto añadirá separadores de miles
+  }
+  deleteProduct(productID: string){
+    let confirmation = confirm("Eliminar producto?");
+    if(confirmation){
+      this.productService.deleteProduct(productID).subscribe(()=>{});
+    }
   }
 }
