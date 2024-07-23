@@ -1,6 +1,10 @@
 import { Component, inject } from '@angular/core';
+import { Options } from 'src/app/models/Options';
+import { PriceXproduct } from 'src/app/models/PriceXproduct';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
+import { OptionsService } from 'src/app/services/options.service';
+import { PricesService } from 'src/app/services/prices.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -9,16 +13,53 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartListComponent {
   cartService = inject(CartService);
+  optionService = inject(OptionsService);
+  option: Options = new Options('','','');
+  pricesService = inject(PricesService);
+  prices: PriceXproduct = new PriceXproduct('','',0,0,0,0);
   products: Array<Product> = [];
 
-  ngOnInit(): void {
+  async ngOnInit() {
       this.cartService.getProducts().subscribe(products => {
         this.products = products;  ///Se lee la lista de productos que estan en el carrito y se inicializa en un array de productos
       })
       this.startQuantity(); 
+      await this.checkProductData();
+  }
+  async checkProductData(){
+    if(this.products.length > 0){
+      for(let i = 0; i<this.products.length; i++){
+        this.products[i] = await this.checkUpdates(this.products[i]);
+        this.products[i].optionSelected = decodeURIComponent(this.products[i].optionSelected);
+        this.cartService.updateProduct(i, this.products[i])
+      }
+    }
   }
   deleteProduct(index: number){ ///Al apretar el boton X que se ve en el carrito borra el producto
     this.cartService.deleteProduct(index);
+  }
+  changeQuantity(productAux: Product){
+    let inpAux = document.getElementById('quantityInp') as HTMLInputElement;
+    if(inpAux){
+      let input = parseFloat(inpAux.value);
+      if(input > 0){
+        if(productAux.quantity != input){
+          let i=0;
+          let access = false;
+          while(i<this.products.length && !access){
+            if(this.products[i].id == productAux.id){
+              access = true;
+            }else{
+              i++;
+            }
+          }
+          if(access){
+            productAux.quantity = input;
+            this.cartService.updateProduct(i,productAux);
+          }
+        }
+      }
+    }
   }
   startQuantity(){ 
     /*Los productos por defecto cuando son cargados en el array de productos no tienen una cantidad asignada, 
@@ -71,5 +112,50 @@ export class CartListComponent {
         this.cartService.updateProduct(index, this.products[i]);
       }
     }
+  }
+  async getOption(productAux: Product){
+    try {
+      const data = await this.optionService.getProductOptionsByTwo(productAux.latestID, productAux.optionSelected).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
+  async checkUpdates(productAux: Product){
+    let optionAux = await this.getOption(productAux);
+    let userLogged = this.cartService.getUser();
+    if(optionAux){
+      this.option = optionAux;
+      (await this.pricesService.readTableByProduct(this.option.id)).subscribe(prices => {
+        this.prices = prices;
+      });
+    }
+    switch(userLogged.priceList){
+      case 1:
+        if(this.prices.priceList1 != productAux.price){
+          productAux.price = this.prices.priceList1;
+        }
+        break;
+      case 2:
+        if(this.prices.priceList2 != productAux.price){
+          productAux.price = this.prices.priceList2;
+        }
+        break;
+      case 3:
+        if(this.prices.priceList3 != productAux.price){
+          productAux.price = this.prices.priceList3;
+        }
+        break;
+      case 4:
+        if(this.prices.priceList4 != productAux.price){
+          productAux.price = this.prices.priceList4;
+        }
+        break;
+      default:
+        break;
+    }
+    return productAux;
   }
 }

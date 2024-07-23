@@ -1,6 +1,7 @@
 <body>
     <div id="added" class="alerts" *ngIf="added"><i class="fa fa-check-circle fa-3x" aria-hidden="true"></i><p> Producto cargado con exito</p></div>
     <div id="modified" class="alerts" *ngIf="modified && !toModify"><i class="fa fa-check-circle fa-3x" aria-hidden="true"></i><p> Producto modificado con exito</p></div>
+    <div id="optionModified" class="alerts" *ngIf="optionUpdated"><i class="fa fa-check-circle fa-3x" aria-hidden="true"></i> Opción del producto modificada</div>
     <div id="container">
         <h1>CARGA DE PRODUCTOS</h1>
         <div class="data">
@@ -20,22 +21,17 @@
                 <label for="image">Imagen</label>
                 <input type="text" name="image" class="productInfo" [value]="getValue('image')" id="imageInp">
     
-                <label for="discount">Descuento (En porcentaje, ejemplo 0.05)</label>
-                <input type="number" name="discount" class="productInfo" [value]="getValue('discount')" id="discountInp">
             </div>
     
             <div id="prices">
-                <label for="price1">Precio Lista 1</label>
-                <input type="number" name="price1" class="productInfo" [value]="getValue('price1')" id="price1Inp">
+                <label for="discount">Descuento (En porcentaje, ejemplo 0.05)</label>
+                <input type="number" name="discount" class="productInfo" [value]="getValue('discount')" id="discountInp">
+
+                <label for="description">Descripción</label>
+                <input type="text" name="description" class="productInfo" [value]="getValue('description')" id="descriptionInp">
     
-                <label for="price2">Precio Lista 2</label>
-                <input type="number" name="price2" class="productInfo" [value]="getValue('price2')" id="price2Inp">
-    
-                <label for="price3">Precio Lista 3</label>
-                <input type="number" name="price3" class="productInfo" [value]="getValue('price3')" id="price3Inp">
-    
-                <label for="price4">Precio Lista 4</label>
-                <input type="number" name="price4" class="productInfo" [value]="getValue('price4')" id="price4Inp">
+                <label for="stock">Stock</label>
+                <input type="number" name="stock" class="productInfo" [value]="getValue('stock')" id="stockInp">
     
                 <button *ngIf="(!onModify)" (click)="addNewProduct()">AGREGAR</button>
                 <button *ngIf="onModify && !toModify" (click)="modify()">MODIFICAR</button>
@@ -76,21 +72,61 @@
 
     <div class="optionData">
         <div class="options">
-            <div *ngFor="let option of options; let indice = index">
-                <div>
-                    <label for="name">Opción</label>
-                    <input type="text" class="productInfo"  name="name" value="{{option.name}}" id="{{option.id}}">
-                </div>
-                <div id="buttons">
-                    <button (click)="modifyOptions(option, indice)">Modificar</button>
-                    <button id="delete" (click)="deleteFeature(option.id, indice)">Eliminar</button>
-                </div>
+            <div id="containerSelect">
+                <label for="select" id="labSelect">Seleccione la opción a modificar</label>
+            <select name="" id="" [(ngModel)]="optionTerm" (change)="selectOption(optionTerm)">
+                <option *ngFor="let option of options" value="{{option.name}}">{{option.name}}</option>
+            </select>
             </div>
-
             <div class="option">
                 <div>
                     <label for="name">Opción</label>
-                    <input type="text" name="name" id="optionInp">
+                    <input type="text"  name="name" value="{{optionSelected.name}}" id="{{optionSelected.id}}">
+                </div>
+                <div class="priceList">
+                    <label for="modifyPrice1">Precio Lista 1</label>
+                    <input type="number" name="modifyPrice1" [value]="productList.priceList1" id="modifyPrice1Inp">
+                </div>
+                <div class="priceList">
+                    <label for="modifyPrice2">Precio Lista 2</label>
+                    <input type="number" name="modifyPrice2" [value]="productList.priceList2" id="modifyPrice2Inp">
+                </div>
+                <div class="priceList">
+                    <label for="modifyPrice3">Precio Lista 3</label>
+                    <input type="number" name="modifyPrice3" [value]="productList.priceList3" id="modifyPrice3Inp">
+                </div>
+                <div class="priceList">
+                    <label for="modifyPrice4">Precio Lista 4</label>
+                    <input type="number" name="modifyPrice4" [value]="productList.priceList4" id="modifyPrice4Inp">
+                </div>
+                <div id="buttons">
+                    <button (click)="modifyOptions(optionSelected, 1)">Modificar</button>
+                    <button id="delete" (click)="deleteOption(optionSelected.id)">Eliminar</button>
+                </div>
+            </div>
+            
+            <label for="addOption">Agregue una nueva opción</label>
+
+            <div class="option">
+                <div id="optionInputs">
+                    <label for="optionName">Opción</label>
+                    <input type="text" name="optionName" id="optionInp">
+                </div>
+                <div class="priceList">
+                    <label for="price1">Precio Lista 1</label>
+                    <input type="number" name="price1" id="price1Inp">
+                </div>
+                <div class="priceList">
+                    <label for="price2">Precio Lista 2</label>
+                    <input type="number" name="price2" id="price2Inp">
+                </div>
+                <div class="priceList">
+                    <label for="price3">Precio Lista 3</label>
+                    <input type="number" name="price3" id="price3Inp">
+                </div>
+                <div class="priceList">
+                    <label for="price4">Precio Lista 4</label>
+                    <input type="number" name="price4" id="price4Inp">
                 </div>
                 <button (click)="addOption()">Agregar</button>
             </div>

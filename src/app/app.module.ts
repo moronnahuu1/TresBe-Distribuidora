@@ -68,6 +68,10 @@ import { DiscountButtonsComponent } from './discounts/discount-buttons/discount-
 import { DiscountProductsComponent } from './discounts/discount-products/discount-products.component';
 import { DiscountMessagesComponent } from './discounts/discount-messages/discount-messages.component';
 import { NoOrdersComponent } from './user-info/user-credentials/my-boughts/no-orders/no-orders.component';
+import { ChangePricesComponent } from './change-prices/change-prices.component';
+import { DataPricesComponent } from './change-prices/data-prices/data-prices.component';
+import { IncreaseComponent } from './change-prices/data-prices/increase/increase.component';
+import { DecreaseComponent } from './change-prices/data-prices/decrease/decrease.component';
 
 @NgModule({
   declarations: [
@@ -135,6 +139,10 @@ import { NoOrdersComponent } from './user-info/user-credentials/my-boughts/no-or
     DiscountProductsComponent,
     DiscountMessagesComponent,
     NoOrdersComponent,
+    ChangePricesComponent,
+    DataPricesComponent,
+    IncreaseComponent,
+    DecreaseComponent,
   ],
   imports: [
     BrowserModule,

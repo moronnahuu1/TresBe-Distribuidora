@@ -6,12 +6,16 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { PricesService } from './prices.service';
 import { PriceXproduct } from '../models/PriceXproduct';
 import { User } from '../models/User';
+import { OptionsService } from './options.service';
+import { Options } from '../models/Options';
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   private myAppUrl: string;
   private myApiUrl: string;
+  optionService = inject(OptionsService);
+  options: Options[] = [];
    products: Array<Product> = [];
    _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   productXpriceService = inject(PricesService);
@@ -57,8 +61,15 @@ export class ProductService {
         break;
     }
       if(productsAux != undefined){
+        this.options = [];
         for(let i=0; i<productsAux.length; i++){
-          productsAux[i].price = await this.setProductPrice(productsAux[i].id);
+            (await this.optionService.readProductOptions(productsAux[i].id)).subscribe(products => {
+            this.options = products;
+          });
+          if(this.options.length>0){
+            productsAux[i].optionSelected = this.options[0].name;
+            productsAux[i].price = await this.setProductPrice(this.options[0].id);
+          }
           productsAux[i].priceDiscount = this.getDiscounts(productsAux[i]);
           this.products.push(productsAux[i]);
         }
@@ -100,8 +111,8 @@ export class ProductService {
     }
   }
   
-  async setProductPrice(productID: string){
-    let data = await this.getPrice(productID);
+  async setProductPrice(optionID: string){
+    let data = await this.getPrice(optionID);
     let priceAux: PriceXproduct = new PriceXproduct('','',0, 0,0,0);
     if(data != undefined){
       priceAux = data;

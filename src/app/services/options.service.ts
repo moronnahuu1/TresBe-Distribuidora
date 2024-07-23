@@ -21,8 +21,15 @@ export class OptionsService {
     if(featuresAux){
       this.options = featuresAux;
       this._options.next(this.options);
+      this.decodeOptions();
     }
     return this._options.asObservable();
+  }
+  decodeOptions(){
+    for(let i = 0; i<this.options.length; i++){
+      this.options[i].name = decodeURIComponent(this.options[i].name);
+    }
+    this._options.next(this.options);
   }
   async getProductOptionsTC(productID: string){
     try {
@@ -34,10 +41,48 @@ export class OptionsService {
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  deleteOneOption(featureID: string, index: number){
+  async returnProductByName(id: string){
+    let prodAux = await this.getProductOptionsByNameTC(id);
+    if(prodAux){
+      prodAux.name = decodeURIComponent(prodAux.name);
+      return prodAux;
+    }else{
+      return null;
+    }
+    }
+  async getProductOptionsByNameTC(id: string){
+    try {
+      const data = await this.getOption(id).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
+  deleteOneOption(featureID: string){
     this.deleteOption(featureID).subscribe(()=>{});
-    this.options.splice(index, 1);
-    this._options.next(this.options);
+    let index = this.searchOptionIndex(featureID);
+    if(index >= 0){
+      this.options.splice(index, 1);
+      this._options.next(this.options);
+    }
+  }
+  searchOptionIndex(optionID: string){
+    let i = 0;
+    let access = false;
+    while(i<this.options.length && !access){
+      if(this.options[i].id == optionID){
+        access = true;
+      }else{
+        i++;
+      }
+    }
+    if(access){
+      return i;
+    }else{
+      return -1;
+    }
   }
   createOption(featureAux: Options){
     this.saveOptions(featureAux).subscribe(()=>{});
@@ -45,6 +90,7 @@ export class OptionsService {
     this._options.next(this.options);
   }
   updateOneOption(index: number, featureAux: Options){
+    featureAux.name = encodeURIComponent(featureAux.name);
     this.updateOptions(featureAux.id, featureAux).subscribe(()=>{});
     this.options[index] = featureAux;
     this._options.next(this.options);
@@ -59,6 +105,17 @@ export class OptionsService {
     let urlAux = this.myAppUrl + this.myApiUrl + 'product/'
     return this.http.get<Options[]>(urlAux + productID); 
   }
+  getProductOptionsByTwo(productID: string, optionName: string): Observable<Options> {
+    optionName = encodeURIComponent(optionName);
+    let urlAux = this.myAppUrl + this.myApiUrl + 'product/option/'
+    return this.http.get<Options>(urlAux + productID + '/' + optionName); 
+  }
+
+  getProductOptionByName(name: string): Observable<Options> {
+    let urlAux = this.myAppUrl + this.myApiUrl + 'name/'
+    return this.http.get<Options>(urlAux + name); 
+  }
+
   deleteOption(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
   }
@@ -66,6 +123,7 @@ export class OptionsService {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
   }
   saveOptions(productAux: Options): Observable<void>{
+    productAux.name = encodeURIComponent(productAux.name);
     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
   }
   updateOptions(id: string, productAux: Options): Observable<void>{

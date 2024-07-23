@@ -153,7 +153,7 @@ export class PayComponent {
       let totalDebt = 0///await this.getDebts();
       if(this.noDebt(totalDebt)){
         let orderID = await this.createOrder();
-        this.cartService.saveCartAfterOrder();
+        this.cartService.saveCartAfterOrder(orderID);
         this.router.navigate([`/checkout/${orderID}`]); //Se redirecciona a la ruta del componente 'placed' para informarle al usuario que su orden fue creada
       }else{
         this.router.navigate([`/checkout/amount/exceeded`])

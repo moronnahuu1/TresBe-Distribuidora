@@ -7,7 +7,7 @@
             <p>{{getDates(oap.order.orderDate)}}</p>
         </div>
         <div *ngFor="let product of oap.products | slice:0:2">
-            <p>{{product.name}} x{{product.quantity}}</p>
+            <p>{{product.name}} {{product.optionSelected}} x{{product.quantity}}</p>
         </div>
         <p *ngIf="oap.products.length > 2">Ver todos los productos</p>
         <p>PRECIO TOTAL: {{oap.order.total}}</p>

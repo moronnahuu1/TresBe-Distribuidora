@@ -73,6 +73,8 @@ img{
     width: 12vh;
     height: 12vh;
     cursor: pointer;
+    overflow-x: auto;
+    overflow-y: auto;
 }
 .size-options div:hover {
     background-color: #f0f0f0;
@@ -89,4 +91,38 @@ p, #description{
 }
 select{
     width: 20vi;
+}
+.form{
+    padding-bottom: 1vi;
+    display: flex;
+    gap: 10px;
+    label{
+        padding: 0;
+        margin: 0;
+    }
+    input{
+        width: 15vi;
+        height: 1.5vi;
+        border: 0;
+        padding-left: 1vi;
+        border-radius: 10px;
+        background-color: rgb(238, 238, 238);
+    }
+}
+#optionContainer{
+    max-height: 7vi;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 2vi;
+    row-gap: 0;
+    overflow-y: auto;
+    overflow-x: auto;
+    position: absolute;
+    right: 10vi;
+}
+.optionData{
+    height: 2.3vi;
+    p{
+        cursor: pointer;
+    }
 }

@@ -1,6 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
 import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
+import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
 import { UserdataService } from 'src/app/services/userdata.service';
@@ -35,18 +37,6 @@ export class UserAccountComponent implements OnInit{
       return true;
     }else{
       return false;
-    }
-  }
-
-  async getUserData(){
-    /* La funcion se conecta con el servicio de userdata para leer la base de datos de la informacion del envio para los usuarios */
-    try {
-      const data = await this.userdataService.getUserdataByUserID(this.user.id).toPromise();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error('Error obteniendo datos:', error);
-      throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
 }

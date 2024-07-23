@@ -1,11 +1,16 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Product } from '../models/Product';
 import { BehaviorSubject } from 'rxjs';
+import { CartProductService } from './cart-product.service';
+import { CartProduct } from '../models/CartProduct';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
+  cartProductService = inject(CartProductService);
+  cartProductsArray: CartProduct[] = [];
   private cartProducts: Array<Product> = []
   private subTotal: number = 0;
   private total: number = 0;
@@ -16,6 +21,15 @@ export class CartService {
   private _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   constructor() { }
 
+  getUser(){
+    let userAux = localStorage.getItem('userLogged');
+    let userLogged: User = new User('','','','',0);
+    if(userAux){
+      userLogged = JSON.parse(userAux);
+    }
+    return userLogged;
+  }
+
   getProducts(){
     let productsAux = localStorage.getItem("cart");
     if(productsAux){
@@ -25,22 +39,38 @@ export class CartService {
     return this._products.asObservable();
   }
 
-  addNewProduct(productAux: Product){
+  async getCartProducts(){
+    for(let i = 0; i<this.cartProducts.length; i++){
+      let cartProdAux = await this.cartProductService.readByID(this.cartProducts[i].id);
+      if(cartProdAux != null){
+        this.cartProductsArray.push(cartProdAux);
+      }
+    }
+  }
+
+  addNewProduct(productAux: Product, latestID: string){
+    productAux.latestID = latestID;
     this.cartProducts.push(productAux);
     localStorage.removeItem("cart");
     localStorage.setItem("cart", JSON.stringify(this.cartProducts));
     this._products.next(this.cartProducts);
   }
 
-  saveCartAfterOrder(){
-    localStorage.setItem("cartResolved", JSON.stringify(this.cartProducts));
-    localStorage.removeItem("cart");
+  saveCartAfterOrder(orderID: string){
+    for(let i = 0; i<this.cartProducts.length; i++){
+      let productAux = this.cartProducts[i];
+      let cartProductAux: CartProduct = new CartProduct(productAux.id, productAux.name, productAux.price, productAux.quantity, productAux.optionSelected, orderID);
+      this.cartProductService.saveCartProduct(cartProductAux).subscribe(()=>{});
+    }
     this.cartProducts = [];
+    localStorage.removeItem("cart");
+    this.cartProductsArray = [];
     this._products.next(this.cartProducts);
   }
 
   deleteProduct(index: number){
     this.cartProducts.splice(index, 1);
+    this.cartProductsArray.splice(index, 1);
     localStorage.removeItem("cart");
     localStorage.setItem("cart", JSON.stringify(this.cartProducts));
     this._products.next(this.cartProducts);

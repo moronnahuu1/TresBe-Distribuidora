@@ -17,7 +17,7 @@
                 <h2>{{product.name}}</h2>
             <p>{{product.category}}</p>
             <p id="price">${{formatNumber(product.price)}}</p>
-            <p *ngIf="product.discount != 0">${{formatNumber(product.priceDiscount)}}</p>
+            <p *ngIf="product.discount != 0">${{formatNumber(product.priceDiscount)}.toFixed(3)}</p>
             </div>
             <div id="containerButtons">
                 <button routerLink="" class="buttonProducts fa fa-credit-card" *ngIf="!isAdmin()"> COMPRAR</button>

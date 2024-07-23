@@ -7,6 +7,8 @@ import { OrdersService } from './orders.service';
 import { ProductService } from './product.service';
 import { Order } from '../models/Order';
 import { BehaviorSubject } from 'rxjs';
+import { CartProductService } from './cart-product.service';
+import { CartProduct } from '../models/CartProduct';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ import { BehaviorSubject } from 'rxjs';
 export class OrderXProductsXOxpService {
 
   orderService = inject(OrdersService);
+  cartProductService = inject(CartProductService);
   orders: Order[] = [];
   oxps: OrderXproducts[] = [];
   orderAndproducts: OrdersAndProducts[] = [];
@@ -34,19 +37,12 @@ export class OrderXProductsXOxpService {
     }
     
     for(let i=0; i<this.orders.length; i++){
-      let productsArray: Product[] = [];
-      (await this.oxpService.readOxp(this.orders[i].id)).subscribe(async oxps => {
-        this.oxps = oxps;
+      let productsArray: CartProduct[] = [];
+      (await this.cartProductService.readCartProducts('order', this.orders[i].id)).subscribe(products => {
+        productsArray = products;
       });
-      for(let j=0; j<this.oxps.length; j++){
-        let productAux = await this.productService.getOneProduct(this.oxps[j].productId);
-        if(productAux){
-          productAux.quantity = this.oxps[j].quantity;
-          productsArray.push(productAux);
-        }
-      }
-      let orderandProduct: OrdersAndProducts = new OrdersAndProducts(this.orders[i], productsArray);
-      this.orderAndproducts.push(orderandProduct);
+      let orderAndProductAux: OrdersAndProducts = new OrdersAndProducts(this.orders[i], productsArray);
+      this.orderAndproducts.push(orderAndProductAux);
       this._orderAndproducts.next(this.orderAndproducts);
     }
     this.ordenacionPorInsercion();

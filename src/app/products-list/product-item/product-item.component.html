@@ -13,13 +13,22 @@
         <div class="product-title">{{productSelected.name}}</div>
         <div class="product-code">Categoría: {{productSelected.category}}</div>
         <div class="reviews"><span>★★★★★</span> <a href="#" class="reviews">2 reviews</a></div>
-        <div class="price" *ngIf="productSelected.discount == 0">${{productSelected.price}}</div>
+        <div class="price" *ngIf="productSelected.discount == 0">${{productSelected.price.toFixed(3)}}</div>
         <div class="price" *ngIf="productSelected.discount > 0">${{productSelected.priceDiscount}}</div>
         <div class="add-to-bag" (click)="addToCart()" *ngIf="!onCart">Añadir al carrito</div>
         <div class="add-to-bag"  [routerLink]="['/cart']" *ngIf="onCart">En carrito</div>
+        <div class="form">
+            <label for="optionSearch" class="option-title">MEDIDA </label>
+            <input id="optionSearchInp" type="text" [(ngModel)]="searchTerm" (input)="updateSearchResults()" placeholder="Busque la medida que desea">
+            <div id="optionContainer">
+              <div class="optionData" *ngFor="let option of optionsSearched" (click)="selectOption(option)">
+                <p>{{option.name.toUpperCase()}}</p>
+              </div>
+            </div>
+          </div>
         <div class="product-options">
-            <select *ngIf="options.length > 0" name="options" (change)="isOnCart()" id="prodOptions">
-                <option *ngFor="let option of options" value="{{option.name}}">{{option.name}}</option>
+            <select *ngIf="options.length > 0" [(ngModel)]="optionSelected.id" name="options" (change)="isOnCart()" id="prodOptions">
+                <option *ngFor="let option of options" value="{{option.id}}">{{option.name}}</option>
             </select>
         </div>
         <div class="product-options">

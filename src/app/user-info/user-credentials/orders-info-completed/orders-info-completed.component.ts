@@ -1,6 +1,9 @@
 import { Component, inject } from '@angular/core';
+import { CartProduct } from 'src/app/models/CartProduct';
+import { Order } from 'src/app/models/Order';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
 import { User } from 'src/app/models/User';
+import { CartProductService } from 'src/app/services/cart-product.service';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
@@ -11,22 +14,26 @@ import { UserDisplayService } from 'src/app/services/user-display.service';
   styleUrls: ['./orders-info-completed.component.css']
 })
 export class OrdersInfoCompletedComponent {
-  orderxproductsxoxpService = inject(OrderXProductsXOxpService);
   ordersAndProducts: OrdersAndProducts[] = [];
+  oxpService = inject(OrderXProductsXOxpService);
   displayService = inject(UserDisplayService);
   orderService = inject(OrdersService);
+  cartProductService = inject(CartProductService);
+  cartProducts: CartProduct[] = [];
+  orders: Order[] = [];
   user: User = new User('','','','',0);
   
   async ngOnInit() {
-     this.orderxproductsxoxpService.getOap().subscribe(products => {
+     this.oxpService.getOap().subscribe(products => {
       this.ordersAndProducts = products;
-     });
+     })
      this.orderService.returnUser().subscribe(user => {
       this.user = user;
      });
+     
   }
   changeDisplay(name: string, orderID: string){
-    this.orderxproductsxoxpService.selectOrder(orderID);
+    this.oxpService.selectOrder(orderID);
     this.displayService.changeDisplay(name);
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { CartProduct } from 'src/app/models/CartProduct';
 import { Order } from 'src/app/models/Order';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
 import { Product } from 'src/app/models/Product';
@@ -17,7 +18,7 @@ export class MyBoughtsComponent implements OnInit{
   ordersAndProductsService = inject(OrderXProductsXOxpService);
   selectedOrder: Order = new Order('','',0,0,0,0,new Date(),'', '');
   selectedOXP: OrdersAndProducts = new OrdersAndProducts(this.selectedOrder, []);
-  selectedProducts: Product[] = [];
+  selectedProducts: CartProduct[] = [];
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   userdataService = inject(UserdataService);
   orderService = inject(OrdersService);

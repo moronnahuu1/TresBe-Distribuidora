@@ -21,6 +21,7 @@ import { ShipmentInformationComponent } from './sign-up/shipment-information/shi
 import { userdataGuard } from './guards/userdata.guard';
 import { loginGuard } from './guards/login.guard';
 import { DiscountsComponent } from './discounts/discounts.component';
+import { ChangePricesComponent } from './change-prices/change-prices.component';
 
 const routes: Routes = [
   {
@@ -117,6 +118,11 @@ const routes: Routes = [
   {
     path: 'products/set/discounts',
     component: DiscountsComponent,
+    canActivate: [adminGuard]
+  },
+  {
+    path: 'products/modify/prices',
+    component: ChangePricesComponent,
     canActivate: [adminGuard]
   }
 ]

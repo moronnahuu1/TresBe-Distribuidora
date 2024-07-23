@@ -1,11 +1,10 @@
+import { CartProduct } from "./CartProduct";
 import { Order } from "./Order";
-import { OrderXproducts } from "./OrderXproduct";
-import { Product } from "./Product";
 
 export class OrdersAndProducts{
     order: Order;
-    products: Product[] = [];
-    constructor(order: Order, products: Product[]){
+    products: CartProduct[] = [];
+    constructor(order: Order, products: CartProduct[]){
         this.order = order;
         this.products = products;
     }

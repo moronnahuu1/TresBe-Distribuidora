@@ -8,12 +8,11 @@ import { OrderXProductsXOxpService } from '../services/order-x-products-x-oxp.se
   styleUrls: ['./user-info.component.css']
 })
 export class UserInfoComponent implements OnInit{
-  orderxproductsxoxpService = inject(OrderXProductsXOxpService);
+  oxpService = inject(OrderXProductsXOxpService);
   ordersAndProducts: OrdersAndProducts[] = [];
   async ngOnInit() {
-    window.scrollTo(0, 0);
-    (await this.orderxproductsxoxpService.getProducts()).subscribe(products => {
+    (await this.oxpService.getProducts()).subscribe(products => {
       this.ordersAndProducts = products;
-    })
+     });
   }
 }

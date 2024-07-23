@@ -14,6 +14,7 @@ export class Product{
     discount: number;
     priceDiscount: number = 0;
     optionSelected: string = "";
+    latestID: string = "";
 
     constructor(id: string, name: string, category: string, brand: string, price: number, image: string, discount: number, description: string, quantity: number){
         this.id = id;

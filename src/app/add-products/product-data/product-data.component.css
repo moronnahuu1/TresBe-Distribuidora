@@ -53,7 +53,7 @@ body::after {
     background-color: rgb(142, 243, 142);
 }
 
-#modified{
+#modified, #optionModified{
     background-color: rgb(241, 243, 142);
 }
 
@@ -143,9 +143,13 @@ button:hover {
     overflow-y: auto;
     overflow-x: auto;
 }
+.options{
+    padding-left: 1vi;
+}
 .feature, .option{
     display: flex;
-    width: 60vi;
+    width: 58vi;
+    padding-right: 1vi;
     justify-content: space-around;
     align-items: center;
     button{
@@ -165,10 +169,27 @@ button:hover {
 }
 .option{
     justify-content: space-around;
+    gap: 10px;
 }
 #buttons{
     display: flex;
     gap: 1vi;
+}
+#priceList{
+    input{
+        width: 1vi
+    }
+}
+#optionInputs{
+    width: 20vi;
+}
+#containerSelect{
+    display: flex;
+    flex-direction: column;
+    select{
+        width: 10vi;
+        background-color: white;
+    }
 }
 
 /* Adaptabilidad para pantallas más pequeñas */

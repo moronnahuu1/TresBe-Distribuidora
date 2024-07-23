@@ -1,6 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
-import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
 
 @Component({

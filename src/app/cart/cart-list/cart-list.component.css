@@ -69,3 +69,10 @@
     font-family: 'globerBold';
     font-size: 12px;
   }
+  #quantityInp{
+    width: 3vi;
+    max-width: 3vi;
+    height: 2vi;
+    border: 0;
+    text-align: center;
+  }

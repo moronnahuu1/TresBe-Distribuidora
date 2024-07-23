@@ -37,9 +37,13 @@ export class ProductDataComponent implements OnInit{
   featureService = inject(FeatureService);
   options: Options[] = [];
   optionService = inject(OptionsService);
-
+  allPrices: PriceXproduct[] = [];
+  optionSelected: Options = new Options('','','');
+  optionTerm: string = '';
+  optionUpdated: boolean = false;
   async ngOnInit() {
     this.modified = false;
+    this.optionUpdated = this.messageUpdated();
     this.featureModify = false; //Se pone estos dos atributos en falso para garantizar que no se pueda modificar si se esta buscando agregar un nuevo producto
     if (this.activeRoute.snapshot.params.hasOwnProperty('id')) { //Se comprueba que la ruta contenga el ID del producto a modificar
       this.productID = this.activeRoute.snapshot.params['id']; //Si el parametro existe se lo asigna al product ID
@@ -47,7 +51,6 @@ export class ProductDataComponent implements OnInit{
     if(this.productID != ''){ //Si el product ID tiene informacion
       this.onModify = await this.readProduct(); //Se busca el producto, si lo encuentra retorna verdadero, por lo que se busca modificar. Si no lo encuentra retorna falso, por lo que se lleva a agregar
       if(this.onModify){ //Si se retorna verdadero en la funcion de read product significa que puede modificar y entra aca
-        this.productList = await this.setProductPrice(this.productID); //Se busca las listas de precios de ESE producto encontrado
         (await this.featureService.readProductFeatures(this.productID)).subscribe(featuresAux => {
           this.features = featuresAux; //Se buscan y se retornan las caracteristicas
         });
@@ -59,9 +62,13 @@ export class ProductDataComponent implements OnInit{
         this.brands = brands; //Se leen las marcas para seleccionar
       });
     
-      this.optionService.getProductOptions(this.productID).subscribe(options => {
+      this.optionService.getProductOptions(this.productID).subscribe(async options => {
         this.options = options;
-      })
+        await this.getAllPrices();
+        this.optionSelected = options[0];
+        this.optionTerm = this.optionSelected.name;
+        this.productList = this.returnPrice(this.optionSelected.id);
+      });
   }
   
   getString(name: string): string{ //La funcion sirve para leer cada uno de los input del html, siempre y cuando sean string
@@ -109,27 +116,29 @@ getItemsProduct(){ //Lee los input del producto, crea ese producto y lo retorna
   return productAux;
 }
 
-getItemsPrice(){ //Lee los input de la lista de precios del producto, crea una nueva lista de precios y la retorna
-  if(!this.onModify){
+getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de precios del producto, crea una nueva lista de precios y la retorna
+  if(toDo == 'add'){
     this.pricesID = this.generateRandomId(16);
+    let pricelist1 = this.getNumber('price1Inp');
+    let pricelist2 = this.getNumber('price2Inp');
+    let pricelist3 = this.getNumber('price3Inp');
+    let pricelist4 = this.getNumber('price4Inp');
+    let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, optionID, pricelist1, pricelist2, pricelist3, pricelist4);
+    return pricesAux;
   }else{
     this.pricesID = this.productList.id;
+    let pricelist1 = this.getNumber('modifyPrice1Inp');
+    let pricelist2 = this.getNumber('modifyPrice2Inp');
+    let pricelist3 = this.getNumber('modifyPrice3Inp');
+    let pricelist4 = this.getNumber('modifyPrice4Inp');
+    let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, optionID, pricelist1, pricelist2, pricelist3, pricelist4);
+    return pricesAux;
   }
-  let pricelist1 = this.getNumber('price1Inp');
-  let pricelist2 = this.getNumber('price2Inp');
-  let pricelist3 = this.getNumber('price3Inp');
-  let pricelist4 = this.getNumber('price4Inp');
-  let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, this.productID, pricelist1, pricelist2, pricelist3, pricelist4);
-
-  return pricesAux;
 }
 
   addNewProduct(){ //La funcion solo sirve para cuando se va a agregar un nuevo producto, NO sirve para MODIFICAR
     let productAux: Product = this.getItemsProduct();
-    let pricesAux: PriceXproduct = this.getItemsPrice();
-
     this.productService.saveProduct(productAux).subscribe(() => {});
-    this.pricesService.saveProduct(pricesAux).subscribe(() => {});
     this.added = true; //Al estar en verdadero se activara el mensaje de producto cargado
   }
 
@@ -152,8 +161,6 @@ getItemsPrice(){ //Lee los input de la lista de precios del producto, crea una n
 
   modifyOneProduct(){ //Funcion que se invoca cuando se apreta el boton de cambiar, para este paso ya se ha apretado el boton de modificar
     let productAux: Product = this.getItemsProduct(); //Se crea un nuevo producto y se le asignan los input a travez de esa funcion
-    let pricesAux: PriceXproduct = this.getItemsPrice(); //Mismo paso que el anterior pero con las listas de precios
-    this.pricesService.updateProduct(pricesAux.id, pricesAux).subscribe(()=> {}); 
     this.productService.updateProduct(this.productID, productAux).subscribe(()=>{});
     this.toModify = false; //Despues de modificar todo, el a modificar queda en falso, ya que ya modificó lo que quiso y lo guardó
     this.modified = true; //Despues de modificar todo, el modificado queda en verdadero, para que el html detecte esto y ponga el mensaje de modificacion correcta
@@ -199,6 +206,12 @@ getItemsPrice(){ //Lee los input de la lista de precios del producto, crea una n
         case "discount": 
         return this.modifyProduct.discount;
 
+        case "description": 
+        return this.modifyProduct.description;
+
+        case "stock": 
+        return this.modifyProduct.stock;
+
         case "price1": 
         return this.productList.priceList1;
 
@@ -227,13 +240,46 @@ getItemsPrice(){ //Lee los input de la lista de precios del producto, crea una n
     }
   }
 
-  async setProductPrice(productID: string){
-    let data = await this.getPrice(productID);
+  async getAllPrices(){
+    for(let i = 0; i<this.options.length; i++){
+      this.options[i].name = decodeURIComponent(this.options[i].name);
+      let priceAux = await this.getPrice(this.options[i].id);
+      let optionPrice: PriceXproduct;
+      if(priceAux){
+        optionPrice = priceAux;
+        this.allPrices.push(optionPrice);
+      }
+    }
+  }
+
+  returnPrice(optionID: string){
+    let optionPrice: PriceXproduct = new PriceXproduct('','',0,0,0,0);
+    for(let i = 0; i<this.allPrices.length; i++){
+      if(this.allPrices[i].optionID == optionID){
+        return this.allPrices[i];
+      }
+    }
+    return optionPrice;
+  }
+
+  async setProductPrice(orderID: string, priceList: number){
+    let data = await this.getPrice(orderID);
     let priceAux: PriceXproduct = new PriceXproduct('','',0, 0,0,0);
     if(data != undefined){
       priceAux = data;
     }
-    return priceAux;
+    switch(priceList){
+      case 1:
+        return priceAux.priceList1;
+      case 2:
+        return priceAux.priceList2;
+      case 3:
+        return priceAux.priceList3;
+      case 4:
+          return priceAux.priceList4;
+      default:
+        return priceAux.priceList1;
+    }
   }
 
   modifyFeatures(feature: Feature, index: number){
@@ -268,14 +314,54 @@ getItemsPrice(){ //Lee los input de la lista de precios del producto, crea una n
     let featureAux = new Feature(this.generateRandomId(16), featureName, featureValue, this.productID);
     this.featureService.createFeature(featureAux);
   }
+  messageUpdated(){
+    if(localStorage.getItem('updated')){
+      localStorage.removeItem('updated');
+      return true;
+    }else{
+      return false;
+    }
+  }
   modifyOptions(optionAux: Options, index: number){
     let optionName = this.getString(optionAux.id);
     optionAux.name = optionName;
+    let pricesAux: PriceXproduct = this.getItemsPrice(optionAux.id, 'update'); //Mismo paso que el anterior pero con las listas de precios
+    this.pricesService.updateProduct(pricesAux.id, pricesAux).subscribe(()=> {}); 
     this.optionService.updateOneOption(index, optionAux);
+    localStorage.setItem('updated', JSON.stringify(true));
+    location.reload();
   }
   addOption(){
     let optionName = this.getString('optionInp');
     let optionAux = new Options(this.generateRandomId(16), optionName, this.productID);
     this.optionService.createOption(optionAux);
+    let pricesAux: PriceXproduct = this.getItemsPrice(optionAux.id, 'add');
+    this.pricesService.saveProduct(pricesAux).subscribe(() => {});
+  }
+  searchOptionByName(nameAux: string){
+    let i = 0;
+    let access = false;
+
+    while(i<this.options.length && !access){
+      if(this.options[i].name == nameAux){
+        access = true;
+      }else{
+        i++;
+      }
+    }
+    if(access){
+      return this.options[i];
+    }else{
+      return this.optionSelected;
+    }
+  }
+  deleteOption(optionID: string){
+    if(optionID != undefined){
+      this.optionService.deleteOneOption(optionID);
+    }
+  }
+  selectOption(nameAux: string){
+    this.optionSelected = this.searchOptionByName(nameAux);
+    this.productList = this.returnPrice(this.optionSelected.id);
   }
 }

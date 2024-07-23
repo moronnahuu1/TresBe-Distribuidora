@@ -4,14 +4,14 @@
       <div class="profile-info">
         <h1>#{{selectedOrder.code}}</h1>
         <p>{{getDates(selectedOrder.orderDate)}}</p>
-        <p>${{selectedOrder.total}}</p>
+        <p>$ {{selectedOrder.total}}</p>
         <p *ngIf="!(selectedOrder.payed) && !(user.client) && !isAdmin()">Transferencia pendiente</p>
       </div>
     </section>
     <section class="personal-info">
       <h2>Información de la orden</h2>
       <div class="info-row" *ngFor="let product of selectedProducts">
-        <span>{{product.name}}</span>
+        <span>{{product.name}} {{product.optionSelected}}</span>
         <span>x{{product.quantity}}</span>
       </div>
     </section>

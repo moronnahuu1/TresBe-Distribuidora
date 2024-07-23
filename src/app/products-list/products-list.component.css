@@ -8,9 +8,9 @@ body{
     align-items: center;
     justify-items: center;
     margin-bottom: 2%;
-    max-height: 100vi;
+    /*max-height: 100vi;
     overflow-y: auto;
-    overflow-x: auto;
+    overflow-x: auto;*/
 }
 #product_item{
     background-color: white;

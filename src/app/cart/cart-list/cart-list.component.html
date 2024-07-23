@@ -19,11 +19,11 @@
         </td>
         <td >
           <button class="quantity-btn" (click)="incrementQuantity(product, indice)">+</button>
-          <span id="quantity">  {{ product.quantity }}  </span>
+          <input type="number" name="quantity" id="quantityInp" (input)="changeQuantity(product)" value="{{product.quantity}}">
           <button class="quantity-btn" id="decrement" (click)="decrementQuantity(product, indice)">-</button>
         </td>
         <td><button class="remove-btn" (click)="deleteProduct(indice)">x</button></td>
-        <td id="price" *ngIf="product.discount == 0">${{ product.price }}</td>
+        <td id="price" *ngIf="product.discount == 0">${{ product.price.toFixed(3) }}</td>
         <td id="priceDiscount" *ngIf="product.discount > 0">${{ product.priceDiscount }}</td>
       </tr>
     </tbody>
