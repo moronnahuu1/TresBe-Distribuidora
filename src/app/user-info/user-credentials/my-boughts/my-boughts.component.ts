@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CartProduct } from 'src/app/models/CartProduct';
 import { Order } from 'src/app/models/Order';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
-import { Product } from 'src/app/models/Product';
 import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
@@ -62,6 +61,20 @@ export class MyBoughtsComponent implements OnInit{
     if(confirmation){
       await this.orderService.deleteOrder(this.selectedOrder.id).toPromise();
       alert('Orden de compra borrada exitosamente');
+    }
+  }
+  async attendOrder(){
+    let confirmation = confirm("Al dar click está confirmando que la orden ya fue registrada y cargada en NUVIX para luego ser preparada");
+    if(confirmation){
+      this.selectedOrder.attended = true;
+      this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).subscribe(()=>{});
+    }
+  }
+  async unattendOrder(){
+    let confirmation = confirm("Al dar click está confirmando que la orden aún no fue registrada y necesita verla en este apartado");
+    if(confirmation){
+      this.selectedOrder.attended = false;
+      this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).subscribe(()=>{});
     }
   }
 }

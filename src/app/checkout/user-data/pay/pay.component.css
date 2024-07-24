@@ -25,3 +25,6 @@ button{
 button:hover{
     transform: scale(1.07);
 }
+#spinner{
+    animation: spin 1s linear infinite;
+}

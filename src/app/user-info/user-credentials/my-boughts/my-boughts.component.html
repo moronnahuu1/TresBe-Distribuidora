@@ -35,8 +35,12 @@
       </div>
     </section>
 
-    <button *ngIf="isAdmin()" (click)="deleteUserOrder(selectedOrder.code)">Eliminar</button>
-    <button *ngIf="!(user.client) && !(selectedOrder.payed) && !isAdmin()">Ya hice la transferencia</button>
+    <div id="buttonsUser">
+      <button *ngIf="isAdmin()" (click)="deleteUserOrder(selectedOrder.code)">Eliminar</button>
+      <button *ngIf="isAdmin() && !selectedOrder.attended" (click)="attendOrder()" id="registerOrder">Orden Registrada</button>
+      <button *ngIf="isAdmin() && selectedOrder.attended" (click)="unattendOrder()">No está registrada</button>
+      <button *ngIf="!(user.client) && !(selectedOrder.payed) && !isAdmin()">Ya hice la transferencia</button>
+    </div>
   </main>
   <div id="containerNoOrders" *ngIf="selectedOrder.code == ''">
     <div id="noOrders">

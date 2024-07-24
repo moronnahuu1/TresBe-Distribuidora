@@ -6,5 +6,5 @@
         <p>DNI: 00000000</p>
     </div>
     <button *ngIf="!creating" (click)="placeOrder()">Realizar pedido</button>
-    <button *ngIf="creating">Realizando pedido</button>
+    <button *ngIf="creating"><i class="fa fa-spinner" id="spinner" aria-hidden="true"></i> Realizando pedido</button>
 </div>

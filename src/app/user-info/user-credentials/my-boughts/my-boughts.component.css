@@ -93,3 +93,13 @@
     padding: 10px 20px;
     cursor: pointer;
   }
+  #buttonsUser{
+    display: flex;
+    gap: 10px;
+  }
+  #registerOrder{
+    background-color: white;
+    color: black;
+    padding: 8px 18px;
+    border: 2px solid #007bff;;
+  }
