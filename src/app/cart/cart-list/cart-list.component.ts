@@ -39,7 +39,7 @@ export class CartListComponent {
     this.cartService.deleteProduct(index);
   }
   changeQuantity(productAux: Product){
-    let inpAux = document.getElementById('quantityInp') as HTMLInputElement;
+    let inpAux = document.getElementById(productAux.id) as HTMLInputElement;
     if(inpAux){
       let input = parseFloat(inpAux.value);
       if(input > 0){

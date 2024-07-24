@@ -24,7 +24,7 @@ export class AdminSupportComponent{
     if(userID != ''){
       this.user = await this.readUser(userID);
       this.orderService.changeUser(this.user);
-      (await this.orderxproductsxoxpService.getProducts()).subscribe(products => {
+      (await this.orderxproductsxoxpService.getProducts('')).subscribe(products => {
         this.ordersAndProducts = products;
       });
       (await this.userdataService.returnUserdata(this.user.id)).subscribe(userdata => {

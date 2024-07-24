@@ -23,18 +23,27 @@ export class OrderXProductsXOxpService {
   _orderAndproducts: BehaviorSubject<OrdersAndProducts[]> = new BehaviorSubject<OrdersAndProducts[]>([]);
   productService = inject(ProductService);
   oxpService = inject(OrdersXProductsService);
-  selectedOrder: OrdersAndProducts = new OrdersAndProducts(new Order('','',0,0,0,0,new Date(),'', ''), []);
+  selectedOrder: OrdersAndProducts = new OrdersAndProducts(new Order('','',0,0,0,0,new Date(),'', '', false), []);
   _selectedOrder: BehaviorSubject<OrdersAndProducts> = new BehaviorSubject<OrdersAndProducts>(this.selectedOrder);
   constructor() { }
 
-  async getProducts(){
-    (await this.orderService.readOrders()).subscribe(orders => {
-      this.orders = orders;
-    });
+  async getProducts(admin: string){
+    if(admin == 'admin'){
+      (await this.orderService.readAdminOrders()).subscribe(orders => {
+        this.orders = orders;
+      });
+    }else{
+      (await this.orderService.readOrders()).subscribe(orders => {
+        this.orders = orders;
+      });
+    }
     if(this.orders.length == 0){
       this.orderAndproducts = [];
       this._orderAndproducts.next(this.orderAndproducts);
     }
+
+    this.orderAndproducts = [];
+    this._orderAndproducts.next(this.orderAndproducts);
     
     for(let i=0; i<this.orders.length; i++){
       let productsArray: CartProduct[] = [];

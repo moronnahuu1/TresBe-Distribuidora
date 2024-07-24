@@ -1,0 +1,14 @@
+<div style="display: flex; align-items: center; width: 100%; background-color: rgb(239, 239, 239);">
+    <div style="font-family: sans-serif; border: 2px solid orange; padding: 1vi; height: fit-content; width: 35vi; background-color: white;">
+        <div style="display: flex; flex-direction: column align-items: center;">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8NCmCrXwgexWDbhCLBeyLUpFBi4FxQA9Zhw&s" style="margin-left: 20%; margin-right: 20%;" alt="">
+        </div>
+        <h1 style="color: rgb(0, 125, 221); text-align: center;">Gracias por comprar en Tresbe Distribuidora</h1>
+        <h3 style="text-align: center">Su orden se registró correctamente</h3>
+        <p>Detalle De La Orden:</p>
+        <p>Código: #${order.code}</p>
+        <p>Envío a: ${this.userdata.street} ${this.userdata.streetNumb}, ${this.userdata.city}, ${this.userdata.province}, ${this.userdata.country}</p>
+        <p>Fecha: ${order.orderDate}</p>
+        <p>Total: $${order.total.toLocaleString()}</p>
+    </div>
+</div>

@@ -69,7 +69,7 @@
     font-family: 'globerBold';
     font-size: 12px;
   }
-  #quantityInp{
+  .quantityInp{
     width: 3vi;
     max-width: 3vi;
     height: 2vi;

@@ -10,7 +10,7 @@ import { OrdersService } from '../services/orders.service';
 })
 export class OrderPlacedComponent implements OnInit{
     orderService = inject(OrdersService);
-    order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "");
+    order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "", false);
     activeRoute = inject(ActivatedRoute);
     id = this.activeRoute.snapshot.params['id'];
     async ngOnInit() {

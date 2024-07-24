@@ -69,6 +69,26 @@ export class OrdersService {
         throw error; // Puedes manejar el error de acuerdo a tus necesidades
       }
   }
+
+  async readAdminOrders(){
+    let ordersAux = await this.getAdminOrdersTC();
+    if(ordersAux){
+      this.orders = ordersAux;
+      this._orders.next(this.orders);
+    }
+    return this._orders.asObservable();
+  }
+
+  async getAdminOrdersTC(){
+    try {
+      const data = await this.getOrdersAdmin().toPromise();
+      console.log(data?.length);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+}
   getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(this.myAppUrl + this.myApiUrl); 
   }
@@ -83,14 +103,26 @@ export class OrdersService {
     let urlAux = this.myAppUrl + this.myApiUrl + 'user/'
     return this.http.get<Order[]>(urlAux + this.user.id); 
   }
+  getOrdersAdmin(){
+    let urlAux = this.myAppUrl + this.myApiUrl;
+    return this.http.get<Order[]>(urlAux + 'admin/attended'); 
+  }
   deleteOrder(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
   }
   deleteOrders(): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
   }
-  saveOrder(productAux: Order): Observable<void>{
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+  saveOrder(productAux: Order, to: string, subject: string, html: string): Observable<void>{
+    let urlAux = this.myAppUrl + this.myApiUrl;
+    const emailData = {
+      order: productAux,
+      to: to,
+      subject: subject,
+      text: '', // Puedes dejar esto vacío si solo envías HTML
+      html: html
+  };
+    return this.http.post<void>(urlAux, emailData);
   }
   updateOrder(id: string, productAux: Order): Observable<void>{
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);

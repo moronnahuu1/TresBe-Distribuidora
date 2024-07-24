@@ -26,20 +26,17 @@ export class PayComponent {
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   userdataService = inject(UserdataService);
   cartProducts: Array<Product> = [];
-  products: Array<Product> = [];
+  ///products: Array<Product> = [];
   subtotal: number = 0;
   total: number = 0;
   dataCreated: boolean = false;
   user: User = new User("", "", "", "",0);
+  creating: boolean = false;
 
   async ngOnInit() {
     this.getUser();
     this.cartService.getProducts().subscribe(products => {
       this.cartProducts = products;
-    })
-
-    this.productService.getProducts().subscribe(products => {
-      this.products = products;
     })
 
     this.cartService.getSubtotal().subscribe(subtotal => {
@@ -98,13 +95,23 @@ export class PayComponent {
   async createOrder(){
     /* La funcion se encarga de manejar la base de datos creando la nueva orden del usuario y agregandola a la base de datos */
     let orderID = this.generateRandomId(); //Se crea un ID de la orden
-    let order: Order = new Order(orderID, this.generateRandomCode(), 0, 0, this.subtotal, this.total, new Date(), this.user.id, this.userdata.id); //Se crea la orden con los datos de la reserva
-    await this.orderService.saveOrder(order).toPromise(); //Se guarda la orden creada en la base de datos
-    let emailData = {
-      to: this.user.email,
-      subject: 'Orden de compra',
-      text: 'Gracias por comprar en Tresbe Distribuidora. Su orden se registro correctamente'
-    };
+    let order: Order = new Order(orderID, this.generateRandomCode(), 0, 0, this.subtotal, this.total, new Date(), this.user.id, this.userdata.id, false); //Se crea la orden con los datos de la reserva
+    let to = this.user.email;
+    let subject = 'Orden de compra'
+    let text = `<div style="display: flex; align-items: center; background-color: rgb(239, 239, 239); width: 50%; padding-left 50%; padding-right: 50%; padding-top: 10%; padding-bottom: 10%">
+    <div style="font-family: sans-serif; border: 2px solid orange; padding: 1vi; height: fit-content; background-color: rgb(239, 239, 239);">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8NCmCrXwgexWDbhCLBeyLUpFBi4FxQA9Zhw&s" style="margin-left: 38%;" alt="">
+        <h1 style="color: rgb(0, 125, 221); text-align: center;">Gracias por comprar en Tresbe Distribuidora</h1>
+        <h3 style="text-align: center; color: black;">Su orden se registró correctamente</h3>
+        <h4 color: black;>DETALLE DE LA ORDEN</h4>
+        <p color: black;>Código: #${order.code}</p>
+        <p color: black;>Envío a: ${this.userdata.street} ${this.userdata.streetNumb}, ${this.userdata.city}, ${this.userdata.province}, ${this.userdata.country}</p>
+        <p color: black;>Fecha: ${order.orderDate}</p>
+        <p color: black;>Total: $${order.total.toLocaleString()}</p>
+    </div>
+</div>`;
+    this.creating = true;
+    await this.orderService.saveOrder(order, to, subject, text).toPromise(); //Se guarda la orden creada en la base de datos
     for(let i=0; i<this.cartProducts.length; i++){ //Se recorre el arreglo de productos DEL CARRITO
       let oxpAux: OrderXproducts = new OrderXproducts(this.generateRandomId(), orderID, this.cartProducts[i].id, this.cartProducts[i].quantity); //Se agregan los productos a una tabla de la base de datos (SOLO EL ID DEL PRODUCTO) y se lo relaciona con la orden de la misma manera (SOLO EL ID DE LA ORDEN)
       this.oxpService.saveOrderXproducts(oxpAux).subscribe(() => {}); //Se guardan los datos creados en la base de datos

@@ -23,7 +23,7 @@ export class OrdersInfoComponent implements OnInit{
   displayService = inject(UserDisplayService);
   
   async ngOnInit() {
-      (await this.orderxproductsxoxpService.getProducts()).subscribe(products => {
+      this.orderxproductsxoxpService.getOap().subscribe(products => {
         this.ordersAndProducts = products;
       })
     this.orderxproductsxoxpService.ordenacionPorInsercion();

@@ -11,8 +11,21 @@ export class UserInfoComponent implements OnInit{
   oxpService = inject(OrderXProductsXOxpService);
   ordersAndProducts: OrdersAndProducts[] = [];
   async ngOnInit() {
-    (await this.oxpService.getProducts()).subscribe(products => {
-      this.ordersAndProducts = products;
-     });
+    if(this.isAdmin()){
+      (await this.oxpService.getProducts('admin')).subscribe(products => {
+        this.ordersAndProducts = products;
+       });
+    }else{
+      (await this.oxpService.getProducts('')).subscribe(products => {
+        this.ordersAndProducts = products;
+       });
+    }
+  }
+  isAdmin(){
+    if(localStorage.getItem('admin')){
+      return true;
+    }else{
+      return false;
+    }
   }
 }
