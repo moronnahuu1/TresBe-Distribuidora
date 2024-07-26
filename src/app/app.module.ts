@@ -76,6 +76,8 @@ import { HeaderPricesComponent } from './change-prices/header-prices/header-pric
 import { ChangeEmailComponent } from './user-info/user-credentials/privacity/change-email/change-email.component';
 import { ChangePasswordComponent } from './user-info/user-credentials/privacity/change-password/change-password.component';
 import { ChangeDetailsComponent } from './user-info/user-credentials/privacity/change-details/change-details.component';
+import { PayedProofComponent } from './payed-proof/payed-proof.component';
+import { PayedDataComponent } from './payed-proof/payed-data/payed-data.component';
 
 @NgModule({
   declarations: [
@@ -151,6 +153,8 @@ import { ChangeDetailsComponent } from './user-info/user-credentials/privacity/c
     ChangeEmailComponent,
     ChangePasswordComponent,
     ChangeDetailsComponent,
+    PayedProofComponent,
+    PayedDataComponent,
   ],
   imports: [
     BrowserModule,
