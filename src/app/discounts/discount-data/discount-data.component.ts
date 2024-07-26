@@ -1,6 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Product } from 'src/app/models/Product';
-import { ProductService } from 'src/app/services/product.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-discount-data',

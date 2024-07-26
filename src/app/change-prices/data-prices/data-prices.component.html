@@ -1,20 +1,25 @@
-<div id="container">
-    <div id="form">
-        <label for="percentage">Ingrese el porcentaje de cambio (0.05, 0.1, etc.)</label>
-        <input type="number" name="percentage" id="percentageInp">
+<div id="align">
+    <div id="container">
+        <div id="form">
+            <label for="percentage">Ingrese el porcentaje de cambio (0.05, 0.1, etc.)</label>
+            <br>
+            <input type="number" name="percentage" id="percentageInp">
+        </div>
+    
+        <div id="brandSelection">
+            <label for="percentage">Seleccione la marca a la que va a aplicar un cambio de precio</label>
+            <br>
+            <select name="brand" [(ngModel)]="brandSelected.name" id="brandSelect" (change)="selectBrand(brandSelected.name)">
+                <option *ngFor="let brand of brands" value="{{brand.name}}">{{brand.name}}</option>
+            </select>
+        </div>
+    
+        <div id="buttons">
+            <button id="increase" class="changePrice" (click)="changePrices('increase')">Aumentar Precios</button>
+            <button id="decrease" class="changePrice" (click)="changePrices('decrease')">Disminuir Precios</button>
+        </div>
     </div>
-
-    <div id="brandSelection">
-        <label for="percentage">Seleccione la marca a la que va a aplicar un cambio de precio</label>
-        <select name="brand" [(ngModel)]="brandSelected.name" id="brandSelect" (change)="selectBrand(brandSelected.name)">
-            <option *ngFor="let brand of brands" value="{{brand.name}}">{{brand.name}}</option>
-        </select>
+    <div id="messages">
+        <p *ngIf="progress > 0"><i class="fa fa-spinner" id="spinner" *ngIf="progress < 100" aria-hidden="true"></i> Cambiando Precios | {{progress}}%</p>
     </div>
-
-    <div id="buttons">
-        <button id="increase" class="changePrice" (click)="changePrices('increase')">Aumentar Precios</button>
-        <button id="decrease" class="changePrice" (click)="changePrices('decrease')">Disminuir Precios</button>
-    </div>
-
-    <p>{{progress}}%</p>
 </div>

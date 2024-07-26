@@ -12,6 +12,13 @@ body{
     overflow-y: auto;
     overflow-x: auto;*/
 }
+.priceTacched{
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px; /* Ajusta el grosor según tus necesidades */
+}
+#discounted{
+    font-size: 20px;
+}
 #product_item{
     background-color: white;
     cursor: pointer;

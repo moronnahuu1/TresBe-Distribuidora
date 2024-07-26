@@ -12,10 +12,11 @@ register();
 export class SwiperComponent implements OnInit{
   arraySwiper: Array<string> = [];
   ngOnInit(): void {
-      this.arraySwiper.push('../../../assets/tresbe.png');
+      this.arraySwiper.push('../../../assets/TRESBEWEB.jpg');
       this.arraySwiper.push('../../../assets/mota.jpeg');
       this.arraySwiper.push('../../../assets/gym6.jpg');
       this.arraySwiper.push('../../../assets/gym5.jpg');
       this.arraySwiper.push('../../../assets/gym4.jpg');
+      
   }
 }

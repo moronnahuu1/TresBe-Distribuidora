@@ -72,6 +72,10 @@ import { ChangePricesComponent } from './change-prices/change-prices.component';
 import { DataPricesComponent } from './change-prices/data-prices/data-prices.component';
 import { IncreaseComponent } from './change-prices/data-prices/increase/increase.component';
 import { DecreaseComponent } from './change-prices/data-prices/decrease/decrease.component';
+import { HeaderPricesComponent } from './change-prices/header-prices/header-prices.component';
+import { ChangeEmailComponent } from './user-info/user-credentials/privacity/change-email/change-email.component';
+import { ChangePasswordComponent } from './user-info/user-credentials/privacity/change-password/change-password.component';
+import { ChangeDetailsComponent } from './user-info/user-credentials/privacity/change-details/change-details.component';
 
 @NgModule({
   declarations: [
@@ -143,6 +147,10 @@ import { DecreaseComponent } from './change-prices/data-prices/decrease/decrease
     DataPricesComponent,
     IncreaseComponent,
     DecreaseComponent,
+    HeaderPricesComponent,
+    ChangeEmailComponent,
+    ChangePasswordComponent,
+    ChangeDetailsComponent,
   ],
   imports: [
     BrowserModule,

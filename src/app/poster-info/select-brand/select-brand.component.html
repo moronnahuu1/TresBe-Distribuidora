@@ -3,5 +3,7 @@
     <div id="container">
         <div class="brands" (click)="onSelectBrand('all')">TODOS</div>
         <div class="brands" *ngFor="let brand of brandsArray" (click)="onSelectBrand(brand.name)">{{brand.name.toUpperCase()}}</div>
+        <div class="brands" *ngIf="isAdmin()" [routerLink]="['/products/set/discounts']">DESCUENTOS</div>
+        <div class="brands" *ngIf="isAdmin()" [routerLink]="['/products/modify/prices']">PRECIOS</div>
     </div>
 </div>

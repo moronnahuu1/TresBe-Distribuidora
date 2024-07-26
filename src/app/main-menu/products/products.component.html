@@ -12,6 +12,8 @@
         <div class="product-item" *ngFor="let product of productsArray" routerLink="/products/{{product.id}}">
             <img src="{{product.image}}" alt="{{product.name}}">
             <h2>{{product.name}}</h2>
+            <p>{{product.brand}}</p>
+            <p>{{product.category}}</p>
         </div>
     </div>
     <div id="buttonProducts" [routerLink]="['/products']">Conocé nuestros productos</div>

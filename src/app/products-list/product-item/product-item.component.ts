@@ -112,6 +112,7 @@ export class ProductItemComponent implements OnInit{
       if(optionAux1 != null){
         this.optionSelected = optionAux1;
         this.productSelected.price = await this.setProductPrice(this.optionSelected.id);
+        this.productSelected.priceDiscount = (this.productSelected.price - (this.productSelected.price * this.productSelected.discount));
       }
     }
   }

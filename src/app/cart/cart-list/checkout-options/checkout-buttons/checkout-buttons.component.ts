@@ -15,13 +15,17 @@ export class CheckoutButtonsComponent {
   user: User = new User('', '', '', '', 0);
   async verifyOrders(){
     this.user = this.getUser();
+    if(this.user.email != ''){
+      this.router.navigate(['/checkout']);
+    }else{
+      this.router.navigate(['/login']);
+    }
     /*let existanceID = await this.hasOrder();
     if(existanceID != ""){
       this.router.navigate([`/checkout/orderExist/${existanceID}`]);
     }else{
       this.router.navigate(['/checkout']);
     }*/
-   this.router.navigate(['/checkout']);
   }
   getUser(){
     let userAux = localStorage.getItem('userLogged');

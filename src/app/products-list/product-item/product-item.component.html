@@ -13,8 +13,8 @@
         <div class="product-title">{{productSelected.name}}</div>
         <div class="product-code">Categoría: {{productSelected.category}}</div>
         <div class="reviews"><span>★★★★★</span> <a href="#" class="reviews">2 reviews</a></div>
-        <div class="price" *ngIf="productSelected.discount == 0">${{productSelected.price.toFixed(3)}}</div>
-        <div class="price" *ngIf="productSelected.discount > 0">${{productSelected.priceDiscount}}</div>
+        <div class="price" [ngClass]="{'tacched': productSelected.discount > 0}">${{productSelected.price.toFixed(1)}}</div>
+        <div class="price" *ngIf="productSelected.discount > 0">${{productSelected.priceDiscount.toFixed(1)}}</div>
         <div class="add-to-bag" (click)="addToCart()" *ngIf="!onCart">Añadir al carrito</div>
         <div class="add-to-bag"  [routerLink]="['/cart']" *ngIf="onCart">En carrito</div>
         <div class="form">
@@ -32,11 +32,11 @@
             </select>
         </div>
         <div class="product-options">
-            <div class="option-title">DESCRIPCIÓN</div>
+            <div class="option-title" *ngIf="productSelected.description != ''">DESCRIPCIÓN</div>
             <div id="description">{{productSelected.description}}</div>
         </div>
         <div class="product-options">
-            <div class="option-title">CARACTERISTICAS</div>
+            <div class="option-title" *ngIf="productSelected.features.length > 0">CARACTERISTICAS</div>
             <div class="size-options">
                 <div *ngFor="let feature of productSelected.features">
                   <p>{{feature.name}}</p>

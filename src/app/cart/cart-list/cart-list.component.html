@@ -24,7 +24,7 @@
         </td>
         <td><button class="remove-btn" (click)="deleteProduct(indice)">x</button></td>
         <td id="price" *ngIf="product.discount == 0">${{ product.price.toFixed(1) }}</td>
-        <td id="priceDiscount" *ngIf="product.discount > 0">${{ product.priceDiscount }}</td>
+        <td id="priceDiscount" *ngIf="product.discount > 0">${{ product.priceDiscount.toFixed(1)}}</td>
       </tr>
     </tbody>
   </table>

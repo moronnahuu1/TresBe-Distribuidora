@@ -6,10 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <swiper-container slides-per-view="1" navigation="true" pagination="true" id="container" [speed]="500" [loop]="true" [autoplay]="{ delay: 5000}" css-mode="true">
+    <swiper-container slides-per-view="1" navigation="true" pagination="true" id="container" speed="10000" [loop]="true" autoplay="true" css-mode="true">
         <swiper-slide id="slide" *ngFor="let imagen of arraySwiper">
             <img src="{{imagen}}" alt="">
         </swiper-slide>
     </swiper-container>
+
 </body>
 </html>

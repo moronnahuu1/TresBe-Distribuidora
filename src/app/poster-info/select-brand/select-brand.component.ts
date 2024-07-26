@@ -44,4 +44,11 @@ export class SelectBrandComponent implements OnInit{
       });
     }
   }
+  isAdmin(){
+    if(localStorage.getItem('admin')){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }
