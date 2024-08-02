@@ -30,6 +30,7 @@
   
   img {
     width: 10vh;
+    max-height: 15vh;
     margin-right: 1vh;
   }
   

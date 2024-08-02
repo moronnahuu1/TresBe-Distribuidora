@@ -35,6 +35,7 @@ export class SelectBrandComponent implements OnInit{
   }
 
   async onSelectBrand(brand: string){
+    this.productService.changeLoading('true').subscribe(()=>{});
     if(brand == 'all'){
       (await this.productService.readProducts('all', null)).subscribe(products => {
       });
@@ -43,6 +44,7 @@ export class SelectBrandComponent implements OnInit{
       (await this.productService.readProducts('brand', brand)).subscribe(products => {
       });
     }
+    this.productService.changeLoading('false').subscribe(()=>{});
   }
   isAdmin(){
     if(localStorage.getItem('admin')){

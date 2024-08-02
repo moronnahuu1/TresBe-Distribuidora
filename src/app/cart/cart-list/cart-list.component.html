@@ -23,7 +23,7 @@
           <button class="quantity-btn" id="decrement" (click)="decrementQuantity(product, indice)">-</button>
         </td>
         <td><button class="remove-btn" (click)="deleteProduct(indice)">x</button></td>
-        <td id="price" *ngIf="product.discount == 0">${{ product.price.toFixed(1) }}</td>
+        <td id="price" *ngIf="product.discount == 0">${{ formatNumber(product.price) }}</td>
         <td id="priceDiscount" *ngIf="product.discount > 0">${{ product.priceDiscount.toFixed(1)}}</td>
       </tr>
     </tbody>

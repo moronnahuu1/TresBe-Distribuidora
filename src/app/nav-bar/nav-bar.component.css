@@ -4,9 +4,7 @@
     height: 70px;
    display: flex;
    justify-content: center;
-   justify-items: center;
    align-items: center;
-   align-content: center;
     :is(a){
         font-family: "Posterama 1919 W01 SemiBold";
         text-decoration: none;
@@ -38,6 +36,163 @@
     img{
         width: 20vh;
         height: 6vh;
-        margin: 0;
+        margin-left: -100px;
+        padding: 0;
     }
 }
+#toggleButton {
+    opacity: 0;
+}
+@media (min-width: 1200px) {}
+@media (min-width: 768px) and (max-width: 1199px) {
+    .navBar{
+        a{
+            margin-left: 1.5%;
+            margin-right: 1.5%;
+        }
+        img{
+            width: 12vh;
+            height: 4vh;
+        }
+    }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+    /*.navBar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: fit-content;
+    }
+    
+    .navBar a, .navBar p, .navBar i {
+        text-decoration: none;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        display: block;
+        width: 100%;
+        text-align: center;
+        border-radius: 4px;
+        opacity: 1;
+        transition: background-color 0.3s, opacity 0.5s, height 0.5s;
+    }
+
+    .navBar a.hidden, .navBar p.hidden, .navBar i.hidden {
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    
+    .navBar a:hover, .navBar p:hover, .navBar i:hover {
+        background-color: #001f40;
+    }
+    
+    .navBar a:nth-of-type(n+2):nth-of-type(-n+7), .navBar p {
+        width: 48%;
+        margin: 1%;
+    }
+    
+    .navBar i {
+        margin-top: 20px;
+    }*/
+    
+}
+@media (max-width: 480px) and (min-width: 280px) {
+    /*.navBar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: fit-content;
+    }
+    
+    .navBar a, .navBar p, .navBar i {
+        text-decoration: none;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        display: block;
+        width: 100%;
+        text-align: center;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+    
+    .navBar a:hover, .navBar p:hover, .navBar i:hover {
+        background-color: #001f40;
+    }
+    
+    .navBar a:nth-of-type(n+2):nth-of-type(-n+7), .navBar p {
+        width: 48%;
+        margin: 1%;
+    }
+    
+    .navBar i {
+        margin-top: 20px;
+    }*/
+    .navBar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: fit-content;
+        position: relative;
+        img{
+            margin-left: 0px;
+        }
+    }
+    
+    .navBar a, .navBar p{
+        text-decoration: none;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        display: block;
+        width: 100%;
+        text-align: center;
+        border-radius: 4px;
+        transition: background-color 0.3s, opacity 0.5s, max-height 0.5s, visibility 0.5s;
+        opacity: 1;
+        max-height: 50px; /* Ajusta esto según sea necesario */
+        visibility: visible;
+    }
+    
+    .navBar a.hidden, .navBar p.hidden, .navBar i.hidden {
+        opacity: 0;
+        max-height: 0;
+        visibility: hidden;
+        overflow: hidden;
+    }
+    
+    .navBar a.collapsing, .navBar p.collapsing {
+        transition: max-height 0.5s, opacity 0.5s, visibility 0.5s;
+    }
+    
+    .navBar a:hover, .navBar p:hover {
+        background-color: #001f40;
+    }
+    
+    .navBar a:nth-of-type(n+2):nth-of-type(-n+7), .navBar p {
+        width: 48%;
+        margin: 1%;
+    }
+    
+    .navBar i {
+        margin-top: 20px;
+    }
+    
+    #toggleButton {
+        opacity: 1;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: rgb(215, 215, 215);
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        i{
+            margin-top: 0;
+        }
+    }
+    #toggleButton:hover{
+        color: rgb(0, 25, 93);
+    }
+     
+}
+@media (max-width: 279px) {}

@@ -20,12 +20,23 @@ export class ProductService {
    _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   productXpriceService = inject(PricesService);
   user: User = new User('', '', '', '', 0);
+  loading: boolean = false;
+  _loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.loading);
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Products/'
   }
   returnObservable(){
     return this._products.asObservable();
+  }
+  changeLoading(name: string){
+    if(name == 'false'){
+      this.loading = false;
+    }else{
+      this.loading = true;
+    }
+    this._loading.next(this.loading);
+    return this._loading.asObservable();
   }
   getDiscounts(productAux: Product){
     if(productAux.discount != 0){

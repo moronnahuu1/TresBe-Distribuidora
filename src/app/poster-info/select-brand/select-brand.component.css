@@ -21,7 +21,7 @@
     letter-spacing: 2px;
     font-size: 13px;
     text-align: center;
-    width: 8vi;
+    width: 15vh;
     padding: 1vi;
     cursor: pointer;
     transition: background-color 1s ease;
@@ -30,3 +30,28 @@
     background-color: rgb(163, 233, 50);
     color: black;
 }
+
+@media (min-width: 1200px) {}
+@media (min-width: 768px) and (max-width: 1199px) {
+    #container{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+    #container{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width: 480px) and (min-width: 280px) {
+    #container{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .brands{
+        width: 15vh;
+        font-size: 10px;
+    }
+}
+@media (max-width: 279px) {}

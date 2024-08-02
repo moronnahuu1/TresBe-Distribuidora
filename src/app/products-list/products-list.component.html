@@ -10,7 +10,9 @@
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <app-nav-bar></app-nav-bar>
     <app-poster-info></app-poster-info>
-    <div id="container">
+    <app-no-products *ngIf="!loading && productsArray.length == 0"></app-no-products>
+    <app-loading *ngIf="loading"></app-loading>
+    <div id="container" *ngIf="!loading">
         <div id="product_item" routerLink="/products/{{product.id}}" *ngFor="let product of productsArray">
             <img src="{{product.image}}" alt="">
             <div id="dataContainer">
@@ -26,10 +28,10 @@
                 <button routerLink="/products" id="delete" class="buttonProducts fa fa-eye" (click)="deleteProduct(product.id)" *ngIf="isAdmin()"> ELIMINAR</button>
             </div>
         </div>
-        <div id="addProduct" class="admin" *ngIf="isAdmin()" [routerLink]="['/add/product']">
+        <div id="addProduct" class="admin" *ngIf="isAdmin() && !loading" [routerLink]="['/add/product']">
             <p class="fa fa-plus-circle"></p>
         </div>
-        <div id="setDiscounts" class="admin" *ngIf="isAdmin()" [routerLink]="['/products/set/discounts']">
+        <div id="setDiscounts" class="admin" *ngIf="isAdmin() && !loading" [routerLink]="['/products/set/discounts']">
             <p><i class="fa fa-angle-double-down fa-5x" aria-hidden="true"></i>
             </p>
             <p>Agregar Descuentos</p>

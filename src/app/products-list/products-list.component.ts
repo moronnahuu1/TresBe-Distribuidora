@@ -14,12 +14,16 @@ export class ProductsListComponent implements OnInit{
   activeRoute = inject(ActivatedRoute);
   category: string = "";
   brand: string = "";
+  loading: boolean = false;
   async ngOnInit() {
     window.scrollTo(0, 0);
     await this.filters();
   }
 
   async filters(){ //Funcion para filtrar los productos, puede ser por categoria o por marca
+    this.productService.changeLoading('true').subscribe(loadAux => {
+      this.loading = loadAux;
+    });
     const categoryAux = this.activeRoute.snapshot.params['category']; //En ambos casos se leen los parametros de la ruta para ver si se trata de una marca o una categoria
     const brandAux = this.activeRoute.snapshot.params['brand'];
     if(brandAux){ //Si es una marca
@@ -40,7 +44,10 @@ export class ProductsListComponent implements OnInit{
         this.productsArray = products;
       });
     }
-  }
+    this.productService.changeLoading('false').subscribe(loadAux => {
+      this.loading = loadAux;
+    }); 
+   }
   isAdmin(){ //funcion para detectar si el usuario logueado es administrador
     let access = localStorage.getItem("admin");
     let admin = false;

@@ -10,7 +10,25 @@ import { CartService } from '../services/cart.service';
 export class NavBarComponent {
   cartService = inject(CartService);
   products: Array<Product> = [];
+  areNavItemsVisible: boolean = true;
+  isHidden: boolean = false;
+  isTransitioning: boolean = false;
   ngOnInit(): void {
+    this.isTransitioning = true;
+    this.areNavItemsVisible = !this.areNavItemsVisible;
+    if (this.areNavItemsVisible) {
+      // Show items with transition
+      this.isHidden = false;
+      setTimeout(() => {
+        this.isTransitioning = false;
+      }, 500); // This duration should match your CSS transition duration
+    } else {
+      // Hide items with transition
+      setTimeout(() => {
+        this.isHidden = true;
+        this.isTransitioning = false;
+      }, 500); // This duration should match your CSS transition duration
+    }
     this.cartService.getProducts().subscribe(products => { //Se leen los productos del carrito para poner la cantidad de productos en la barra
       this.products = products;
     })
@@ -31,4 +49,16 @@ export class NavBarComponent {
     localStorage.removeItem("admin"); //Si los tiene, entrará aca y va a eliminar la caracteristica de administrador
   }
  }
+ toggleNav(): void {
+  this.isTransitioning = true;
+  if (this.isHidden) {
+    // Mostrar elementos con transición
+    this.isHidden = false;
+    this.isTransitioning = false;
+  } else {
+    // Ocultar elementos con transición
+      this.isHidden = true;
+      this.isTransitioning = false;
+  }
+}
 }

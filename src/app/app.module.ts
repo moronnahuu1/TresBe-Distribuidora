@@ -78,6 +78,8 @@ import { ChangePasswordComponent } from './user-info/user-credentials/privacity/
 import { ChangeDetailsComponent } from './user-info/user-credentials/privacity/change-details/change-details.component';
 import { PayedProofComponent } from './payed-proof/payed-proof.component';
 import { PayedDataComponent } from './payed-proof/payed-data/payed-data.component';
+import { LoadingComponent } from './loading/loading.component';
+import { NoProductsComponent } from './products-list/no-products/no-products.component';
 
 @NgModule({
   declarations: [
@@ -155,6 +157,8 @@ import { PayedDataComponent } from './payed-proof/payed-data/payed-data.componen
     ChangeDetailsComponent,
     PayedProofComponent,
     PayedDataComponent,
+    LoadingComponent,
+    NoProductsComponent,
   ],
   imports: [
     BrowserModule,

@@ -158,4 +158,7 @@ export class CartListComponent {
     }
     return productAux;
   }
+  formatNumber(numberAux: number) {
+    return Number.isInteger(numberAux) ? numberAux : numberAux.toFixed(1);
+}
 }
