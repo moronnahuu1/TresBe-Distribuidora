@@ -13,7 +13,7 @@
     <app-no-products *ngIf="!loading && productsArray.length == 0"></app-no-products>
     <app-loading *ngIf="loading"></app-loading>
     <div id="container" *ngIf="!loading">
-        <div id="product_item" routerLink="/products/{{product.id}}" *ngFor="let product of productsArray">
+        <div id="product_item" routerLink="/products/{{product.id}}" *ngFor="let product of paginatedProducts()">
             <img src="{{product.image}}" alt="">
             <div id="dataContainer">
                 <h2>{{product.name}}</h2>
@@ -36,6 +36,10 @@
             </p>
             <p>Agregar Descuentos</p>
         </div>
+    </div>
+    <div class="pagination-controls">
+        <button (click)="previousPage()" class="pagButton" [disabled]="currentPage === 1">Anterior</button>
+        <button (click)="nextPage()" class="pagButton" [disabled]="currentPage * pageSize >= productsArray.length">Siguiente</button>
     </div>
     <app-footer></app-footer>
 </body>

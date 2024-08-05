@@ -15,6 +15,8 @@ export class ProductsListComponent implements OnInit{
   category: string = "";
   brand: string = "";
   loading: boolean = false;
+  currentPage: number = 1;
+  pageSize: number = 12;
   async ngOnInit() {
     window.scrollTo(0, 0);
     await this.filters();
@@ -63,6 +65,26 @@ export class ProductsListComponent implements OnInit{
     let confirmation = confirm("Eliminar producto?");
     if(confirmation){
       this.productService.deleteProduct(productID).subscribe(()=>{});
+    }
+  }
+
+  paginatedProducts(): Product[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return this.productsArray.slice(start, end);
+  }
+
+  nextPage() {
+    if ((this.currentPage * this.pageSize) < this.productsArray.length) {
+      this.currentPage++;
+      window.scrollTo(0, 500);
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      window.scrollTo(0, 500);
     }
   }
 }
