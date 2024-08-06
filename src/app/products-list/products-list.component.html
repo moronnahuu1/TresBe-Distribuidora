@@ -37,7 +37,7 @@
             <p>Agregar Descuentos</p>
         </div>
     </div>
-    <div class="pagination-controls">
+    <div class="pagination-controls" *ngIf="productsArray.length > 0">
         <button (click)="previousPage()" class="pagButton" [disabled]="currentPage === 1">Anterior</button>
         <button (click)="nextPage()" class="pagButton" [disabled]="currentPage * pageSize >= productsArray.length">Siguiente</button>
     </div>

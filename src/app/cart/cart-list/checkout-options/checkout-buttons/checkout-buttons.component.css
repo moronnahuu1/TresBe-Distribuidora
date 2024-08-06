@@ -36,3 +36,61 @@ button{
 #messageCode{
     font-family: 'globerBold';
 }
+@media (min-width: 768px) and (max-width: 1199px) {
+    #container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    #discount{
+        margin-bottom: 2vh;
+        display: flex;
+        input{
+            width: 70%;
+        }
+        button{
+            font-size: 10px;
+        }
+    }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+    #container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    #discount{
+        margin-bottom: 2vh;
+        display: flex;
+        input{
+            width: 70%;
+        }
+        button{
+            font-size: 10px;
+        }
+    }
+}
+@media (max-width: 480px) and (min-width: 280px) {
+    #container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    #discount{
+        margin-bottom: 2vh;
+        display: flex;
+        input{
+            width: 70%;
+        }
+        button{
+            font-size: 10px;
+        }
+    }
+}
+@media (max-width: 279px) {}

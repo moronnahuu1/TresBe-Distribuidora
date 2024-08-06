@@ -26,6 +26,7 @@
     padding: 10px 0;
     border-top: 1px solid #ddd;
     vertical-align: middle;
+    max-width: 25vi;
   }
   
   img {
@@ -76,4 +77,81 @@
     height: 2vi;
     border: 0;
     text-align: center;
+  }
+
+  @media (min-width: 1200px) {
+    
+  }
+  
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .cart {
+      width: 80%;
+      padding-left: 5vh;
+      padding-right: 5vh;
+    }
+    table {
+      width: 100%;
+    }
+  }
+  
+  @media (min-width: 481px) and (max-width: 767px) {
+    .cart {
+      width: 90vw;
+      padding-left: 4vw;
+      padding-right: 4vw;
+    }
+    table {
+      width: 90vw;
+    }
+    img {
+      width: 8vh;
+      max-height: 12vh;
+    }
+    .quantity-btn, .remove-btn {
+      width: 4vh;
+      height: 3.5vh;
+    }
+  }
+  
+  @media (max-width: 480px) and (min-width: 280px) {
+    .cart {
+      width: 94vw;
+      padding-left: 3vw;
+      padding-right: 3vw;
+      font-size: 12px;
+    }
+    table {
+      width: 96vw;
+    }
+    img {
+      width: 5vh;
+      max-height: 10vh;
+    }
+    .quantity-btn, .remove-btn {
+      width: 3.5vh;
+      height: 3vh;
+    }
+    .quantityInp{
+      min-width: 5vh;
+      min-height: 2vh;
+    }
+  }
+  
+  @media (max-width: 279px) {
+    .cart {
+      width: 100vw;
+      padding-left: 2vw;
+      padding-right: 2vw;
+    }
+    table {
+      width: 100vw;
+    }
+    img {
+      width: 5vh;
+      max-height: 8vh;
+    }
+    .quantity-btn, .remove-btn {
+      width: 3vh;
+      height: 2.5vh;
+    }
   }

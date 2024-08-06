@@ -38,3 +38,16 @@ table {
     display: flex;
     gap: 10px;
 }
+@media (min-width: 768px) and (max-width: 1199px) {}
+@media (min-width: 481px) and (max-width: 767px) {
+  #container{
+    width: 64%;
+    margin: 0;
+  }
+  table{
+    width: 100%;
+    margin: 0;
+  }
+}
+@media (max-width: 480px) and (min-width: 280px) {}
+@media (max-width: 279px) {}
