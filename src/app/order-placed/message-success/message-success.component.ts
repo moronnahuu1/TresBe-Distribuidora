@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./message-success.component.css']
 })
 export class MessageSuccessComponent implements OnInit{
-  user: User = new User('','','','',0);
+  user: User = new User('','','','','');
   userService = inject(UserService);
 
   ngOnInit(): void {

@@ -21,7 +21,7 @@ export class DataPricesComponent implements OnInit{
   productService = inject(ProductService);
   products: Product[] = [];
   pricesService = inject(PricesService);
-  prices: PriceXproduct = new PriceXproduct('','',0,0,0,0);
+  prices: PriceXproduct = new PriceXproduct('','',0,0,0,0,0,0,0);
   optionService = inject(OptionsService);
   options: Options[] = [];
   progressService = inject(ProgressService);
@@ -78,15 +78,16 @@ export class DataPricesComponent implements OnInit{
       });
       if(option == 'increase'){
         
-        this.prices.priceList1 = (this.prices.priceList1 + (this.prices.priceList1 * percentage));
-        this.prices.priceList2 = (this.prices.priceList2 + (this.prices.priceList2 * percentage));
-        this.prices.priceList3 = (this.prices.priceList3 + (this.prices.priceList3 * percentage));
-        this.prices.priceList4 = (this.prices.priceList4 + (this.prices.priceList4 * percentage));
+        this.prices.costPrice = this.prices.costPrice + (this.prices.costPrice * percentage);
+        this.prices.priceList1 = (this.prices.costPrice * 1.29);
+        this.prices.priceList2 = (this.prices.costPrice * 1.35);
+        this.prices.priceList3 = (this.prices.costPrice * 1.50);
+        this.prices.priceList4 = (this.prices.costPrice * 1.70);
+        this.prices.priceListE = (this.prices.costPrice * 1.16);
+        this.prices.priceListG = (this.prices.costPrice * 1.22);
+
       }else if(option == 'decrease'){
-        this.prices.priceList1 = (this.prices.priceList1 - (this.prices.priceList1 * percentage));
-        this.prices.priceList2 = (this.prices.priceList2 - (this.prices.priceList2 * percentage));
-        this.prices.priceList3 = (this.prices.priceList3 - (this.prices.priceList3 * percentage));
-        this.prices.priceList4 = (this.prices.priceList4 - (this.prices.priceList4 * percentage));
+        this.prices.costPrice = (this.prices.costPrice - (this.prices.costPrice * percentage));
       }
       this.pricesService.updateProduct(this.prices.id, this.prices).subscribe(()=>{});
     }

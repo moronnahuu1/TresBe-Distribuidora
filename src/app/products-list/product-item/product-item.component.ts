@@ -30,7 +30,7 @@ export class ProductItemComponent implements OnInit{
   productSelected: Product = new Product('','','','',0,'',0,'', 1);
   allFeatures: Feature[]= [];
   activeRoute = inject(ActivatedRoute);
-  user: User = new User('', '', '', '', 0);
+  user: User = new User('', '', '', '', '');
   onCart: Boolean = false;
   searchTerm: string = '';
   optionsSearched: Options[] = [];
@@ -157,7 +157,7 @@ export class ProductItemComponent implements OnInit{
   }
   async setProductPrice(optionID: string){ //Funcion para asignarle al producto su lista de precios
     let data = await this.getPrice(optionID); //Se lee la lista de precios desde la BDD con el ID del producto
-    let priceAux: PriceXproduct = new PriceXproduct('','',0, 0,0,0);
+    let priceAux: PriceXproduct = new PriceXproduct('','',0, 0,0,0,0,0,0);
     if(data != undefined){
       priceAux = data;
     }
@@ -165,14 +165,18 @@ export class ProductItemComponent implements OnInit{
       return priceAux.priceList1;
     }else{
       switch(this.user.priceList){ //Si el usuario esta logueado de forma correcta, entra al else y hace el switch, revisando la lista de precios que tiene el usuario
-        case 1:
+        case '1':
           return priceAux.priceList1;
-        case 2:
+        case '2':
           return priceAux.priceList2;
-        case 3:
+        case '3':
           return priceAux.priceList3;
-        case 4:
+        case '4':
           return priceAux.priceList4;
+        case 'E':
+            return priceAux.priceListE;
+        case 'G':
+          return priceAux.priceListG;
         default:
           return priceAux.priceList1;
       }

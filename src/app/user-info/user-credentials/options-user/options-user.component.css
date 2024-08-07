@@ -39,3 +39,54 @@ p:hover{
     color: #333;
     font-weight: bold;
   }
+  /* Tablets (portrait and landscape) */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .sidebar {
+    width: calc(100vi - 20px);
+    height: auto;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .sidebar {
+    width: calc(100vi - 20px);
+    height: auto;
+      padding: 15px;
+  }
+  #container {
+      margin-left: 2vi;
+  }
+  .sidebar ul li {
+      margin-bottom: 2vi;
+  }
+}
+
+/* Mobile devices (portrait) */
+@media (max-width: 480px) and (min-width: 280px) {
+  .sidebar {
+      width: calc(100vi - 20px);
+      height: auto;
+      padding: 10px;
+  }
+  #container {
+      margin-left: 3vi;
+  }
+  .sidebar ul li {
+      margin-bottom: 1.5vi;
+  }
+}
+
+/* Very small devices (portrait) */
+@media (max-width: 279px) {
+  .sidebar {
+    width: calc(100vi - 20px);
+    height: auto;
+      padding: 5px;
+  }
+  #container {
+      margin-left: 4vi;
+  }
+  .sidebar ul li {
+      margin-bottom: 1vi;
+  }
+}

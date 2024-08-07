@@ -1,12 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Order } from 'src/app/models/Order';
-import { OrderXproducts } from 'src/app/models/OrderXproduct';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
-import { Product } from 'src/app/models/Product';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
-import { OrdersXProductsService } from 'src/app/services/orders-x-products.service';
 import { OrdersService } from 'src/app/services/orders.service';
-import { ProductService } from 'src/app/services/product.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
 
 @Component({

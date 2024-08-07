@@ -23,3 +23,49 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
+@media (min-width: 768px) and (max-width: 1199px) {
+    #container {
+        width: calc(100vi - 4vh);
+        padding-bottom: 4vh;
+        height: auto;
+    }
+    #bankData {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile devices (landscape) */
+@media (min-width: 481px) and (max-width: 767px) {
+    #container {
+        width: calc(100vi - 4vh);
+        padding-bottom: 4vh;
+        height: auto;
+    }
+    #bankData {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile devices (portrait) */
+@media (max-width: 480px) and (min-width: 280px) {
+    #container {
+        width: calc(100vi - 4vh);
+        padding-bottom: 4vh;
+        height: auto;
+    }
+    #bankData {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Very small devices (portrait) */
+@media (max-width: 279px) {
+    #container {
+        width: calc(100vi - 4vh);
+        padding-bottom: 4vh;
+        height: auto;
+    }
+    #bankData {
+        grid-template-columns: 1fr;
+    }
+}

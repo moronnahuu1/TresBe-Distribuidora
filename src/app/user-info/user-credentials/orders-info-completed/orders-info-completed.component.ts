@@ -21,7 +21,7 @@ export class OrdersInfoCompletedComponent {
   cartProductService = inject(CartProductService);
   cartProducts: CartProduct[] = [];
   orders: Order[] = [];
-  user: User = new User('','','','',0);
+  user: User = new User('','','','','');
   
   async ngOnInit() {
      this.oxpService.getOap().subscribe(products => {

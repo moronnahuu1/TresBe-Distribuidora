@@ -55,3 +55,89 @@ h1{
         width: 60%;
     }
 }
+/* Tablets (portrait and landscape) */
+@media (min-width: 768px) and (max-width: 1199px) {
+    #container {
+        width: 40vi;
+        height: 55vi;
+        padding: 3vi;
+    }
+    .items {
+        padding-left: 4vi;
+        padding-right: 4vi;
+        padding-top: 2vi;
+        padding-bottom: 3vi;
+        min-height: 12vi;
+        max-height: 12vi;
+        font-size: 16px;
+    }
+    #noOrders p {
+        width: 70%;
+        font-size: 20px;
+    }
+}
+
+/* Mobile devices (landscape) */
+@media (min-width: 481px) and (max-width: 767px) {
+    #container {
+        width: 50vi;
+        height: 65vi;
+        padding: 2.5vi;
+    }
+    .items {
+        padding-left: 4vi;
+        padding-right: 4vi;
+        padding-top: 2vi;
+        padding-bottom: 3vi;
+        min-height: 13vi;
+        max-height: 13vi;
+        font-size: 16px;
+    }
+    #noOrders p {
+        width: 80%;
+        font-size: 22px;
+    }
+}
+
+/* Mobile devices (portrait) */
+@media (max-width: 480px) and (min-width: 280px) {
+    #container {
+        width: calc(100vi - 4vi);
+        height: 75vi;
+        padding: 2vi;
+    }
+    .items {
+        padding-left: 5vi;
+        padding-right: 5vi;
+        padding-top: 3vi;
+        padding-bottom: 4vi;
+        font-size: 15px;
+        min-height: 30vh;
+    }
+    #noOrders p {
+        width: 90%;
+        font-size: 24px;
+    }
+}
+
+/* Very small devices (portrait) */
+@media (max-width: 279px) {
+    #container {
+        width: 100%;
+        height: 85vi;
+        padding: 1vi;
+    }
+    .items {
+        padding-left: 5vi;
+        padding-right: 5vi;
+        padding-top: 4vi;
+        padding-bottom: 5vi;
+        min-height: 18vi;
+        max-height: 18vi;
+        font-size: 20px;
+    }
+    #noOrders p {
+        width: 100%;
+        font-size: 26px;
+    }
+}

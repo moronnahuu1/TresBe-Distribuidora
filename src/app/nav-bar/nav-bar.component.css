@@ -133,6 +133,7 @@
         align-items: center;
         height: fit-content;
         position: relative;
+        width: 100%;
         img{
             margin-left: 0px;
         }

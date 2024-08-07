@@ -84,20 +84,8 @@
                     <input type="text"  name="name" value="{{optionSelected.name}}" id="{{optionSelected.id}}">
                 </div>
                 <div class="priceList">
-                    <label for="modifyPrice1">Precio Lista 1</label>
-                    <input type="number" name="modifyPrice1" [value]="productList.priceList1" id="modifyPrice1Inp">
-                </div>
-                <div class="priceList">
-                    <label for="modifyPrice2">Precio Lista 2</label>
-                    <input type="number" name="modifyPrice2" [value]="productList.priceList2" id="modifyPrice2Inp">
-                </div>
-                <div class="priceList">
-                    <label for="modifyPrice3">Precio Lista 3</label>
-                    <input type="number" name="modifyPrice3" [value]="productList.priceList3" id="modifyPrice3Inp">
-                </div>
-                <div class="priceList">
-                    <label for="modifyPrice4">Precio Lista 4</label>
-                    <input type="number" name="modifyPrice4" [value]="productList.priceList4" id="modifyPrice4Inp">
+                    <label for="modifyPrice1">Costo de producto</label>
+                    <input type="number" name="modifyPrice1" [value]="productList.costPrice" id="modifyCostPriceInp">
                 </div>
                 <div id="buttons">
                     <button (click)="modifyOptions(optionSelected, 1)">Modificar</button>
@@ -113,20 +101,8 @@
                     <input type="text" name="optionName" id="optionInp">
                 </div>
                 <div class="priceList">
-                    <label for="price1">Precio Lista 1</label>
-                    <input type="number" name="price1" id="price1Inp">
-                </div>
-                <div class="priceList">
-                    <label for="price2">Precio Lista 2</label>
-                    <input type="number" name="price2" id="price2Inp">
-                </div>
-                <div class="priceList">
-                    <label for="price3">Precio Lista 3</label>
-                    <input type="number" name="price3" id="price3Inp">
-                </div>
-                <div class="priceList">
-                    <label for="price4">Precio Lista 4</label>
-                    <input type="number" name="price4" id="price4Inp">
+                    <label for="price1">Costo de producto</label>
+                    <input type="number" name="price1" id="costPriceInp">
                 </div>
                 <button (click)="addOption()">Agregar</button>
             </div>

@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ChangePasswordComponent implements OnInit{
   userService = inject(UserService);
-  user: User = new User('','','','',0);
+  user: User = new User('','','','','');
   updated: boolean = false;
   badEmail: boolean = false;
   ngOnInit(): void {

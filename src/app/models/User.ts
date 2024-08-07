@@ -3,10 +3,10 @@ export class User{
     email: string;
     password: string;
     username: string;
-    priceList: number;
+    priceList: string;
     client: boolean = false;
 
-    constructor(id: string, email: string, password: string, username: string, priceList: number){
+    constructor(id: string, email: string, password: string, username: string, priceList: string){
         this.id = id;
         this.email = email;
         this.password = password;

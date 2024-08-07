@@ -30,7 +30,7 @@ export class PayComponent {
   subtotal: number = 0;
   total: number = 0;
   dataCreated: boolean = false;
-  user: User = new User("", "", "", "",0);
+  user: User = new User("", "", "", "",'');
   creating: boolean = false;
 
   async ngOnInit() {

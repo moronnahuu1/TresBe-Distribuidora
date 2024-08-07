@@ -27,7 +27,7 @@ export class OrderDetailComponent implements OnInit{
   products: Array<Product> = [];
   order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "", false);
   id: string = "";
-  user: User = new User("", "", "", "",0); //USER va a ser el usuario logueado en el momento
+  user: User = new User("", "", "", "",''); //USER va a ser el usuario logueado en el momento
   users: Array<Userdata> = []; //USERS va a ser la informacion de envio de cada usuario logueado, nombre, apellido, lugar de residencia, telefono, mail, etc.
   userdata: Userdata = new Userdata("", "", "", "", "", "", "", "", "", "", 0, "", "false"); //USERDATA va aser la informacion de envio DEL USUARIO LOGUEADO
   router = inject(Router);
@@ -61,7 +61,7 @@ export class OrderDetailComponent implements OnInit{
     /* Funcion para leer el usuario logueado, si el usuario esta logueado deberia cargarlo de forma correcta, 
     sino, las funciones del componente cuando llamen a esta funcion se van a encargar de redireccionar a otro sitio de la pagina */
     let userAux = localStorage.getItem("userLogged");
-    let userParsed: User = new User("", "", "", "",0); //USER va a ser el usuario logueado en el momento
+    let userParsed: User = new User("", "", "", "",''); //USER va a ser el usuario logueado en el momento
     if(userAux){
       userParsed = JSON.parse(userAux);
     }

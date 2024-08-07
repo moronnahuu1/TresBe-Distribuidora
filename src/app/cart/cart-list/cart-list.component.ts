@@ -16,7 +16,7 @@ export class CartListComponent {
   optionService = inject(OptionsService);
   option: Options = new Options('','','');
   pricesService = inject(PricesService);
-  prices: PriceXproduct = new PriceXproduct('','',0,0,0,0);
+  prices: PriceXproduct = new PriceXproduct('','',0,0,0,0,0,0,0);
   products: Array<Product> = [];
 
   async ngOnInit() {
@@ -133,24 +133,34 @@ export class CartListComponent {
       });
     }
     switch(userLogged.priceList){
-      case 1:
+      case '1':
         if(this.prices.priceList1 != productAux.price){
           productAux.price = this.prices.priceList1;
         }
         break;
-      case 2:
+      case '2':
         if(this.prices.priceList2 != productAux.price){
           productAux.price = this.prices.priceList2;
         }
         break;
-      case 3:
+      case '3':
         if(this.prices.priceList3 != productAux.price){
           productAux.price = this.prices.priceList3;
         }
         break;
-      case 4:
+      case '4':
         if(this.prices.priceList4 != productAux.price){
           productAux.price = this.prices.priceList4;
+        }
+        break;
+      case 'E':
+        if(this.prices.priceListE != productAux.price){
+          productAux.price = this.prices.priceListE;
+        }
+        break;
+      case 'G':
+        if(this.prices.priceListG != productAux.price){
+          productAux.price = this.prices.priceListG;
         }
         break;
       default:

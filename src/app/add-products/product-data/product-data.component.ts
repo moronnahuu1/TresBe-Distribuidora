@@ -25,7 +25,7 @@ export class ProductDataComponent implements OnInit{
   brands: Brand[] = [];
   added: boolean = false;
   productID: string = '';
-  productList: PriceXproduct = new PriceXproduct('','',0,0,0,0);
+  productList: PriceXproduct = new PriceXproduct('','',0,0,0,0,0,0,0);
   pricesID: string = '';
   modifyProduct: Product = new Product('','','','',0,'',0,'',0);
   activeRoute = inject(ActivatedRoute);
@@ -119,19 +119,26 @@ getItemsProduct(){ //Lee los input del producto, crea ese producto y lo retorna
 getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de precios del producto, crea una nueva lista de precios y la retorna
   if(toDo == 'add'){
     this.pricesID = this.generateRandomId(16);
-    let pricelist1 = this.getNumber('price1Inp');
-    let pricelist2 = this.getNumber('price2Inp');
-    let pricelist3 = this.getNumber('price3Inp');
-    let pricelist4 = this.getNumber('price4Inp');
-    let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, optionID, pricelist1, pricelist2, pricelist3, pricelist4);
+    let costPrice = this.getNumber('costPriceInp');
+    let pricelist1 = (costPrice * 1.29);
+    let pricelist2 = (costPrice * 1.35);
+    let pricelist3 = (costPrice * 1.5);
+    let pricelist4 = (costPrice * 1.7);
+    let pricelistE = (costPrice * 1.16);
+    let pricelistG = (costPrice * 1.22);
+
+    let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, optionID, pricelist1, pricelist2, pricelist3, pricelist4, pricelistE, pricelistG, costPrice);
     return pricesAux;
   }else{
     this.pricesID = this.productList.id;
-    let pricelist1 = this.getNumber('modifyPrice1Inp');
-    let pricelist2 = this.getNumber('modifyPrice2Inp');
-    let pricelist3 = this.getNumber('modifyPrice3Inp');
-    let pricelist4 = this.getNumber('modifyPrice4Inp');
-    let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, optionID, pricelist1, pricelist2, pricelist3, pricelist4);
+    let costPrice = this.getNumber('modifyCostPriceInp');
+    let pricelist1 = (costPrice * 1.29);
+    let pricelist2 = (costPrice * 1.35);
+    let pricelist3 = (costPrice * 1.5);
+    let pricelist4 = (costPrice * 1.7);
+    let pricelistE = (costPrice * 1.16);
+    let pricelistG = (costPrice * 1.22);
+    let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, optionID, pricelist1, pricelist2, pricelist3, pricelist4, pricelistE, pricelistG, costPrice);
     return pricesAux;
   }
 }
@@ -223,6 +230,9 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
 
         case "price4": 
         return this.productList.priceList4;
+
+        case "costPrice": 
+        return this.productList.costPrice;
       }
       return "";
     }else{
@@ -253,7 +263,7 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
   }
 
   returnPrice(optionID: string){
-    let optionPrice: PriceXproduct = new PriceXproduct('','',0,0,0,0);
+    let optionPrice: PriceXproduct = new PriceXproduct('','',0,0,0,0,0,0,0);
     for(let i = 0; i<this.allPrices.length; i++){
       if(this.allPrices[i].optionID == optionID){
         return this.allPrices[i];
@@ -264,7 +274,7 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
 
   async setProductPrice(orderID: string, priceList: number){
     let data = await this.getPrice(orderID);
-    let priceAux: PriceXproduct = new PriceXproduct('','',0, 0,0,0);
+    let priceAux: PriceXproduct = new PriceXproduct('','',0, 0,0,0,0,0,0);
     if(data != undefined){
       priceAux = data;
     }
@@ -322,11 +332,11 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
       return false;
     }
   }
-  modifyOptions(optionAux: Options, index: number){
+  async modifyOptions(optionAux: Options, index: number){
     let optionName = this.getString(optionAux.id);
     optionAux.name = optionName;
     let pricesAux: PriceXproduct = this.getItemsPrice(optionAux.id, 'update'); //Mismo paso que el anterior pero con las listas de precios
-    this.pricesService.updateProduct(pricesAux.id, pricesAux).subscribe(()=> {}); 
+    await this.pricesService.updateProduct(pricesAux.id, pricesAux).toPromise(); 
     this.optionService.updateOneOption(index, optionAux);
     localStorage.setItem('updated', JSON.stringify(true));
     location.reload();

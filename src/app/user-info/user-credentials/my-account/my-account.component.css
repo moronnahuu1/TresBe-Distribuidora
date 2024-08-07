@@ -62,4 +62,102 @@
     font-size: 1em;
     color: #333;
   }
-  
+  /* Tablets (portrait and landscape) */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .profile {
+      width: 60vi;
+      padding: 15px;
+  }
+  .profile-picture {
+      width: 80px;
+      height: 80px;
+      margin-right: 15px;
+  }
+  .profile-info h1 {
+      font-size: 1.5em;
+  }
+  .profile-info p {
+      font-size: 0.9em;
+  }
+  .edit-button {
+      padding: 8px 16px;
+  }
+  .personal-info h2, .address-info h2 {
+      font-size: 1em;
+  }
+}
+
+/* Mobile devices (landscape) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .profile {
+      width: 80vi;
+      padding: 10px;
+  }
+  .profile-picture {
+      width: 70px;
+      height: 70px;
+      margin-right: 10px;
+  }
+  .profile-info h1 {
+      font-size: 1.2em;
+  }
+  .profile-info p {
+      font-size: 0.8em;
+  }
+  .edit-button {
+      padding: 8px 16px;
+  }
+  .personal-info h2, .address-info h2 {
+      font-size: 0.9em;
+  }
+}
+
+/* Mobile devices (portrait) */
+@media (max-width: 480px) and (min-width: 280px) {
+  .profile {
+      width: 90vi;
+      padding: 8px;
+  }
+  .profile-picture {
+      width: 60px;
+      height: 60px;
+      margin-right: 5px;
+  }
+  .profile-info h1 {
+      font-size: 1em;
+  }
+  .profile-info p {
+      font-size: 0.7em;
+  }
+  .edit-button {
+      padding: 6px 12px;
+  }
+  .personal-info h2, .address-info h2 {
+      font-size: 0.8em;
+  }
+}
+
+/* Very small devices (portrait) */
+@media (max-width: 279px) {
+  .profile {
+      width: 100%;
+      padding: 5px;
+  }
+  .profile-picture {
+      width: 50px;
+      height: 50px;
+      margin-right: 5px;
+  }
+  .profile-info h1 {
+      font-size: 0.9em;
+  }
+  .profile-info p {
+      font-size: 0.6em;
+  }
+  .edit-button {
+      padding: 5px 10px;
+  }
+  .personal-info h2, .address-info h2 {
+      font-size: 0.7em;
+  }
+}

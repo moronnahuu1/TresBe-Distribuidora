@@ -23,7 +23,7 @@ export class CartService {
 
   getUser(){
     let userAux = localStorage.getItem('userLogged');
-    let userLogged: User = new User('','','','',0);
+    let userLogged: User = new User('','','','','');
     if(userAux){
       userLogged = JSON.parse(userAux);
     }

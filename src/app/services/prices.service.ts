@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class PricesService {
   private myAppUrl: string;
   private myApiUrl: string;
-  prices: PriceXproduct = new PriceXproduct('','',0,0,0,0);
+  prices: PriceXproduct = new PriceXproduct('','',0,0,0,0,0,0,0);
   _prices: BehaviorSubject<PriceXproduct> = new BehaviorSubject<PriceXproduct>(this.prices);
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;

@@ -19,7 +19,7 @@ export class ProductService {
    products: Array<Product> = [];
    _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   productXpriceService = inject(PricesService);
-  user: User = new User('', '', '', '', 0);
+  user: User = new User('', '', '', '', '');
   loading: boolean = false;
   _loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.loading);
   constructor(private http: HttpClient) { 
@@ -124,7 +124,7 @@ export class ProductService {
   
   async setProductPrice(optionID: string){
     let data = await this.getPrice(optionID);
-    let priceAux: PriceXproduct = new PriceXproduct('','',0, 0,0,0);
+    let priceAux: PriceXproduct = new PriceXproduct('','',0, 0,0,0,0,0,0);
     if(data != undefined){
       priceAux = data;
     }
@@ -132,14 +132,18 @@ export class ProductService {
       return priceAux.priceList1;
     }else{
       switch(this.user.priceList){
-        case 1:
+        case '1':
           return priceAux.priceList1;
-        case 2:
+        case '2':
           return priceAux.priceList2;
-        case 3:
+        case '3':
           return priceAux.priceList3;
-        case 4:
+        case '4':
           return priceAux.priceList4;
+        case 'E':
+          return priceAux.priceListE;
+        case 'G':
+          return priceAux.priceListG;
         default:
           return priceAux.priceList1;
       }
@@ -147,7 +151,7 @@ export class ProductService {
   }
   getUser(){
     let userAux = localStorage.getItem('userLogged');
-    let userdata: User = new User('', '', '', '', 0);
+    let userdata: User = new User('', '', '', '', '');
     if(userAux){
        userdata = JSON.parse(userAux);
     }

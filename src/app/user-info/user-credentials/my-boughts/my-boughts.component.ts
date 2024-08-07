@@ -21,7 +21,7 @@ export class MyBoughtsComponent implements OnInit{
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   userdataService = inject(UserdataService);
   orderService = inject(OrdersService);
-  user: User = new User('','','','',0);
+  user: User = new User('','','','','');
   async ngOnInit() {
     this.orderService.returnUser().subscribe(user => {
       this.user = user;

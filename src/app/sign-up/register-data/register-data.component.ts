@@ -70,9 +70,9 @@ export class RegisterDataComponent {
       this.noUsername = true;
     }
     if(this.searchTerm != '' && this.passTerm != '' && this.usernameTerm != '' && !this.emailRepeated && this.passwordFormat){
-      let priceList = 1;
+      let priceList = '4';
       if(this.isAdmin()){
-        priceList = this.getNumber('priceListInp');
+        priceList = this.getString('priceListInp');
       }
       let newUser = new User(this.generateRandomId(16), this.getString('emailInp'), this.getString('passwordInp'), this.getString('usernameInp'), priceList);
       if(this.isAdmin()){

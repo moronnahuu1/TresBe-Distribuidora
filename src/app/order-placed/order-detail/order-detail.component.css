@@ -8,7 +8,7 @@ body {
     width: 46vh;
     height: 75vh;
     background-color: #fff;
-    padding: 20px;
+    padding: 2vi;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 .order-header {
@@ -53,4 +53,52 @@ body {
 .total {
     font-weight: bold;
     font-size: 1.2em;
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+    .container {
+        width: calc(100vi - 4vi);
+        height: auto;
+    }
+}
+
+/* Mobile devices (landscape) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .container {
+        width: calc(100vi - 20px);
+        height: auto;
+    }
+}
+
+/* Mobile devices (portrait) */
+@media (max-width: 480px) and (min-width: 280px) {
+    .container {
+        width: calc(100vi - 20px);
+        height: auto;
+        padding: 10px;
+    }
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .order-header button {
+        margin-top: 10px;
+        width: 100%;
+    }
+}
+
+/* Very small devices (portrait) */
+@media (max-width: 279px) {
+    .container {
+        width: calc(100vi - 20px);
+        height: auto;
+        padding: 10px;
+    }
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .order-header button {
+        margin-top: 10px;
+        width: 100%;
+    }
 }

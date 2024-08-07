@@ -16,7 +16,7 @@ export class UserService {
   }
   getUserLogged(){
     let userAux = localStorage.getItem('userLogged');
-    let userdata: User = new User('', '', '', '', 0);
+    let userdata: User = new User('', '', '', '', '');
     if(userAux){
        userdata = JSON.parse(userAux);
     }

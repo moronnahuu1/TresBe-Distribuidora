@@ -12,7 +12,7 @@ import { OrdersService } from 'src/app/services/orders.service';
 export class CheckoutButtonsComponent {
   orderService = inject(OrdersService);
   router = inject(Router);
-  user: User = new User('', '', '', '', 0);
+  user: User = new User('', '', '', '', '');
   async verifyOrders(){
     this.user = this.getUser();
     if(this.user.email != ''){
@@ -29,7 +29,7 @@ export class CheckoutButtonsComponent {
   }
   getUser(){
     let userAux = localStorage.getItem('userLogged');
-    let userdata: User = new User('', '', '', '', 0);
+    let userdata: User = new User('', '', '', '', '');
     if(userAux){
        userdata = JSON.parse(userAux);
     }

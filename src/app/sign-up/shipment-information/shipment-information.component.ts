@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ShipmentInformationComponent implements OnInit{
   userID: string = "";
-  user: User = new User("", "", "", "",0);
+  user: User = new User("", "", "", "",'');
   Country: string = "Argentina";
   provinciaSeleccionada: string | null = null; // Inicializar como null o un valor adecuado
   userdataService = inject(UserdataService);

@@ -42,3 +42,45 @@
 .not-confirmed{
     color: rgb(224, 224, 224);
 }
+@media (min-width: 768px) and (max-width: 1199px) {
+    .timeline {
+        width: fit-content;
+        gap: 20px;
+    }
+}
+
+/* Mobile devices (landscape) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .timeline {
+        width: fit-content;
+        flex-direction: column;
+    }
+    .timeline-item {
+        width: 100%;
+        margin-bottom: 2vh;
+    }
+}
+
+/* Mobile devices (portrait) */
+@media (max-width: 480px) and (min-width: 280px) {
+    .timeline {
+        width: fit-content;
+        flex-direction: column;
+    }
+    .timeline-item {
+        width: 100%;
+        margin-bottom: 2vh;
+    }
+}
+
+/* Very small devices (portrait) */
+@media (max-width: 279px) {
+    .timeline {
+        width: fit-content;
+        flex-direction: column;
+    }
+    .timeline-item {
+        width: 100%;
+        margin-bottom: 2vh;
+    }
+}
