@@ -7,8 +7,9 @@
     padding-bottom: 5vi;
     font-family: sans-serif;
     font-size: 14px;
+    gap: 10px;
 }
-#container{
+.containers{
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -32,15 +33,15 @@ button:hover{
     transform: scale(1.07);
 }
   
-  #increase {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  #decrease {
+  #decrease, .changeBy {
     background-color: #f8f9fa;
     color: #007bff;
     border: 1px solid #007bff;
+    transition: background-color 1s, transform 1s;
+  }
+  #increase, .active {
+    background-color: #007bff;
+    color: white;
   }
   #messages{
     p{

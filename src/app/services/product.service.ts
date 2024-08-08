@@ -8,6 +8,7 @@ import { PriceXproduct } from '../models/PriceXproduct';
 import { User } from '../models/User';
 import { OptionsService } from './options.service';
 import { Options } from '../models/Options';
+import { BrandsService } from './brands.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +16,8 @@ export class ProductService {
   private myAppUrl: string;
   private myApiUrl: string;
   optionService = inject(OptionsService);
+  brandService = inject(BrandsService);
+  brandSelected: string = 'all';
   options: Options[] = [];
    products: Array<Product> = [];
    _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
@@ -180,6 +183,9 @@ export class ProductService {
 
   async searchProducts(name: string){
     try {
+      this.brandService.getBrandSelected().subscribe(brandAux =>{
+        this.brandSelected = brandAux;
+      })
       const data = await this.getProductSearch(name).toPromise();
       console.log(data?.length);
       return data;
@@ -221,7 +227,10 @@ export class ProductService {
   }
   getProductSearch(name: string): Observable<Product[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'search/';
-    return this.http.get<Product[]>(urlAux + name); 
+    if(this.brandSelected == ''){
+      this.brandSelected = 'all';
+    }
+    return this.http.get<Product[]>(urlAux + name + '/' + this.brandSelected); 
   }
   getProductsByBrand(brand: string): Observable<Product[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'brand/'

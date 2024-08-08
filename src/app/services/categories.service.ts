@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../models/Category';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,9 +10,32 @@ import { environment } from 'src/environments/environment';
 export class CategoriesService {
   private myAppUrl: string;
   private myApiUrl: string;
+  categories: Category[] = [];
+  _categories: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>(this.categories);
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Categories/'
+  }
+  returnCategories(){
+    return this._categories.asObservable();
+  }
+  async readCategories(){
+    let categoriesAux = await this.getCategoriesTC();
+    if(categoriesAux){
+      this.categories = categoriesAux;
+      this._categories.next(this.categories);
+    }
+    return this._categories.asObservable();
+  }
+  async getCategoriesTC(){
+    try{
+      const data = await this.getCategories().toPromise();
+      console.log(data);
+      return data;
+    }catch(error){
+      console.log(error);
+      throw error;
+    }
   }
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.myAppUrl + this.myApiUrl); 

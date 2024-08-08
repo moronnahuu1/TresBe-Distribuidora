@@ -1,9 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Brand } from 'src/app/models/Brand';
+import { Category } from 'src/app/models/Category';
 import { Options } from 'src/app/models/Options';
 import { PriceXproduct } from 'src/app/models/PriceXproduct';
 import { Product } from 'src/app/models/Product';
 import { BrandsService } from 'src/app/services/brands.service';
+import { CategoriesService } from 'src/app/services/categories.service';
 import { OptionsService } from 'src/app/services/options.service';
 import { PricesService } from 'src/app/services/prices.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -17,7 +19,12 @@ import { ProgressService } from 'src/app/services/progress.service';
 export class DataPricesComponent implements OnInit{
   brandService = inject(BrandsService);
   brands: Brand[] = [];
+  onBrand: boolean = true;
+  onCategory: boolean = false;
   brandSelected: Brand = new Brand('','','');
+  categorySelected: Category = new Category('','');
+  categories: Category[] = [];
+  categoryService = inject(CategoriesService);
   productService = inject(ProductService);
   products: Product[] = [];
   pricesService = inject(PricesService);
@@ -29,9 +36,19 @@ export class DataPricesComponent implements OnInit{
 
   async ngOnInit() {
     await this.getBrands();
+    await this.getCategories();
     this.progressService.returnNumber().subscribe(numberAux => {
       this.progress = numberAux;
     })
+  }
+  selectByCategory(){
+    this.onBrand = false;
+    this.onCategory = true;
+  }
+
+  selectByBrand(){
+    this.onBrand = true;
+    this.onCategory = false;
   }
 
   async getBrands(){
@@ -43,10 +60,25 @@ export class DataPricesComponent implements OnInit{
     }
   }
 
-  async getProducts(){
-    (await this.productService.readProducts('brand', this.brandSelected.name)).subscribe(products => {
-      this.products = products;
+  async getCategories(){
+    (await this.categoryService.readCategories()).subscribe(categoriesAux => {
+      this.categories = categoriesAux;
     });
+    if(this.categories.length > 0){
+      this.categorySelected = this.categories[0];
+    }
+  }
+
+  async getProducts(){
+    if(this.onBrand && !this.onCategory){
+      (await this.productService.readProducts('brand', this.brandSelected.name)).subscribe(products => {
+        this.products = products;
+      });
+    }else if(this.onCategory && !this.onBrand){
+      (await this.productService.readProducts('category', this.categorySelected.name)).subscribe(products => {
+        this.products = products;
+      });
+    }
   }
 
   async modifyPrices(percentage: number, option: string){
@@ -88,6 +120,12 @@ export class DataPricesComponent implements OnInit{
 
       }else if(option == 'decrease'){
         this.prices.costPrice = (this.prices.costPrice - (this.prices.costPrice * percentage));
+        this.prices.priceList1 = (this.prices.costPrice * 1.29);
+        this.prices.priceList2 = (this.prices.costPrice * 1.35);
+        this.prices.priceList3 = (this.prices.costPrice * 1.50);
+        this.prices.priceList4 = (this.prices.costPrice * 1.70);
+        this.prices.priceListE = (this.prices.costPrice * 1.16);
+        this.prices.priceListG = (this.prices.costPrice * 1.22);
       }
       this.pricesService.updateProduct(this.prices.id, this.prices).subscribe(()=>{});
     }
@@ -124,7 +162,29 @@ export class DataPricesComponent implements OnInit{
       return this.brandSelected;
     }
   }
-  selectBrand(brandID: string){
-    this.brandSelected = this.searchBrandByID(brandID);
+  searchCategoryByName(name: string){
+    let i = 0;
+    let access = false;
+
+    while(i<this.categories.length && !access){
+      if(this.categories[i].name == name){
+        access = true;
+      }else{
+        i++;
+      }
+    }
+    if(access){
+      return this.categories[i];
+    }else{
+      return this.categorySelected;
+    }
+  }
+  selectBrand(event: Event){
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.brandSelected = this.searchBrandByID(selectedValue);
+  }
+  selectCategory(event: Event){
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.categorySelected = this.searchCategoryByName(selectedValue);
   }
 }
