@@ -160,6 +160,16 @@ body{
 .pagButton:hover{
     transform: scale(1.05);
 }
+#prices{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    p{
+        margin: 0;
+        padding: 0;
+    }
+}
 @media (min-width: 1200px) {}
 @media (min-width: 768px) and (max-width: 1199px) {
     #container{

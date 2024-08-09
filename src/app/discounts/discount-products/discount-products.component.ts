@@ -10,10 +10,17 @@ import { ProductService } from 'src/app/services/product.service';
 export class DiscountProductsComponent implements OnInit{
   productService = inject(ProductService);
   products: Array<Product> = [];
+  loading: boolean = false;
 
   ngOnInit(): void {
+    this.productService.changeLoading('true').subscribe(loadAux => {
+      this.loading = loadAux;
+    });
       this.productService.returnObservable().subscribe(products => {
         this.products = products;
+      });
+      this.productService.changeLoading('false').subscribe(loadAux => {
+        this.loading = loadAux;
       });
   }
 }

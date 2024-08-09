@@ -20,6 +20,8 @@
         font-family: "real";
         font-style: italic;
         font-size: 20px;
+        letter-spacing: 2px;
+        text-align: center;
     }
     transition: transform 0.8s ease;
     background-size: cover;

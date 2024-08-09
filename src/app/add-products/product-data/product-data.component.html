@@ -13,9 +13,9 @@
                 <input type="text" class="productInfo" name="category" [value]="getValue('category')" id="categoryInp">
     
                 <label for="brand">Marca</label>
-                <select [(ngModel)]="brand" name="brand" class="productInfo" id="brandSelect">
-                    <option *ngIf="onModify">{{getValue('brand')}}</option>
-                    <option *ngFor="let brand of brands" >{{brand.name}}</option>
+
+                <select name="brand" class="productInfo" [(ngModel)]="brand" id="brandSelect" (change)="changeBrand($event)">
+                    <option *ngFor="let brand of brands" [value]="brand.name" >{{brand.name}}</option>
                 </select>
     
                 <label for="image">Imagen</label>

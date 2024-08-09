@@ -86,15 +86,8 @@ export class DataPricesComponent implements OnInit{
       (await this.optionService.readProductOptions(this.products[i].id)).subscribe(options => {
         this.options = options;
       });
-      if(this.options.length > 1){
-        const middleIndex = Math.ceil(this.options.length / 2);
-
-        const firstHalf = this.options.splice(0, middleIndex);
-        const secondHalf = this.options;
-        await this.getOptionPrices(firstHalf, percentage, option);
-        await this.getOptionPrices(secondHalf, percentage, option);
-      }else{
-        this.getOptionPrices(this.options, percentage, option);
+      if(this.options.length > 0){
+        await this.getOptionPrices(this.options, percentage, option);
       }
       let progressAux = ((i * 100) / this.products.length);
       this.progressService.updateNumber(progressAux).subscribe(()=>{});
@@ -102,12 +95,24 @@ export class DataPricesComponent implements OnInit{
     this.progressService.updateNumber(100).subscribe(()=>{});
   }
 
+  async getPrice(id: string){
+    try {
+      const data = await this.pricesService.getTableByProduct(id).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
+
   async getOptionPrices(halfArray: Options[], percentage: number, option: string){
     
     for(let i = 0; i<halfArray.length; i++){
-      (await this.pricesService.readTableByProduct(halfArray[i].id)).subscribe(prices => {
-        this.prices = prices;
-      });
+      let pricesAux = await this.getPrice(halfArray[i].id);
+      if(pricesAux != undefined){
+        this.prices = pricesAux;
+      }
       if(option == 'increase'){
         
         this.prices.costPrice = this.prices.costPrice + (this.prices.costPrice * percentage);
@@ -119,7 +124,7 @@ export class DataPricesComponent implements OnInit{
         this.prices.priceListG = (this.prices.costPrice * 1.22);
 
       }else if(option == 'decrease'){
-        this.prices.costPrice = (this.prices.costPrice - (this.prices.costPrice * percentage));
+        this.prices.costPrice = (this.prices.costPrice - (this.prices.costPrice * percentage));  
         this.prices.priceList1 = (this.prices.costPrice * 1.29);
         this.prices.priceList2 = (this.prices.costPrice * 1.35);
         this.prices.priceList3 = (this.prices.costPrice * 1.50);
@@ -127,7 +132,7 @@ export class DataPricesComponent implements OnInit{
         this.prices.priceListE = (this.prices.costPrice * 1.16);
         this.prices.priceListG = (this.prices.costPrice * 1.22);
       }
-      this.pricesService.updateProduct(this.prices.id, this.prices).subscribe(()=>{});
+      await this.pricesService.updateProduct(this.prices.id, this.prices).toPromise();
     }
   }
 

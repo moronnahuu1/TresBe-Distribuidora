@@ -44,3 +44,12 @@ label{
     display: flex;
     gap: 10px;
 }
+p{
+  background-color: rgb(39, 91, 155);
+  color: white;
+  padding: 1vi;
+  border-radius: 15px;
+}
+#spinner{
+animation: spin 1s infinite;
+}

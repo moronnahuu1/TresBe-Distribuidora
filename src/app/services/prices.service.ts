@@ -59,7 +59,7 @@ export class PricesService {
   saveProduct(productAux: PriceXproduct): Observable<void>{
     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
   }
-  updateProduct(id: string, productAux: PriceXproduct): Observable<void>{
+  updateProduct(id: string, productAux: PriceXproduct): Observable<void>{    
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);
   }
 }

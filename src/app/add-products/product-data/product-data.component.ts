@@ -48,6 +48,12 @@ export class ProductDataComponent implements OnInit{
     if (this.activeRoute.snapshot.params.hasOwnProperty('id')) { //Se comprueba que la ruta contenga el ID del producto a modificar
       this.productID = this.activeRoute.snapshot.params['id']; //Si el parametro existe se lo asigna al product ID
     }
+    (await this.brandService.readBrands()).subscribe(brands => {
+      this.brands = brands; //Se leen las marcas para seleccionar
+      if(!this.onModify){
+        this.brand = this.brands[0].name;
+      }
+    });
     if(this.productID != ''){ //Si el product ID tiene informacion
       this.onModify = await this.readProduct(); //Se busca el producto, si lo encuentra retorna verdadero, por lo que se busca modificar. Si no lo encuentra retorna falso, por lo que se lleva a agregar
       if(this.onModify){ //Si se retorna verdadero en la funcion de read product significa que puede modificar y entra aca
@@ -58,9 +64,6 @@ export class ProductDataComponent implements OnInit{
       }
     }
     this.added = false; //Propiedad para los mensajes de la pagina
-      (await this.brandService.readBrands()).subscribe(brands => {
-        this.brands = brands; //Se leen las marcas para seleccionar
-      });
     
       this.optionService.getProductOptions(this.productID).subscribe(async options => {
         this.options = options;
@@ -178,10 +181,30 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
     let productAux = await this.getProduct();
     if(productAux){
       this.modifyProduct = productAux; //El modify product queda asignado como el producto a modificar, todos los datos del producto tomado por parametro son los datos que van a quedar en esta variable
+      this.brand = this.modifyProduct.brand;
+      this.onModifyBrands();
       return true; //Si el producto existe retorna verdadero para saber que se va a modificar algo existente
     }else{
       return false; //Si el producto no existe retorna falso y no deja modificar, solo agregar
     }
+  }
+
+  onModifyBrands(){
+    let i = 0;
+      let access = false;
+      while(i<this.brands.length && !access){
+        if(this.brands[i].name == this.brand){
+          access = true;
+        }else{
+          i++;
+        }
+      }
+      if(access){
+        let brandAux = this.brands[i];
+        this.brands.splice(i, 1);
+        this.brands.unshift(brandAux);
+        alert(this.brands[0].name);
+      }
   }
 
   async getProduct(){ //Funcion para traer el producto desde la base de datos pasando primero por el servicio del producto
@@ -373,5 +396,9 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
   selectOption(nameAux: string){
     this.optionSelected = this.searchOptionByName(nameAux);
     this.productList = this.returnPrice(this.optionSelected.id);
+  }
+  changeBrand(event: Event){
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.brand = selectedValue;
   }
 }

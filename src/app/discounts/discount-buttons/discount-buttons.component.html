@@ -5,4 +5,5 @@
         <button class="apply-btn" (click)="setDiscount()">Aplicar descuento</button>
         <button class="reset-btn" (click)="deleteDiscounts()">Eliminar todos los descuentos</button>
     </div>
+    <p *ngIf="progress > 0"><i class="fa fa-spinner" id="spinner" *ngIf="progress < 100" aria-hidden="true"></i> Cambiando Precios | {{progress.toFixed(1)}}%</p>
 </div>
