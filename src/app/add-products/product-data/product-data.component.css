@@ -191,6 +191,43 @@ button:hover {
         background-color: white;
     }
 }
+.form{
+    padding-bottom: 1vi;
+    display: flex;
+    max-width: 100%;
+    gap: 10px;
+    label{
+        padding: 0;
+        margin: 0;
+    }
+    input{
+        width: 15vi;
+        height: 1.5vi;
+        border: 0;
+        padding-left: 1vi;
+        border-radius: 10px;
+        background-color: rgb(238, 238, 238);
+    }
+}
+#optionContainer{
+    max-height: 7vi;
+    width: 35%;
+    font-size: 13px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2vi;
+    row-gap: 3vi;
+    overflow-y: auto;
+    overflow-x: auto;
+    position: absolute;
+    right: 25%;
+}
+.optionsForSearch{
+    height: 2.3vi;
+    p{
+        cursor: pointer;
+    }
+}
 
 /* Adaptabilidad para pantallas más pequeñas */
 @media (max-width: 600px) {

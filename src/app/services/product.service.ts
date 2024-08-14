@@ -197,7 +197,7 @@ export class ProductService {
 
   async returnOneProduct(id: string){
     let productAux = await this.getOneProduct(id);
-    let productReturn: Product = new Product('','','','',0,'',0,'',0);
+    let productReturn: Product = new Product('','','','',0,'',0,'',0,0);
     if(productAux != undefined){
       productReturn = productAux;
     }

@@ -15,8 +15,9 @@ export class Product{
     priceDiscount: number = 0;
     optionSelected: string = "";
     latestID: string = "";
+    sells: number;
 
-    constructor(id: string, name: string, category: string, brand: string, price: number, image: string, discount: number, description: string, quantity: number){
+    constructor(id: string, name: string, category: string, brand: string, price: number, image: string, discount: number, description: string, quantity: number, sells: number){
         this.id = id;
         this.name = name;
         this.category = category;
@@ -27,5 +28,6 @@ export class Product{
         this.description = description;
         this.quantity = quantity;
         this.priceDiscount = (price - (price * discount));
+        this.sells = sells
     }
 }

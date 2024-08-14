@@ -17,9 +17,11 @@ export class ProductsListComponent implements OnInit{
   loading: boolean = false;
   currentPage: number = 1;
   pageSize: number = 12;
+  productsNotPayed: Product[] = [];
   async ngOnInit() {
     window.scrollTo(0, 0);
     await this.filters();
+    ///this.hasCostPrice();
   }
 
   async filters(){ //Funcion para filtrar los productos, puede ser por categoria o por marca
@@ -49,6 +51,14 @@ export class ProductsListComponent implements OnInit{
     this.productService.changeLoading('false').subscribe(loadAux => {
       this.loading = loadAux;
     }); 
+   }
+   hasCostPrice(){
+    for(let i=0; i<this.productsArray.length; i++){
+      if(this.productsArray[i].price < 2 && this.productsArray[i].brand == 'Total'){
+        this.productsNotPayed.push(this.productsArray[i]);
+      }
+    }
+    ///alert(this.productsNotPayed.length)
    }
   isAdmin(){ //funcion para detectar si el usuario logueado es administrador
     let access = localStorage.getItem("admin");

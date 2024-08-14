@@ -65,7 +65,7 @@ export class PayComponent {
     for(let i=0; i<this.cartProducts.length; i++){ //Se recorre la lista de los productos UNICAMENTE en el CARRITO
       if(this.cartProducts[i].stock >= this.cartProducts[i].quantity){ //Se comprueba que el stock no sea menor a la cantidad pedida
         this.cartProducts[i].stock = this.cartProducts[i].stock - this.cartProducts[i].quantity; //Se actualiza el stock
-        this.updateProducts(this.cartProducts[i].id, this.cartProducts[i]); //Se actualiza el producto en la base de datos
+        this.updateProducts(this.cartProducts[i].latestID, this.cartProducts[i]); //Se actualiza el producto en la base de datos
       }
     }
   }
@@ -115,6 +115,7 @@ export class PayComponent {
     for(let i=0; i<this.cartProducts.length; i++){ //Se recorre el arreglo de productos DEL CARRITO
       let oxpAux: OrderXproducts = new OrderXproducts(this.generateRandomId(), orderID, this.cartProducts[i].id, this.cartProducts[i].quantity); //Se agregan los productos a una tabla de la base de datos (SOLO EL ID DEL PRODUCTO) y se lo relaciona con la orden de la misma manera (SOLO EL ID DE LA ORDEN)
       this.oxpService.saveOrderXproducts(oxpAux).subscribe(() => {}); //Se guardan los datos creados en la base de datos
+      await this.addSellProduct(this.cartProducts[i]);
     }
     return orderID; //Se retorna el ID de la orden creada
   }
@@ -168,6 +169,14 @@ export class PayComponent {
       
     }else{
       alert("Por favor, guarde los datos de envio antes de confirmar el pedido");
+    }
+  }
+  async addSellProduct(productAux: Product){
+    /* La funcion se encarga de sumar una nueva venta al producto que se compra */
+    let productReturned = await this.productService.returnOneProduct(productAux.latestID);
+    if(productReturned){
+      productReturned.sells = (productReturned.sells + 1);
+      await this.updateProducts(productReturned.id, productReturned);
     }
   }
   async updateProducts(productID: string, productAux: Product): Promise<void>{

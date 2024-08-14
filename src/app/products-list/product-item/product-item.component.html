@@ -15,7 +15,7 @@
         <div class="product-title">{{productSelected.name}}</div>
         <div class="product-code">Categoría: {{productSelected.category}}</div>
         <div class="reviews"><span>★★★★★</span> <a href="#" class="reviews">2 reviews</a></div>
-        <div class="price" [ngClass]="{'tacched': productSelected.discount > 0}">${{productSelected.price.toFixed(1)}}</div>
+        <div class="price" [ngClass]="{'tacched': productSelected.discount > 0}">${{formatNumber(productSelected.price)}}</div>
         <div class="price" *ngIf="productSelected.discount > 0">${{productSelected.priceDiscount.toFixed(1)}}</div>
         <div class="add-to-bag" (click)="addToCart()" *ngIf="!onCart">Añadir al carrito</div>
         <div class="add-to-bag"  [routerLink]="['/cart']" *ngIf="onCart">En carrito</div>
@@ -27,7 +27,7 @@
                 <p>{{option.name.toUpperCase()}}</p>
               </div>
             </div>
-          </div>
+        </div>
         <div class="product-options">
             <select *ngIf="options.length > 0" [(ngModel)]="optionSelected.id" name="options" (change)="isOnCart()" id="prodOptions">
                 <option *ngFor="let option of options" value="{{option.id}}">{{option.name}}</option>

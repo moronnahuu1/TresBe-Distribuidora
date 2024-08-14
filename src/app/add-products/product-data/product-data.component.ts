@@ -27,7 +27,7 @@ export class ProductDataComponent implements OnInit{
   productID: string = '';
   productList: PriceXproduct = new PriceXproduct('','',0,0,0,0,0,0,0);
   pricesID: string = '';
-  modifyProduct: Product = new Product('','','','',0,'',0,'',0);
+  modifyProduct: Product = new Product('','','','',0,'',0,'',0,0);
   activeRoute = inject(ActivatedRoute);
   onModify: boolean = false;
   toModify: boolean = false;
@@ -41,6 +41,8 @@ export class ProductDataComponent implements OnInit{
   optionSelected: Options = new Options('','','');
   optionTerm: string = '';
   optionUpdated: boolean = false;
+  searchTerm: string = '';
+  optionsSearched: Options[] = [];
   async ngOnInit() {
     this.modified = false;
     this.optionUpdated = this.messageUpdated();
@@ -114,7 +116,7 @@ getItemsProduct(){ //Lee los input del producto, crea ese producto y lo retorna
   let category = this.getString('categoryInp');
   let description = this.getString("descriptionInp");
 
-  let productAux = new Product(this.productID, name, category, this.brand, 0, image, discount, description, 1);
+  let productAux = new Product(this.productID, name, category, this.brand, 0, image, discount, description, 1, 0);
 
   return productAux;
 }
@@ -203,7 +205,6 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
         let brandAux = this.brands[i];
         this.brands.splice(i, 1);
         this.brands.unshift(brandAux);
-        alert(this.brands[0].name);
       }
   }
 
@@ -396,9 +397,25 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
   selectOption(nameAux: string){
     this.optionSelected = this.searchOptionByName(nameAux);
     this.productList = this.returnPrice(this.optionSelected.id);
+    this.optionTerm = this.optionSelected.name;
+    this.optionsSearched = [];
   }
   changeBrand(event: Event){
     const selectedValue = (event.target as HTMLSelectElement).value;
     this.brand = selectedValue;
+  }
+
+  updateSearchResults(){
+    this.optionsSearched = [];
+    if(this.optionTerm != ""){
+      for(let i = 0; i<this.options.length; i++){
+        if(this.options[i].name.includes(this.optionTerm)){
+          this.optionsSearched.push(this.options[i]);
+        }
+      }
+    }else{
+      this.optionsSearched = [];
+    }
+    this.optionTerm = this.optionSelected.name;
   }
 }
