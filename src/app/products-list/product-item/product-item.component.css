@@ -124,18 +124,21 @@ select{
 #optionContainer{
     max-height: 7vi;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 2vi;
-    row-gap: 0;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1vi;
+    row-gap: 1vi;
     overflow-y: auto;
     overflow-x: auto;
     position: absolute;
     right: 10vi;
 }
 .optionData{
-    height: 2.3vi;
+    border: 1px solid rgb(231, 231, 231);
+    border-radius: 15px;
+    padding: 5px;
     p{
         cursor: pointer;
+        font-size: 10px;
     }
 }
 @media (min-width: 1200px) {}

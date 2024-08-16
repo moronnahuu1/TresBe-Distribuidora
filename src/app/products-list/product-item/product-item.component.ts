@@ -107,7 +107,6 @@ export class ProductItemComponent implements OnInit{
   async getOptionSelected(){  //Se trae desde el html la opcion seleccionada
     let optionAux = this.optionSelected;
     if(optionAux){
-      let optionInp = optionAux.name;
       let optionAux1 = await this.optionService.returnProductByName(this.optionSelected.id);
       if(optionAux1 != null){
         this.optionSelected = optionAux1;
@@ -298,7 +297,8 @@ parseFraction(fraction: string): number {
     this.optionsSearched = [];
     if(this.searchTerm != ""){
       for(let i = 0; i<this.options.length; i++){
-        if(this.options[i].name.includes(this.searchTerm)){
+        this.options[i].name = this.options[i].name.toUpperCase();
+        if(this.options[i].name.includes(this.searchTerm.toUpperCase())){
           this.optionsSearched.push(this.options[i]);
         }
       }

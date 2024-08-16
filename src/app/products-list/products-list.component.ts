@@ -54,11 +54,11 @@ export class ProductsListComponent implements OnInit{
    }
    hasCostPrice(){
     for(let i=0; i<this.productsArray.length; i++){
-      if(this.productsArray[i].price < 2 && this.productsArray[i].brand == 'Total'){
+      if(this.productsArray[i].price < 2){
         this.productsNotPayed.push(this.productsArray[i]);
       }
     }
-    ///alert(this.productsNotPayed.length)
+    alert(this.productsNotPayed.length)
    }
   isAdmin(){ //funcion para detectar si el usuario logueado es administrador
     let access = localStorage.getItem("admin");
