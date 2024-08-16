@@ -1,6 +1,11 @@
 <div id="container">
     <h1>ULTIMAS COMPRAS</h1>
     <p *ngIf="isAdmin()">Usuario: {{user.username}}</p>
+    <div id="form">
+        <label for="search">Buscá la orden que desees</label>
+        <input type="text" name="search" id="searchInp" placeholder="Código de orden">
+        <button (click)="searchOrder()">Buscar</button>
+    </div>
     <div class="items" *ngFor="let oap of ordersAndProducts" (click)="changeDisplay('myOrders', oap.order.id)">
         <div id="dateCode">
             <p>#{{oap.order.code}}</p>

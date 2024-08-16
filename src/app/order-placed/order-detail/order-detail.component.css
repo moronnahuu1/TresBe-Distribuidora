@@ -1,14 +1,12 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
     margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
 .container {
-    width: 46vh;
-    height: 75vh;
-    background-color: #fff;
+    width: 44vh;
+    height: fit-content;
     padding: 2vi;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }

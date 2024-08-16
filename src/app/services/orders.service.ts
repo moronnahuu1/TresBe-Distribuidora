@@ -31,6 +31,35 @@ export class OrdersService {
     localStorage.setItem('searchedUser', JSON.stringify(true));
     this._user.next(this.user);
   }
+  returnOrders(){
+    return this._orders.asObservable();
+  }
+  isAdmin(){
+    if(localStorage.getItem('admin')){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  /*searchOrder(input: string){
+    if(input != ''){
+      if(!this.isAdmin()){
+  
+      }else{
+        let ordersSearched: Order[] = [];
+        for(let i = 0; i<this.orders.length; i++){
+          if(this.orders[i].code.toLowerCase().includes(input.toLowerCase())){
+            ordersSearched.push(this.orders[i]);
+          }
+        }
+        this.orders = ordersSearched;
+        this._orders.next(this.orders);
+        alert(this.orders.length);
+      }
+    }else{
+      
+    }
+  }*/
   returnUser(){
     return this._user.asObservable();
   }
@@ -47,6 +76,7 @@ export class OrdersService {
     }else{
       this.orders = [];
       this._orders.next(this.orders);
+      await this.readOxp()
     }
     return this._orders.asObservable();
   }
@@ -113,14 +143,15 @@ export class OrdersService {
   deleteOrders(): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
   }
-  saveOrder(productAux: Order, to: string, subject: string, html: string): Observable<void>{
+  saveOrder(productAux: Order, to: string, subject: string, html: string, htmlAux: string): Observable<void>{
     let urlAux = this.myAppUrl + this.myApiUrl;
     const emailData = {
       order: productAux,
       to: to,
       subject: subject,
       text: '', // Puedes dejar esto vacío si solo envías HTML
-      html: html
+      html: html,
+      htmlAux: htmlAux
   };
     return this.http.post<void>(urlAux, emailData);
   }

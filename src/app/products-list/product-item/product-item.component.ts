@@ -297,8 +297,7 @@ parseFraction(fraction: string): number {
     this.optionsSearched = [];
     if(this.searchTerm != ""){
       for(let i = 0; i<this.options.length; i++){
-        this.options[i].name = this.options[i].name.toUpperCase();
-        if(this.options[i].name.includes(this.searchTerm.toUpperCase())){
+        if(this.options[i].name.toUpperCase().includes(this.searchTerm.toUpperCase())){
           this.optionsSearched.push(this.options[i]);
         }
       }

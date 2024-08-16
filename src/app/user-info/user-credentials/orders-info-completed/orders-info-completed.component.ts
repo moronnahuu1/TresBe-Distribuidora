@@ -57,4 +57,21 @@ isAdmin(){
     return false;
   }
 }
+getInput(name: string){
+  if(name != undefined && name != ''){
+    let inpAux = document.getElementById(name) as HTMLInputElement;
+    if(inpAux){
+      let input = inpAux.value;
+      return input;
+    }else{
+      return '';
+    }
+  }else{
+    return '';
+  }
+}
+searchOrder(){
+  let input = this.getInput('searchInp');
+  ///this.orderService.searchOrder(input);
+}
 }

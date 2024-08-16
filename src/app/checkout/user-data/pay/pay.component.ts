@@ -110,8 +110,23 @@ export class PayComponent {
         <p color: black;>Total: $${order.total.toLocaleString()}</p>
     </div>
 </div>`;
+
+    let textAux = `<div style="display: flex; align-items: center; width: 100%; background-color: rgb(239, 239, 239);">
+    <div style="font-family: sans-serif; border: 2px solid orange; padding: 1vi; height: fit-content; width: 35vi; background-color: white;">
+        <div style="display: flex; flex-direction: column align-items: center;">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8NCmCrXwgexWDbhCLBeyLUpFBi4FxQA9Zhw&s" style="margin-left: 20%; margin-right: 20%;" alt="">
+        </div>
+        <h1 style="color: rgb(0, 125, 221); text-align: center;">Tenes un nuevo pedido</h1>
+        <p>Detalle De La Orden:</p>
+        <p>Usuario: ${this.user.username}</p>
+        <p>Código: #${order.code}</p>
+        <p>Envío a: ${this.userdata.street} ${this.userdata.streetNumb}, ${this.userdata.city}, ${this.userdata.province}, ${this.userdata.country}</p>
+        <p>Fecha: ${order.orderDate}</p>
+        <p>Total: $${order.total.toLocaleString()}</p>
+    </div>
+</div>;`
     this.creating = true;
-    await this.orderService.saveOrder(order, to, subject, text).toPromise(); //Se guarda la orden creada en la base de datos
+    await this.orderService.saveOrder(order, to, subject, text, textAux).toPromise(); //Se guarda la orden creada en la base de datos
     for(let i=0; i<this.cartProducts.length; i++){ //Se recorre el arreglo de productos DEL CARRITO
       let oxpAux: OrderXproducts = new OrderXproducts(this.generateRandomId(), orderID, this.cartProducts[i].id, this.cartProducts[i].quantity); //Se agregan los productos a una tabla de la base de datos (SOLO EL ID DEL PRODUCTO) y se lo relaciona con la orden de la misma manera (SOLO EL ID DE LA ORDEN)
       this.oxpService.saveOrderXproducts(oxpAux).subscribe(() => {}); //Se guardan los datos creados en la base de datos
