@@ -2,7 +2,8 @@
     width: 40vi;
     padding: 20px;
     height: fit-content;
-    max-height: 10vi;
+    max-height: 42vi;
+    overflow: auto;
   }
   
   .profile-header {
@@ -101,14 +102,13 @@
     background-color: white;
     color: black;
     padding: 8px 18px;
-    border: 2px solid #007bff;;
+    border: 2px solid #007bff;
   }
   /* Tablets (portrait and landscape) */
 @media (min-width: 768px) and (max-width: 1199px) {
   .profile {
-      width: 60vi;
-      padding: 15px;
-      max-height: 12vi;
+    width: 50vi;
+    padding: 15px;
   }
   .profile-picture {
       width: 80px;
@@ -144,7 +144,6 @@
   .profile {
       width: 80vi;
       padding: 10px;
-      max-height: 14vi;
   }
   .profile-picture {
       width: 70px;
@@ -180,7 +179,7 @@
   .profile {
       width: 90vi;
       padding: 8px;
-      max-height: 16vi;
+      max-height: fit-content;
   }
   .profile-picture {
       width: 60px;
@@ -216,7 +215,6 @@
   .profile {
       width: 100%;
       padding: 5px;
-      max-height: 20vi;
   }
   .profile-picture {
       width: 50px;

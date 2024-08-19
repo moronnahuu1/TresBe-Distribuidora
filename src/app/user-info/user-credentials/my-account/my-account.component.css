@@ -65,7 +65,7 @@
   /* Tablets (portrait and landscape) */
 @media (min-width: 768px) and (max-width: 1199px) {
   .profile {
-      width: 60vi;
+      width: 50vi;
       padding: 15px;
   }
   .profile-picture {
