@@ -6,19 +6,19 @@
         <h1>CARGA DE PRODUCTOS</h1>
         <div class="data">
             <div class="dataText">
-                <label for="name">Nombre de Producto</label>
+                <label for="name">Nombre de Producto *</label>
                 <input type="text" class="productInfo" name="name" [value]="getValue('name')" id="nameInp">
     
-                <label for="category">Categoría</label>
+                <label for="category">Categoría *</label>
                 <input type="text" class="productInfo" name="category" [value]="getValue('category')" id="categoryInp">
     
-                <label for="brand">Marca</label>
+                <label for="brand">Marca *</label>
 
                 <select name="brand" class="productInfo" [(ngModel)]="brand" id="brandSelect" (change)="changeBrand($event)">
                     <option *ngFor="let brand of brands" [value]="brand.name" >{{brand.name}}</option>
                 </select>
     
-                <label for="image">Imagen</label>
+                <label for="image">Imagen *</label>
                 <input type="text" name="image" class="productInfo" [value]="getValue('image')" id="imageInp">
     
             </div>
@@ -42,6 +42,7 @@
 
     <div class="featureData">
         <div class="features">
+            <h2 style="text-align: center;">CARACTERISTICAS</h2>
             <div *ngFor="let feature of features; let indice = index" class="feature">
                 <div>
                     <label for="name">Caracteristica</label>
@@ -72,6 +73,7 @@
 
     <div class="optionData">
         <div class="options">
+            <h2 style="text-align: center;">OPCIONES</h2>
             <div id="containerSelect">
                 <label for="select" id="labSelect">Seleccione la opción a modificar</label>
                 <div class="form">
@@ -100,7 +102,7 @@
                 </div>
                 <div id="buttons">
                     <button (click)="modifyOptions(optionSelected, 1)">Modificar</button>
-                    <button id="delete" (click)="deleteOption(optionSelected.id)">Eliminar</button>
+                    <button id="delete" (click)="deleteOption(optionSelected)">Eliminar</button>
                 </div>
             </div>
             
@@ -116,6 +118,24 @@
                     <input type="number" name="price1" id="costPriceInp">
                 </div>
                 <button (click)="addOption()">Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="priceData" *ngIf="onModify">
+        <div class="pricesChange">
+            <h2 style="text-align: center;">PRECIOS</h2>
+            <div class="pricesData">
+                <div id="form">
+                    <label for="percentage">Ingrese el porcentaje de cambio (0.05, 0.1, etc.)</label>
+                    <br>
+                    <input type="number" name="percentage" id="percentageInp">
+                </div>
+
+                <div id="buttons">
+                    <button id="increase" class="changePrice" (click)="changePrices('increase')">Aumentar Precios</button>
+                    <button id="decrease" class="changePrice" (click)="changePrices('decrease')">Disminuir Precios</button>
+                </div>
             </div>
         </div>
     </div>

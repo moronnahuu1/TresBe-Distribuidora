@@ -79,7 +79,7 @@ export class ProductDataComponent implements OnInit{
   getString(name: string): string{ //La funcion sirve para leer cada uno de los input del html, siempre y cuando sean string
     let divAux = document.getElementById(name) as HTMLInputElement;
     let miDiv = "";
-    if(divAux){
+    if(divAux != null && divAux != undefined){
       miDiv = divAux.value;
     }
     return miDiv;
@@ -116,8 +116,12 @@ getItemsProduct(){ //Lee los input del producto, crea ese producto y lo retorna
   let category = this.getString('categoryInp');
   let description = this.getString("descriptionInp");
 
-  let productAux = new Product(this.productID, name, category, this.brand, 0, image, discount, description, 1, 0);
+  if(name.length == 0 || image.length == 0 || category.length == 0){
+    alert('Los campos con asteriscos no pueden estar vacíos');
+    return null;
+  }
 
+  let productAux = new Product(this.productID, name, category, this.brand, 0, image, discount, description, 1, 0);
   return productAux;
 }
 
@@ -125,33 +129,45 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
   if(toDo == 'add'){
     this.pricesID = this.generateRandomId(16);
     let costPrice = this.getNumber('costPriceInp');
-    let pricelist1 = (costPrice * 1.29);
-    let pricelist2 = (costPrice * 1.35);
-    let pricelist3 = (costPrice * 1.5);
-    let pricelist4 = (costPrice * 1.7);
-    let pricelistE = (costPrice * 1.16);
-    let pricelistG = (costPrice * 1.22);
-
-    let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, optionID, pricelist1, pricelist2, pricelist3, pricelist4, pricelistE, pricelistG, costPrice);
-    return pricesAux;
+    if(costPrice > 0){
+      let pricelist1 = (costPrice * 1.29);
+      let pricelist2 = (costPrice * 1.35);
+      let pricelist3 = (costPrice * 1.5);
+      let pricelist4 = (costPrice * 1.7);
+      let pricelistE = (costPrice * 1.16);
+      let pricelistG = (costPrice * 1.22);
+  
+      let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, optionID, pricelist1, pricelist2, pricelist3, pricelist4, pricelistE, pricelistG, costPrice);
+      return pricesAux;
+    }else{
+      alert('el costo no puede ser 0 o menor');
+      return null;
+    }
   }else{
     this.pricesID = this.productList.id;
     let costPrice = this.getNumber('modifyCostPriceInp');
-    let pricelist1 = (costPrice * 1.29);
-    let pricelist2 = (costPrice * 1.35);
-    let pricelist3 = (costPrice * 1.5);
-    let pricelist4 = (costPrice * 1.7);
-    let pricelistE = (costPrice * 1.16);
-    let pricelistG = (costPrice * 1.22);
-    let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, optionID, pricelist1, pricelist2, pricelist3, pricelist4, pricelistE, pricelistG, costPrice);
-    return pricesAux;
+    if(costPrice > 0){
+      let pricelist1 = (costPrice * 1.29);
+      let pricelist2 = (costPrice * 1.35);
+      let pricelist3 = (costPrice * 1.5);
+      let pricelist4 = (costPrice * 1.7);
+      let pricelistE = (costPrice * 1.16);
+      let pricelistG = (costPrice * 1.22);
+      let pricesAux: PriceXproduct = new PriceXproduct(this.pricesID, optionID, pricelist1, pricelist2, pricelist3, pricelist4, pricelistE, pricelistG, costPrice);
+      return pricesAux;
+    }else{
+      alert('el costo no puede ser 0 o menor');
+      return null;
+    }
   }
 }
 
   addNewProduct(){ //La funcion solo sirve para cuando se va a agregar un nuevo producto, NO sirve para MODIFICAR
-    let productAux: Product = this.getItemsProduct();
-    this.productService.saveProduct(productAux).subscribe(() => {});
-    this.added = true; //Al estar en verdadero se activara el mensaje de producto cargado
+    let productAux: Product | null = this.getItemsProduct();
+    if(productAux != null){
+      this.productService.saveProduct(productAux).subscribe(() => {});
+      this.added = true; //Al estar en verdadero se activara el mensaje de producto cargado}
+    }
   }
 
   enableOrDisableInputs(){ ///Se habilitan o deshabilitan los input de la parte de PRODUCTO, NO CONFUNDIR, SOLO PRODUCTO, NO CARACTERISTICAS
@@ -172,11 +188,13 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
   }
 
   modifyOneProduct(){ //Funcion que se invoca cuando se apreta el boton de cambiar, para este paso ya se ha apretado el boton de modificar
-    let productAux: Product = this.getItemsProduct(); //Se crea un nuevo producto y se le asignan los input a travez de esa funcion
-    this.productService.updateProduct(this.productID, productAux).subscribe(()=>{});
-    this.toModify = false; //Despues de modificar todo, el a modificar queda en falso, ya que ya modificó lo que quiso y lo guardó
-    this.modified = true; //Despues de modificar todo, el modificado queda en verdadero, para que el html detecte esto y ponga el mensaje de modificacion correcta
-    this.enableOrDisableInputs(); //Se vuelve a cambiar la habilitacion de los inputs del producto, en este caso se van a deshabilitar nuevamente
+    let productAux: Product | null = this.getItemsProduct(); //Se crea un nuevo producto y se le asignan los input a travez de esa funcion
+    if(productAux != null){
+      this.productService.updateProduct(this.productID, productAux).subscribe(()=>{});
+      this.toModify = false; //Despues de modificar todo, el a modificar queda en falso, ya que ya modificó lo que quiso y lo guardó
+      this.modified = true; //Despues de modificar todo, el modificado queda en verdadero, para que el html detecte esto y ponga el mensaje de modificacion correcta
+      this.enableOrDisableInputs(); //Se vuelve a cambiar la habilitacion de los inputs del producto, en este caso se van a deshabilitar nuevamente
+    }
   }
 
   async readProduct(){ //Lee el producto que se trae POR PARAMETRO unicamente si lo que se desea es MODIFICAR
@@ -317,14 +335,26 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
   }
 
   modifyFeatures(feature: Feature, index: number){
-    this.featureModify = true;
-    this.enableOrDisableFeatures(feature.name, feature.value);
-    let featureName = this.getString(feature.name);
-    let featureValue = this.getString(feature.value);
-    feature.name = featureName;
-    feature.value = featureValue;
-    this.featureService.updateOneFeature(index, feature);
-    this.featureModify = false;
+    if(this.features.length > 0){
+      if(feature != undefined && feature != null){
+        this.featureModify = true;
+        this.enableOrDisableFeatures(feature.name, feature.value);
+        let featureName = this.getString(feature.name);
+        let featureValue = this.getString(feature.value);
+        if(featureName.length > 0 && featureValue.length > 0){
+          feature.name = featureName;
+          feature.value = featureValue;
+          this.featureService.updateOneFeature(index, feature);
+          this.featureModify = false;
+        }else{
+          alert('No podes dejar ningun campo vacío');
+        }
+      }else{
+        alert('Seleccione una caracteristica primero');
+      }
+    } else{
+      alert('No hay caracteristicas para modificar')
+    }
   }
   enableOrDisableFeatures(name: string, value: string){
     const nameAux = document.getElementById(name) as HTMLInputElement;
@@ -345,8 +375,17 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
   addFeature(){
     let featureName = this.getString('featureInp');
     let featureValue = this.getString('featureValueInp');
-    let featureAux = new Feature(this.generateRandomId(16), featureName, featureValue, this.productID);
-    this.featureService.createFeature(featureAux);
+    if(this.productID.length > 0){
+        if(featureName.length > 0 && featureValue.length > 0){
+        let featureAux = new Feature(this.generateRandomId(16), featureName, featureValue, this.productID);
+        this.featureService.createFeature(featureAux);
+      }else{
+        alert('No podes dejar ningun campo vacío');
+      }
+    }else{
+        alert('Para agregar una caracteristica primero debe completar la carga de un producto');
+        window.scrollTo(0, 0);
+      }
   }
   messageUpdated(){
     if(localStorage.getItem('updated')){
@@ -357,20 +396,36 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
     }
   }
   async modifyOptions(optionAux: Options, index: number){
+    if(this.options.length > 0){
     let optionName = this.getString(optionAux.id);
-    optionAux.name = optionName;
-    let pricesAux: PriceXproduct = this.getItemsPrice(optionAux.id, 'update'); //Mismo paso que el anterior pero con las listas de precios
-    await this.pricesService.updateProduct(pricesAux.id, pricesAux).toPromise(); 
-    this.optionService.updateOneOption(index, optionAux);
-    localStorage.setItem('updated', JSON.stringify(true));
-    location.reload();
+      if(optionName.length > 0){
+        optionAux.name = optionName;
+        let pricesAux: PriceXproduct | null = this.getItemsPrice(optionAux.id, 'update'); //Mismo paso que el anterior pero con las listas de precios
+        if(pricesAux != null){
+          await this.pricesService.updateProduct(pricesAux.id, pricesAux).toPromise(); 
+          this.optionService.updateOneOption(index, optionAux);
+          localStorage.setItem('updated', JSON.stringify(true));
+          location.reload();
+        }
+      }else{
+        alert('No podes dejar el campo de nombre de opción vacío');
+      }
+    }else{
+      alert('No hay opciones para modificar');
+    }
   }
   addOption(){
     let optionName = this.getString('optionInp');
-    let optionAux = new Options(this.generateRandomId(16), optionName, this.productID);
-    this.optionService.createOption(optionAux);
-    let pricesAux: PriceXproduct = this.getItemsPrice(optionAux.id, 'add');
-    this.pricesService.saveProduct(pricesAux).subscribe(() => {});
+    if(optionName.length > 0){
+      let optionAux = new Options(this.generateRandomId(16), optionName, this.productID);
+      let pricesAux: PriceXproduct | null = this.getItemsPrice(optionAux.id, 'add');
+      if(pricesAux != null){
+        this.optionService.createOption(optionAux);
+        this.pricesService.saveProduct(pricesAux).subscribe(() => {});
+      }
+    }else{
+      alert('No podes dejar el campo de nombre de opción vacío');
+    }
   }
   searchOptionByName(nameAux: string){
     let i = 0;
@@ -389,9 +444,13 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
       return this.optionSelected;
     }
   }
-  deleteOption(optionID: string){
-    if(optionID != undefined){
-      this.optionService.deleteOneOption(optionID);
+  deleteOption(optionSelected: Options){
+    if(this.options.length > 0){
+      if(optionSelected.id != undefined){
+      this.optionService.deleteOneOption(optionSelected.id);
+      }
+    }else{
+      alert('No hay opciones para eliminar');
     }
   }
   selectOption(nameAux: string){
@@ -417,5 +476,51 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
       this.optionsSearched = [];
     }
     this.optionTerm = this.optionSelected.name;
+  }
+
+  async changePrices(option: string){
+    let inpAux = document.getElementById('percentageInp') as HTMLInputElement;
+    if(inpAux){
+      let percentage = parseFloat(inpAux.value);
+      if(inpAux.value.length > 0){
+        if(percentage > 0){
+          let confirmed = confirm('Cambiar los precios en ' + percentage + '% ?');
+          if(confirmed){
+            await this.modifyPrices(percentage, option);
+          }
+        }else{
+          alert('El porcentaje de cambio no puede ser negativo o 0');
+        }
+      }else{
+        alert('No podes dejar el campo vacio');
+      }
+    }else{
+      alert('No podes dejar el campo vacio');
+    }
+  }
+
+  async modifyPrices(percentage: number, option: string){
+    for(let i=0; i<this.allPrices.length; i++){
+      if(option == 'increase'){
+        
+        this.allPrices[i].costPrice = this.allPrices[i].costPrice + (this.allPrices[i].costPrice * percentage);
+        this.allPrices[i].priceList1 = (this.allPrices[i].costPrice * 1.29);
+        this.allPrices[i].priceList2 = (this.allPrices[i].costPrice * 1.35);
+        this.allPrices[i].priceList3 = (this.allPrices[i].costPrice * 1.50);
+        this.allPrices[i].priceList4 = (this.allPrices[i].costPrice * 1.70);
+        this.allPrices[i].priceListE = (this.allPrices[i].costPrice * 1.16);
+        this.allPrices[i].priceListG = (this.allPrices[i].costPrice * 1.22);
+
+      }else if(option == 'decrease'){
+        this.allPrices[i].costPrice = (this.allPrices[i].costPrice - (this.allPrices[i].costPrice * percentage));  
+        this.allPrices[i].priceList1 = (this.allPrices[i].costPrice * 1.29);
+        this.allPrices[i].priceList2 = (this.allPrices[i].costPrice * 1.35);
+        this.allPrices[i].priceList3 = (this.allPrices[i].costPrice * 1.50);
+        this.allPrices[i].priceList4 = (this.allPrices[i].costPrice * 1.70);
+        this.allPrices[i].priceListE = (this.allPrices[i].costPrice * 1.16);
+        this.allPrices[i].priceListG = (this.allPrices[i].costPrice * 1.22);
+      }
+      await this.pricesService.updateProduct(this.allPrices[i].id, this.allPrices[i]).toPromise();
+    }
   }
 }
