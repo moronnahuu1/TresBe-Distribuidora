@@ -17,12 +17,14 @@
 }
 h1{
     font-family: "Posterama 1919 W01 SemiBold";
-    width: fit-content;
+    text-align: center;
 }
 #containsAll{
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-left: 1vi;
+    padding-right: 1vi;
 }
 #buttonProducts{
     width: fit-content;

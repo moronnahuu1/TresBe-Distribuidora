@@ -16,6 +16,8 @@ a, h2{
     height: 250px;
     position: relative;
     bottom: 0;
+    padding-left: 1vi;
+    padding-right: 1vi;
 }
 .followList, .contactList, .mapList{
     display: flex;

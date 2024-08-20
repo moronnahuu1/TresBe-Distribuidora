@@ -11,7 +11,7 @@
         <a href="/brands" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Marcas</a>
         <a href="/login" *ngIf="!isLogged()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Iniciar Sesión</a>
         <a href="" *ngIf="isLogged()" (click)="logout()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Salir</a>
-        <p routerLink="/cart" class="fa fa-shopping-cart" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"> {{products.length}}</p>
+        <p routerLink="/cart" class="fa fa-shopping-cart cartLength" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"> {{products.length}}</p>
         <i *ngIf="isLogged()" class="fa fa-user fa-2x" aria-hidden="true" [routerLink]="['/user']" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"></i>
     </div>
         
