@@ -6,5 +6,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
+  whatsappNumber = '5492233121896'; // Incluye el código del país sin '+'
+  whatsappMessage = 'Hola! Quiero hacer una consulta sobre un producto. ';
 
+  email = 'info.tresbedistribuidora@gmail.com';
+  subject = 'Consulta sobre productos';
+  body = 'Hola, estoy interesado en conocer más sobre ciertos productos';
+  
+  whatsappLink(): string {
+    const encodedMessage = encodeURIComponent(this.whatsappMessage);
+    return `https://wa.me/${this.whatsappNumber}?text=${encodedMessage}`;
+  }
+
+  gmailLink(): string {
+    const encodedSubject = encodeURIComponent(this.subject);
+    const encodedBody = encodeURIComponent(this.body);
+    return `mailto:${this.email}?subject=${encodedSubject}&body=${encodedBody}`;
+  }
 }
