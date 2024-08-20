@@ -12,12 +12,12 @@ a, h2{
     display: flex;
     justify-content: space-around;
     justify-items: center;
-    width: 100%;
+    padding-left: 1vi;
+    padding-right: 1vi;
+    width: calc(100% - 2vi);
     height: 250px;
     position: relative;
     bottom: 0;
-    padding-left: 1vi;
-    padding-right: 1vi;
 }
 .followList, .contactList, .mapList{
     display: flex;

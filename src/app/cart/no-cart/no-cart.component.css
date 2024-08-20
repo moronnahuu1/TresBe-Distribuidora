@@ -43,7 +43,7 @@
 
   @media (min-width: 1200px) {
     .cart {
-      width: 80vh;
+      width: calc(100% - 16vh);
     }
     p {
       font-size: 24px;
@@ -56,7 +56,7 @@
   /* Tablets y laptops medianas (768px a 1199px) */
   @media (min-width: 768px) and (max-width: 1199px) {
     .cart {
-      width: 90vh;
+      width: calc(100% - 16vh);
     }
     p {
       font-size: 22px;

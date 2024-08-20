@@ -51,8 +51,9 @@
             margin-right: 1.5%;
         }
         img{
-            width: 12vh;
-            height: 4vh;
+            width: 10vh;
+            height: 3vh;
+            margin-left: 0;
         }
     }
 }
