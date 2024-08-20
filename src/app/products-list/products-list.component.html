@@ -13,6 +13,7 @@
     <app-no-products *ngIf="!loading && productsArray.length == 0"></app-no-products>
     <app-loading *ngIf="loading"></app-loading>
     <div id="container" *ngIf="!loading">
+        <!--<img src="../../" alt="">!-->
         <div id="product_item" routerLink="/products/{{product.id}}" *ngFor="let product of paginatedProducts()">
             <img src="{{product.image}}" alt="">
             <div id="dataContainer">
