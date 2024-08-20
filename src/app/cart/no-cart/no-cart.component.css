@@ -40,3 +40,77 @@
     background-color: rgb(25, 115, 206);
     color: white;
   }
+
+  @media (min-width: 1200px) {
+    .cart {
+      width: 80vh;
+    }
+    p {
+      font-size: 24px;
+    }
+    button {
+      font-size: 18px;
+    }
+  }
+  
+  /* Tablets y laptops medianas (768px a 1199px) */
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .cart {
+      width: 90vh;
+    }
+    p {
+      font-size: 22px;
+    }
+    button {
+      font-size: 16px;
+    }
+  }
+  
+  /* Tablets pequeñas (481px a 767px) */
+  @media (min-width: 481px) and (max-width: 767px) {
+    .cart {
+      width: 95vh;
+      padding-left: 5vh;
+      padding-right: 5vh;
+    }
+    p {
+      font-size: 20px;
+    }
+    button {
+      font-size: 15px;
+    }
+  }
+  
+  /* Móviles grandes (280px a 480px) */
+  @media (max-width: 480px) and (min-width: 280px) {
+    .cart {
+      width: 100%;
+      padding-left: 3vh;
+      padding-right: 3vh;
+    }
+    p {
+      font-size: 18px;
+      text-align: center;
+    }
+    button {
+      font-size: 14px;
+      padding: 2% 4%;
+    }
+  }
+  
+  /* Móviles muy pequeños (menos de 279px) */
+  @media (max-width: 279px) {
+    .cart {
+      width: 100%;
+      padding-left: 2vh;
+      padding-right: 2vh;
+    }
+    p {
+      font-size: 16px;
+      text-align: center;
+    }
+    button {
+      font-size: 12px;
+      padding: 3% 5%;
+    }
+  }
