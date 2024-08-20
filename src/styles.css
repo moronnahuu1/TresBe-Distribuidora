@@ -37,6 +37,10 @@ body, html {
     margin: 0;
     padding: 0;
     width: 100%;
+    scroll-behavior: smooth;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch; /* Habilita el desplazamiento suave en iOS */
+    scroll-behavior: smooth; /* Desplazamiento suave */
     /*background: linear-gradient(to right, #0097b0, #7ed959);*/
   }
 
@@ -50,3 +54,4 @@ body, html {
     -webkit-user-drag: none; /* Para navegadores basados en WebKit */
     pointer-events: none;    /* Desactiva los eventos del puntero */
   }
+  
