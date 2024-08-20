@@ -40,6 +40,7 @@ body, html {
     margin: 0;
     padding: 0;
     width: 100%;
+    overflow-x: hidden; /* Previene desplazamiento horizontal */
     scroll-behavior: smooth;
     overscroll-behavior-y: contain;
     overscroll-behavior: none; /* Evita el rebote o la sobrecarga al llegar al fondo */
