@@ -25,7 +25,7 @@ export class OrderDetailComponent implements OnInit{
   oxp: Array<OrderXproducts> = [];
   orders: Array<Order> = [];
   products: Array<Product> = [];
-  order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "", false);
+  order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "", false, '');
   id: string = "";
   user: User = new User("", "", "", "",''); //USER va a ser el usuario logueado en el momento
   users: Array<Userdata> = []; //USERS va a ser la informacion de envio de cada usuario logueado, nombre, apellido, lugar de residencia, telefono, mail, etc.

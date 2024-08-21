@@ -15,7 +15,7 @@ import { UserdataService } from 'src/app/services/userdata.service';
 })
 export class MyBoughtsComponent implements OnInit{
   ordersAndProductsService = inject(OrderXProductsXOxpService);
-  selectedOrder: Order = new Order('','',0,0,0,0,new Date(),'', '', false);
+  selectedOrder: Order = new Order('','',0,0,0,0,new Date(),'', '', false, '');
   selectedOXP: OrdersAndProducts = new OrdersAndProducts(this.selectedOrder, []);
   selectedProducts: CartProduct[] = [];
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');

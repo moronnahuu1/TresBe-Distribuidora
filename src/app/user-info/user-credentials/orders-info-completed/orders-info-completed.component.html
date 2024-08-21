@@ -9,6 +9,7 @@
     <div class="items" *ngFor="let oap of ordersAndProducts" (click)="changeDisplay('myOrders', oap.order.id)">
         <div id="dateCode">
             <p>#{{oap.order.code}}</p>
+            <p *ngIf="isAdmin()">{{oap.order.username}}</p>
             <p>{{getDates(oap.order.orderDate)}}</p>
         </div>
         <div *ngFor="let product of oap.products | slice:0:2">

@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { Product } from '../models/Product';
 import { ActivatedRoute } from '@angular/router';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-products-list',
@@ -18,6 +19,8 @@ export class ProductsListComponent implements OnInit{
   currentPage: number = 1;
   pageSize: number = 12;
   productsNotPayed: Product[] = [];
+  cartService = inject(CartService);
+  onCart: Boolean = false;
   async ngOnInit() {
     window.scrollTo(0, 0);
     await this.filters();

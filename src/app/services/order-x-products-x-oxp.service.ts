@@ -23,7 +23,7 @@ export class OrderXProductsXOxpService {
   _orderAndproducts: BehaviorSubject<OrdersAndProducts[]> = new BehaviorSubject<OrdersAndProducts[]>([]);
   productService = inject(ProductService);
   oxpService = inject(OrdersXProductsService);
-  selectedOrder: OrdersAndProducts = new OrdersAndProducts(new Order('','',0,0,0,0,new Date(),'', '', false), []);
+  selectedOrder: OrdersAndProducts = new OrdersAndProducts(new Order('','',0,0,0,0,new Date(),'', '', false, ''), []);
   _selectedOrder: BehaviorSubject<OrdersAndProducts> = new BehaviorSubject<OrdersAndProducts>(this.selectedOrder);
   constructor() { }
 

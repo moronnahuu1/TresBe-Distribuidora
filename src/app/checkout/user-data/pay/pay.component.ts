@@ -95,7 +95,7 @@ export class PayComponent {
   async createOrder(){
     /* La funcion se encarga de manejar la base de datos creando la nueva orden del usuario y agregandola a la base de datos */
     let orderID = this.generateRandomId(); //Se crea un ID de la orden
-    let order: Order = new Order(orderID, this.generateRandomCode(), 0, 0, this.subtotal, this.total, new Date(), this.user.id, this.userdata.id, false); //Se crea la orden con los datos de la reserva
+    let order: Order = new Order(orderID, this.generateRandomCode(), 0, 0, this.subtotal, this.total, new Date(), this.user.id, this.userdata.id, false, this.user.username); //Se crea la orden con los datos de la reserva
     let to = this.user.email;
     let subject = 'Orden de compra'
     let text = `<div style="display: flex; align-items: center; background-color: rgb(239, 239, 239); width: 50%; padding-left 50%; padding-right: 50%; padding-top: 10%; padding-bottom: 10%">
