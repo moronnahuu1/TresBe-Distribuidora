@@ -49,8 +49,11 @@ validateUser(){
     if(userIndex == -1){ //Si el retorno del checking retorna -1 significa que no encontro el usuario, por tanto no hace ninguna modificacion en el sistema
     }else{ //Si el retorno devuelve un valor igual o mayor a 0 significa que encontro el usuario, por lo que entraria a esta seccion
       localStorage.setItem("userLogged", JSON.stringify(this.users[userIndex]));  //Se guarda en local storage una copia del usuario que se loguea, para saber que está logueado en cualquier parte de la pagina
-      if(this.users[userIndex].email == "nahuelarielmoron1@gmail.com"){ //Comprobacion de administrador, si el mail coincide significa que se esta logueando un administrador
+      if(process.env['ADMIN']){
+        alert(process.env['ADMIN']);
+        if(this.users[userIndex].email == process.env['ADMIN']/*"nahuelarielmoron1@gmail.com"*/){ //Comprobacion de administrador, si el mail coincide significa que se esta logueando un administrador
         localStorage.setItem("admin", JSON.stringify(true)); //Se guarda en local storage una comprobacion de admin, para saber en cualquier parte de la pagina que el usuario logueado es admin
+      }
       }
       window.location.href = ''; //Se redirecciona al menu de inicio, con el usuario ya logueado
     }
