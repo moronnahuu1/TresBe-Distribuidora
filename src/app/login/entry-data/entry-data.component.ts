@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, inject } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-entry-data',
@@ -49,8 +50,8 @@ validateUser(){
     if(userIndex == -1){ //Si el retorno del checking retorna -1 significa que no encontro el usuario, por tanto no hace ninguna modificacion en el sistema
     }else{ //Si el retorno devuelve un valor igual o mayor a 0 significa que encontro el usuario, por lo que entraria a esta seccion
       localStorage.setItem("userLogged", JSON.stringify(this.users[userIndex]));  //Se guarda en local storage una copia del usuario que se loguea, para saber que está logueado en cualquier parte de la pagina
-      if(process.env['ADMIN']){
-        alert(process.env['ADMIN']);
+      if(environment.admin){
+        alert(environment.admin);
         if(this.users[userIndex].email == process.env['ADMIN']/*"nahuelarielmoron1@gmail.com"*/){ //Comprobacion de administrador, si el mail coincide significa que se esta logueando un administrador
         localStorage.setItem("admin", JSON.stringify(true)); //Se guarda en local storage una comprobacion de admin, para saber en cualquier parte de la pagina que el usuario logueado es admin
       }
