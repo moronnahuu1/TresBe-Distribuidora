@@ -56,6 +56,12 @@ h1{
 .items:hover{
     transform: scale(1.05);
 }
+.itemsChild{
+    border-bottom: 1px solid rgb(214, 214, 214);
+}
+.products{
+    text-transform: capitalize;
+}
 #dateCode{
     margin-bottom: -10px;
     display: flex;

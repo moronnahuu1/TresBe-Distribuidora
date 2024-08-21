@@ -1,5 +1,5 @@
 <main class="profile" *ngIf="selectedOrder.code != ''">
-  <p *ngIf="isAdmin()">Estas viendo una orden del usuario: {{user.username}}</p>
+  <p *ngIf="isAdmin()">Estas viendo una orden del usuario: {{selectedOrder.username}}</p>
     <section class="profile-header">
       <div class="profile-info">
         <h1>#{{selectedOrder.code}}</h1>

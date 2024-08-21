@@ -7,16 +7,18 @@
         <button (click)="searchOrder()">Buscar</button>
     </div>
     <div class="items" *ngFor="let oap of ordersAndProducts" (click)="changeDisplay('myOrders', oap.order.id)">
-        <div id="dateCode">
+        <div id="dateCode" class="itemsChild">
             <p>#{{oap.order.code}}</p>
             <p *ngIf="isAdmin()">{{oap.order.username}}</p>
             <p>{{getDates(oap.order.orderDate)}}</p>
         </div>
-        <div *ngFor="let product of oap.products | slice:0:2">
-            <p>{{product.name}} {{product.optionSelected}} x{{product.quantity}}</p>
+        <div class="itemsChild">
+            <div *ngFor="let product of oap.products | slice:0:2" class="products">
+                <p>{{product.name.toLowerCase()}} {{product.optionSelected}} x{{product.quantity}}</p>
+            </div>
         </div>
         <p *ngIf="oap.products.length > 2">Ver todos los productos</p>
-        <p>PRECIO TOTAL: {{oap.order.total}}</p>
+        <p>PRECIO TOTAL: ${{oap.order.total}}</p>
     </div>
     <div *ngIf="ordersAndProducts.length == 0" id="noOrders">
         <i class="fa fa-shopping-cart fa-5x" aria-hidden="true"></i>
