@@ -52,7 +52,7 @@ validateUser(){
       localStorage.setItem("userLogged", JSON.stringify(this.users[userIndex]));  //Se guarda en local storage una copia del usuario que se loguea, para saber que está logueado en cualquier parte de la pagina
       if(environment.admin){
         alert(environment.admin);
-        if(this.users[userIndex].email == process.env['ADMIN']/*"nahuelarielmoron1@gmail.com"*/){ //Comprobacion de administrador, si el mail coincide significa que se esta logueando un administrador
+        if(this.users[userIndex].email == environment.admin/*"nahuelarielmoron1@gmail.com"*/){ //Comprobacion de administrador, si el mail coincide significa que se esta logueando un administrador
         localStorage.setItem("admin", JSON.stringify(true)); //Se guarda en local storage una comprobacion de admin, para saber en cualquier parte de la pagina que el usuario logueado es admin
       }
       }
