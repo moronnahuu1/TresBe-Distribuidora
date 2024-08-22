@@ -3,6 +3,7 @@ import { ProductService } from '../services/product.service';
 import { Product } from '../models/Product';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../services/cart.service';
+import { OptionsService } from '../services/options.service';
 
 @Component({
   selector: 'app-products-list',
@@ -20,6 +21,7 @@ export class ProductsListComponent implements OnInit{
   pageSize: number = 12;
   productsNotPayed: Product[] = [];
   cartService = inject(CartService);
+  optionsService = inject(OptionsService);
   onCart: Boolean = false;
   async ngOnInit() {
     window.scrollTo(0, 0);
@@ -74,10 +76,11 @@ export class ProductsListComponent implements OnInit{
   formatNumber(number: number): string { //Funcion de front, se usa en HTML para mostrar los numeros grandes de forma mas legible.
     return number.toLocaleString(); // Esto añadirá separadores de miles
   }
-  deleteProduct(productID: string){
+  async deleteProduct(productID: string){
     let confirmation = confirm("Eliminar producto?");
     if(confirmation){
-      this.productService.deleteProduct(productID).subscribe(()=>{});
+      await this.productService.deleteProduct(productID).toPromise();
+      await this.optionsService.deleteOptionByProduct(productID).toPromise();
     }
   }
 

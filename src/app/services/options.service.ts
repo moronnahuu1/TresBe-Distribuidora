@@ -116,6 +116,11 @@ export class OptionsService {
     return this.http.get<Options>(urlAux + name); 
   }
 
+  deleteOptionByProduct(id: string): Observable<void> {
+    let apiUrl = this.myAppUrl + this.myApiUrl + 'deleteProduct/' + id;
+    return this.http.delete<void>(apiUrl);
+  }
+
   deleteOption(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
   }
