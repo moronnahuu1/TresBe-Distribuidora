@@ -4,6 +4,7 @@
     width: 100%;
     background-color: rgb(255, 255, 255);
     align-items: center;
+    font-family: sans-serif;
 }
 .product-item{
     margin-top: 2%;
@@ -15,9 +16,10 @@
         height: 350px;
     }
 }
-h1{
+h2,h1{
     font-family: "Posterama 1919 W01 SemiBold";
     text-align: center;
+    letter-spacing: 1px;
 }
 #containsAll{
     display: flex;
