@@ -117,8 +117,6 @@ h1{
         padding-right: 4vi;
         padding-top: 2vi;
         padding-bottom: 3vi;
-        min-height: 13vi;
-        max-height: 13vi;
         font-size: 16px;
     }
     #noOrders p {
@@ -140,7 +138,6 @@ h1{
         padding-top: 3vi;
         padding-bottom: 4vi;
         font-size: 15px;
-        min-height: 30vh;
     }
     #noOrders p {
         width: 90%;
@@ -160,8 +157,6 @@ h1{
         padding-right: 5vi;
         padding-top: 4vi;
         padding-bottom: 5vi;
-        min-height: 18vi;
-        max-height: 18vi;
         font-size: 20px;
     }
     #noOrders p {
