@@ -47,7 +47,6 @@ button {
     height: 4vh;
     width: 15vh;
     cursor: pointer;
-    border: 1px solid #ccc; /* Agregar borde para mejor visualización */
     border-left: none; /* Eliminar borde izquierdo */
     background-color: rgb(169, 234, 72);
     transition: transform 1s ease;
