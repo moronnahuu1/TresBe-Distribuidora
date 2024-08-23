@@ -36,27 +36,27 @@
 button{
     color: black;
 }
-body{
+body {
     box-sizing: border-box;
-}
-body, html {
+  }
+  
+  body, html {
     margin: 0;
     padding: 0;
     width: 100%;
-    overflow-x: hidden; /* Previene desplazamiento horizontal */
+    /* overflow-x: hidden; No ocultes el desplazamiento horizontal */
     scroll-behavior: smooth;
-    overscroll-behavior-y: contain;
-    overscroll-behavior: none; /* Evita el rebote o la sobrecarga al llegar al fondo */
+    overscroll-behavior-y: contain; /* Mantiene el control en la dirección vertical */
     -webkit-overflow-scrolling: touch; /* Habilita el desplazamiento suave en iOS */
-    scroll-behavior: smooth; /* Desplazamiento suave */
-    /*background: linear-gradient(to right, #0097b0, #7ed959);*/
   }
-
+  
+  /* Mantén otros estilos */
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
   }
+  
 
   img {
     -webkit-user-drag: none; /* Para navegadores basados en WebKit */
