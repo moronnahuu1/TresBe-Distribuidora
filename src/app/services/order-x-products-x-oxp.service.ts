@@ -27,9 +27,13 @@ export class OrderXProductsXOxpService {
   _selectedOrder: BehaviorSubject<OrdersAndProducts> = new BehaviorSubject<OrdersAndProducts>(this.selectedOrder);
   constructor() { }
 
-  async getProducts(admin: string){
-    if(admin == 'admin'){
+  async getProducts(type: string, input: string | null){
+    if(type == 'admin'){
       (await this.orderService.readAdminOrders()).subscribe(orders => {
+        this.orders = orders;
+      });
+    }else if(type == 'search' && input != null){
+      (await this.orderService.searchOrders(input)).subscribe(orders => {
         this.orders = orders;
       });
     }else{

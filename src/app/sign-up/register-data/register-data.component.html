@@ -5,7 +5,7 @@
 
         <div id="dataText">
             <label for="email">Email</label>
-            <input type="email" name="email" id="emailInp" [(ngModel)]="searchTerm" (input)="verifyEmail()" placeholder="juan@gmail.com">
+            <input type="email" name="email" id="emailInp" [(ngModel)]="searchTerm" (input)="verifyEmail()" placeholder="miEmail@gmail.com">
             <div id="emailMessages" class="messages">
                 <p *ngIf="emailRepeated">El email ya se encuentra registrado</p>
                 <p *ngIf="noMail">No puede dejar el email vacío</p>

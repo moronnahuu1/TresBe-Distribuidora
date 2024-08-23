@@ -4,7 +4,7 @@
       <div class="profile-info">
         <h1>#{{selectedOrder.code}}</h1>
         <p>{{getDates(selectedOrder.orderDate)}}</p>
-        <p>$ {{selectedOrder.total}}</p>
+        <p>$ {{formatNumber(selectedOrder.total)}}</p>
         <p *ngIf="!(selectedOrder.payed) && !(user.client) && !isAdmin()">Transferencia pendiente</p>
       </div>
     </section>
@@ -33,9 +33,15 @@
         <span>Calle</span>
         <span>{{userdata.street}} {{userdata.streetNumb}}</span>
       </div>
+      <div class="info-row">
+        <span>Orden Registrada</span>
+        <span *ngIf="selectedOrder.attended">Si</span>
+        <span *ngIf="!selectedOrder.attended">No</span>
+      </div>
     </section>
 
     <div id="buttonsUser">
+      <button style="cursor: auto;" *ngIf="!isAdmin() && selectedOrder.attended">Tu orden ya fue registrada!</button>
       <button *ngIf="isAdmin()" (click)="deleteUserOrder(selectedOrder.code)">Eliminar</button>
       <button *ngIf="isAdmin() && !selectedOrder.attended" (click)="attendOrder()" id="registerOrder">Orden Registrada</button>
       <button *ngIf="isAdmin() && selectedOrder.attended" (click)="unattendOrder()">No está registrada</button>

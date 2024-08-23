@@ -12,11 +12,11 @@ export class UserInfoComponent implements OnInit{
   ordersAndProducts: OrdersAndProducts[] = [];
   async ngOnInit() {
     if(this.isAdmin()){
-      (await this.oxpService.getProducts('admin')).subscribe(products => {
+      (await this.oxpService.getProducts('admin', null)).subscribe(products => {
         this.ordersAndProducts = products;
        });
     }else{
-      (await this.oxpService.getProducts('')).subscribe(products => {
+      (await this.oxpService.getProducts('', null)).subscribe(products => {
         this.ordersAndProducts = products;
        });
     }

@@ -41,25 +41,30 @@ export class OrdersService {
       return false;
     }
   }
-  /*searchOrder(input: string){
+  async searchOrders(input: string){
     if(input != ''){
       if(!this.isAdmin()){
-  
-      }else{
-        let ordersSearched: Order[] = [];
-        for(let i = 0; i<this.orders.length; i++){
-          if(this.orders[i].code.toLowerCase().includes(input.toLowerCase())){
-            ordersSearched.push(this.orders[i]);
-          }
+        let ordersSearched = await this.getSearchedOrdersUser(input);
+        if(ordersSearched){
+          this.orders = ordersSearched;
+          this._orders.next(this.orders);
         }
-        this.orders = ordersSearched;
-        this._orders.next(this.orders);
-        alert(this.orders.length);
+      }else{
+        let ordersSearched = await this.getSearchedOrders(input);
+        if(ordersSearched){
+          this.orders = ordersSearched;
+          this._orders.next(this.orders);
+        }
       }
     }else{
-      
+      if(this.isAdmin()){
+        await this.readAdminOrders();
+      }else{
+        await this.readOrders();
+      }
     }
-  }*/
+    return this._orders.asObservable();
+  }
   returnUser(){
     return this._user.asObservable();
   }
@@ -119,6 +124,28 @@ export class OrdersService {
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
 }
+
+async getSearchedOrders(input: string){
+  try {
+    const data = await this.getOrdersSearched(input).toPromise();
+    console.log(data?.length);
+    return data;
+  } catch (error) {
+    console.error('Error obteniendo datos:', error);
+    throw error; // Puedes manejar el error de acuerdo a tus necesidades
+  }
+}
+
+async getSearchedOrdersUser(input: string){
+  try {
+    const data = await this.getOrdersSearchedNotAdmin(input, this.user.id).toPromise();
+    console.log(data?.length);
+    return data;
+  } catch (error) {
+    console.error('Error obteniendo datos:', error);
+    throw error; // Puedes manejar el error de acuerdo a tus necesidades
+  }
+}
   getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(this.myAppUrl + this.myApiUrl); 
   }
@@ -136,6 +163,14 @@ export class OrdersService {
   getOrdersAdmin(){
     let urlAux = this.myAppUrl + this.myApiUrl;
     return this.http.get<Order[]>(urlAux + 'admin/attended'); 
+  }
+  getOrdersSearched(input: string){
+    let urlAux = this.myAppUrl + this.myApiUrl;
+    return this.http.get<Order[]>(urlAux + 'search/code/'+ input); 
+  }
+  getOrdersSearchedNotAdmin(input: string, userID: string){
+    let urlAux = this.myAppUrl + this.myApiUrl;
+    return this.http.get<Order[]>(urlAux + 'search/code/user/'+ input + '/'+ userID); 
   }
   deleteOrder(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);

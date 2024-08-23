@@ -77,4 +77,7 @@ export class MyBoughtsComponent implements OnInit{
       this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).subscribe(()=>{});
     }
   }
+  formatNumber(number: number): string { //Funcion de front, se usa en HTML para mostrar los numeros grandes de forma mas legible.
+    return number.toLocaleString(); // Esto añadirá separadores de miles
+  }
 }

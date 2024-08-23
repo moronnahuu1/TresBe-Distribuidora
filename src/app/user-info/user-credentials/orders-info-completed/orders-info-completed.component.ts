@@ -70,8 +70,11 @@ getInput(name: string){
     return '';
   }
 }
-searchOrder(){
+async searchOrder(){
   let input = this.getInput('searchInp');
+  (await this.oxpService.getProducts('search', input)).subscribe(orders => {
+    this.ordersAndProducts = orders;
+  });
   ///this.orderService.searchOrder(input);
 }
 }
