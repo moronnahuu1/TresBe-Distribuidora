@@ -44,7 +44,7 @@ input {
 }
 
 button {
-    height: 4vh;
+    height: calc(4vh + 2px);
     width: 15vh;
     cursor: pointer;
     border: none;
