@@ -47,7 +47,7 @@ button {
     height: 4vh;
     width: 15vh;
     cursor: pointer;
-    border-left: none; /* Eliminar borde izquierdo */
+    border: none;
     background-color: rgb(169, 234, 72);
     transition: transform 1s ease;
     letter-spacing: 1px;
