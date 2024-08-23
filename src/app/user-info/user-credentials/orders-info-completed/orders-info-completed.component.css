@@ -46,8 +46,8 @@ h1{
     background-color: rgb(255, 255, 255);
     border: 1px solid rgb(214, 214, 214);
     margin-bottom: 10px;
-    height: fit-content;
     min-height: 10vi;
+    height: fit-content;
     font-size: 14px;
     border-radius: 20px;
     cursor: pointer;
