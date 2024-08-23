@@ -8,10 +8,13 @@ import { BrandsService } from 'src/app/services/brands.service';
   styleUrls: ['./brands-data.component.css']
 })
 export class BrandsDataComponent implements OnInit {
+  loading: boolean = false;
   brandService = inject(BrandsService);
   brandsArray: Array<Brand> = [];
   ngOnInit(): void {
-      this.readBrands();
+    this.loading = true;
+    this.readBrands();
+    this.loading = false;
   }
   async readBrands(){
     const brandsAux = await this.getBrands();
