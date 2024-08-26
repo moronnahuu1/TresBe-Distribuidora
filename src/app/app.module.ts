@@ -80,6 +80,7 @@ import { PayedProofComponent } from './payed-proof/payed-proof.component';
 import { PayedDataComponent } from './payed-proof/payed-data/payed-data.component';
 import { LoadingComponent } from './loading/loading.component';
 import { NoProductsComponent } from './products-list/no-products/no-products.component';
+import { NotAvailableComponent } from './not-available/not-available.component';
 
 @NgModule({
   declarations: [
@@ -159,6 +160,7 @@ import { NoProductsComponent } from './products-list/no-products/no-products.com
     PayedDataComponent,
     LoadingComponent,
     NoProductsComponent,
+    NotAvailableComponent,
   ],
   imports: [
     BrowserModule,
