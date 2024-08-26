@@ -144,7 +144,6 @@ h1{
         font-size: 24px;
     }
 }
-
 /* Very small devices (portrait) */
 @media (max-width: 279px) {
     #container {
