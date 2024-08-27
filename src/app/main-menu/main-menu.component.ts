@@ -8,5 +8,28 @@ import { Component, OnInit } from '@angular/core';
 export class MainMenuComponent implements OnInit{
   ngOnInit(): void {
     window.scrollTo(0, 0);
+    document.addEventListener("DOMContentLoaded", function () {
+      const faders = document.querySelectorAll('.fade-in');
+  
+      const appearOptions = {
+          threshold: 0.3, // Porcentaje de visibilidad necesario para activar la animación
+          rootMargin: "0px 0px -50px 0px"
+      };
+  
+      const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+          entries.forEach(entry => {
+              if (!entry.isIntersecting) {
+                  return;
+              } else {
+                  entry.target.classList.add('show');
+                  appearOnScroll.unobserve(entry.target);
+              }
+          });
+      }, appearOptions);
+  
+      faders.forEach(fader => {
+          appearOnScroll.observe(fader);
+      });
+  });  
   }
 }

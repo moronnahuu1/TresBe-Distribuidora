@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/3b.ico">
     <title>Productos | Tresbe Distribuidora</title>
 </head>
 <body>
@@ -42,6 +43,7 @@
     </div>
     <div class="pagination-controls" *ngIf="productsArray.length > 0">
         <button (click)="previousPage()" class="pagButton" [disabled]="currentPage === 1">Anterior</button>
+        <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;" *ngIf="productsArray.length > 0">{{currentPage}}</p>
         <button (click)="nextPage()" class="pagButton" [disabled]="currentPage * pageSize >= productsArray.length">Siguiente</button>
     </div>
     <app-footer></app-footer>
