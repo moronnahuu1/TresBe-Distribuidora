@@ -37,11 +37,11 @@ export class SelectBrandComponent implements OnInit{
   async onSelectBrand(brand: string){
     this.productService.changeLoading('true').subscribe(()=>{});
     if(brand == 'all'){
-      (await this.productService.readProducts('all', null)).subscribe(products => {
+      (await this.productService.readProducts('all', null, 1)).subscribe(products => {
       });
     }else{
       this.brandService.changeSelected(brand);
-      (await this.productService.readProducts('brand', brand)).subscribe(products => {
+      (await this.productService.readProducts('brand', brand, 1)).subscribe(products => {
       });
     }
     this.productService.changeLoading('false').subscribe(()=>{});

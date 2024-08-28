@@ -16,7 +16,7 @@ export class SearchBarComponent implements OnInit{
   }
   async updateSearchResults(){
     if(this.searchTerm != ''){
-      (await this.productService.readProducts('search', this.searchTerm)).subscribe(products => {
+      (await this.productService.readProducts('search', this.searchTerm, 1)).subscribe(products => {
         this.products = products;
       });
     }

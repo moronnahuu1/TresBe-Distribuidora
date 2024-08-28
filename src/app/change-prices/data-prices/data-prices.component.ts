@@ -69,13 +69,13 @@ export class DataPricesComponent implements OnInit{
     }
   }
 
-  async getProducts(){
+  async getProducts(){ ///TO DO PAGE NUMBER ON READ PRODUCTS
     if(this.onBrand && !this.onCategory){
-      (await this.productService.readProducts('brand', this.brandSelected.name)).subscribe(products => {
+      (await this.productService.readProducts('brand', this.brandSelected.name, 1)).subscribe(products => {
         this.products = products;
       });
     }else if(this.onCategory && !this.onBrand){
-      (await this.productService.readProducts('category', this.categorySelected.name)).subscribe(products => {
+      (await this.productService.readProducts('category', this.categorySelected.name, 1)).subscribe(products => {
         this.products = products;
       });
     }

@@ -13,7 +13,7 @@ export class MainMenuComponent implements OnInit{
   
       const appearOptions = {
           threshold: 0.3, // Porcentaje de visibilidad necesario para activar la animación
-          rootMargin: "0px 0px -50px 0px"
+          rootMargin: "0px 0px -100px 0px"
       };
   
       const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {

@@ -23,10 +23,16 @@ export class ProductsListComponent implements OnInit{
   cartService = inject(CartService);
   optionsService = inject(OptionsService);
   onCart: Boolean = false;
+  totalPages: number = 0;
   async ngOnInit() {
     window.scrollTo(0, 0);
     await this.filters();
+    await this.readCounts();
     ///this.hasCostPrice();
+  }
+
+  async readCounts(){
+    this.totalPages = await this.productService.readCounts();
   }
 
   async filters(){ //Funcion para filtrar los productos, puede ser por categoria o por marca
@@ -37,19 +43,19 @@ export class ProductsListComponent implements OnInit{
     const brandAux = this.activeRoute.snapshot.params['brand'];
     if(brandAux){ //Si es una marca
       this.brand = brandAux; //Se asigna la marca a una variable global para manejarla luego en el html
-      (await this.productService.readProducts('brand', this.brand)).subscribe(products => { //Se leen los productos desde el servicio con la marca registrada como parametro
+      (await this.productService.readProducts('brand', this.brand, 1)).subscribe(products => { //Se leen los productos desde el servicio con la marca registrada como parametro
         this.productsArray = products;
       });
     }
     if(categoryAux){ //Si es una categoria
       this.category = categoryAux; //Se asigna la categoria a una variable global para manejarla luego en el html
-      (await this.productService.readProducts('category', this.category)).subscribe(products =>{ //Se leen los productos desde el servicio con la categoria registrada como parametro
+      (await this.productService.readProducts('category', this.category, 1)).subscribe(products =>{ //Se leen los productos desde el servicio con la categoria registrada como parametro
         this.productsArray = products;
       }
       );
     }
     if(!brandAux && !categoryAux){ //Si no hay parametros, ni marca ni categoria, se leen todos los productos
-      (await this.productService.readProducts("all", null)).subscribe(products => {
+      (await this.productService.readProducts("all", null, this.currentPage)).subscribe(products => {
         this.productsArray = products;
       });
     }
@@ -90,16 +96,16 @@ export class ProductsListComponent implements OnInit{
     return this.productsArray.slice(start, end);
   }
 
-  nextPage() {
-    if ((this.currentPage * this.pageSize) < this.productsArray.length) {
+  async nextPage() {
       this.currentPage++;
+      await this.filters();
       window.scrollTo(0, 500);
-    }
   }
 
-  previousPage() {
+  async previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      await this.filters();
       window.scrollTo(0, 500);
     }
   }

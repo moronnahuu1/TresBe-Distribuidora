@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Product } from '../models/Product';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, count, Observable } from 'rxjs';
 import { PricesService } from './prices.service';
 import { PriceXproduct } from '../models/PriceXproduct';
 import { User } from '../models/User';
@@ -47,7 +47,7 @@ export class ProductService {
     }
     return productAux.priceDiscount;
   }
-  async readProducts(type: string, value: string | null){
+  async readProducts(type: string, value: string | null, page: number){
     this.user = this.getUser();
     let productsAux;
     this.products = [];
@@ -71,7 +71,7 @@ export class ProductService {
         productsAux = await this.getRand();        
         break;
       default:
-        productsAux = await this.setProducts();
+        productsAux = await this.setProducts(page);
         break;
     }
       if(productsAux != undefined){
@@ -170,9 +170,9 @@ export class ProductService {
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  async setProducts(): Promise<Product[] | undefined>{
+  async setProducts(page: number): Promise<Product[] | undefined>{
     try {
-      const data = await this.getProducts().toPromise();
+      const data = await this.getProducts(page).toPromise();
       console.log(data?.length);
       return data;
     } catch (error) {
@@ -214,9 +214,33 @@ export class ProductService {
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
+
+  async readCounts(){
+    let countedAux = await this.countProductsTC();
+    let totalProducts = 0;
+    if(countedAux){
+      totalProducts = countedAux;
+    }
+    return totalProducts;
+  }
+
+  async countProductsTC(){
+    try {
+      const data = await this.countProducts().toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
   
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl); 
+  getProducts(page: number): Observable<Product[]> {
+    return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl + page); 
+  }
+
+  countProducts(): Observable<number> {
+    return this.http.get<number>(this.myAppUrl + this.myApiUrl + 'count/pages'); 
   }
 
   getRandomProducts(): Observable<Product[]> {
