@@ -10,7 +10,7 @@ export class ProductsComponent implements OnInit {
   productsArray: Array<Product> = [];
   productService = inject(ProductService);
   async ngOnInit() {
-    (await this.productService.readProducts('rand', null, 1)).subscribe(products => {      
+    (await this.productService.readProducts('rand', null)).subscribe(products => {      
       this.productsArray = products;
     })
   }

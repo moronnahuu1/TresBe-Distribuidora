@@ -37,12 +37,9 @@ export class SelectBrandComponent implements OnInit{
   async onSelectBrand(brand: string){
     this.productService.changeLoading('true').subscribe(()=>{});
     if(brand == 'all'){
-      (await this.productService.readProducts('all', null, 1)).subscribe(products => {
-      });
+      window.location.href = '/products'
     }else{
-      this.brandService.changeSelected(brand);
-      (await this.productService.readProducts('brand', brand, 1)).subscribe(products => {
-      });
+      window.location.href = `/brands/products/${brand}`
     }
     this.productService.changeLoading('false').subscribe(()=>{});
   }

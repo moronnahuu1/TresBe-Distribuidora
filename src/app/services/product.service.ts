@@ -18,6 +18,11 @@ export class ProductService {
   optionService = inject(OptionsService);
   brandService = inject(BrandsService);
   brandSelected: string = 'all';
+  pageNumber: number = 1;
+  pageTotal: number = 0;
+  _pageNumber: BehaviorSubject<number> = new BehaviorSubject<number>(this.pageNumber);
+  _pageTotal: BehaviorSubject<number> = new BehaviorSubject<number>(this.pageTotal);
+
   options: Options[] = [];
    products: Array<Product> = [];
    _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
@@ -47,7 +52,7 @@ export class ProductService {
     }
     return productAux.priceDiscount;
   }
-  async readProducts(type: string, value: string | null, page: number){
+  async readProducts(type: string, value: string | null){
     this.user = this.getUser();
     let productsAux;
     this.products = [];
@@ -71,7 +76,7 @@ export class ProductService {
         productsAux = await this.getRand();        
         break;
       default:
-        productsAux = await this.setProducts(page);
+        productsAux = await this.setProducts(this.pageNumber);
         break;
     }
       if(productsAux != undefined){
@@ -203,6 +208,13 @@ export class ProductService {
     }
     return productReturn;
   }
+  setPageNumber(page: number){
+    this.pageNumber = page;
+    this._pageNumber.next(this.pageNumber);
+  }
+  getCurrentPage(){
+    return this._pageNumber.asObservable();
+  }
 
   async getOneProduct(id: string){
     try {
@@ -215,18 +227,18 @@ export class ProductService {
     }
   }
 
-  async readCounts(){
-    let countedAux = await this.countProductsTC();
-    let totalProducts = 0;
+  async readCounts(value: string, type: string){
+    let countedAux = await this.countProductsTC(value, type);
     if(countedAux){
-      totalProducts = countedAux;
+      this.pageTotal = countedAux;
+      this._pageTotal.next(this.pageTotal);
     }
-    return totalProducts;
+    return this._pageTotal.asObservable();
   }
 
-  async countProductsTC(){
+  async countProductsTC(value: string, type: string){
     try {
-      const data = await this.countProducts().toPromise();
+      const data = await this.countProducts(value, type).toPromise();
       console.log(data);
       return data;
     } catch (error) {
@@ -236,11 +248,11 @@ export class ProductService {
   }
   
   getProducts(page: number): Observable<Product[]> {
-    return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl + page); 
+    return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl + 'page/'+ page); 
   }
 
-  countProducts(): Observable<number> {
-    return this.http.get<number>(this.myAppUrl + this.myApiUrl + 'count/pages'); 
+  countProducts(value: string, type: string): Observable<number> {
+    return this.http.get<number>(this.myAppUrl + this.myApiUrl + 'count/' + value + '/' + type); 
   }
 
   getRandomProducts(): Observable<Product[]> {
@@ -258,11 +270,11 @@ export class ProductService {
   }
   getProductsByBrand(brand: string): Observable<Product[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'brand/'
-    return this.http.get<Product[]>(urlAux + brand); 
+    return this.http.get<Product[]>(urlAux + brand + '/' + this.pageNumber); 
   }
   getProductsByCategory(category: string): Observable<Product[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'category/'
-    return this.http.get<Product[]>(urlAux + category); 
+    return this.http.get<Product[]>(urlAux + category + '/' + this.pageNumber); 
   }
   deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);

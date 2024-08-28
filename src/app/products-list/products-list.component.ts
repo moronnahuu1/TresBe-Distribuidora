@@ -27,12 +27,16 @@ export class ProductsListComponent implements OnInit{
   async ngOnInit() {
     window.scrollTo(0, 0);
     await this.filters();
-    await this.readCounts();
     ///this.hasCostPrice();
   }
 
-  async readCounts(){
-    this.totalPages = await this.productService.readCounts();
+  async readCounts(value: string, type: string){
+    (await this.productService.readCounts(value, type)).subscribe(pages => {
+      this.totalPages = pages;
+    });
+    this.productService.getCurrentPage().subscribe(page => {
+      this.currentPage = page;
+    });
   }
 
   async filters(){ //Funcion para filtrar los productos, puede ser por categoria o por marca
@@ -43,21 +47,24 @@ export class ProductsListComponent implements OnInit{
     const brandAux = this.activeRoute.snapshot.params['brand'];
     if(brandAux){ //Si es una marca
       this.brand = brandAux; //Se asigna la marca a una variable global para manejarla luego en el html
-      (await this.productService.readProducts('brand', this.brand, 1)).subscribe(products => { //Se leen los productos desde el servicio con la marca registrada como parametro
+      (await this.productService.readProducts('brand', this.brand)).subscribe(products => { //Se leen los productos desde el servicio con la marca registrada como parametro
         this.productsArray = products;
       });
+      await this.readCounts('brand',this.brand);
     }
     if(categoryAux){ //Si es una categoria
       this.category = categoryAux; //Se asigna la categoria a una variable global para manejarla luego en el html
-      (await this.productService.readProducts('category', this.category, 1)).subscribe(products =>{ //Se leen los productos desde el servicio con la categoria registrada como parametro
+      (await this.productService.readProducts('category', this.category)).subscribe(products =>{ //Se leen los productos desde el servicio con la categoria registrada como parametro
         this.productsArray = products;
       }
       );
+      await this.readCounts('category', this.category);
     }
     if(!brandAux && !categoryAux){ //Si no hay parametros, ni marca ni categoria, se leen todos los productos
-      (await this.productService.readProducts("all", null, this.currentPage)).subscribe(products => {
+      (await this.productService.readProducts("all", null)).subscribe(products => {
         this.productsArray = products;
       });
+      await this.readCounts('all','all');
     }
     this.productService.changeLoading('false').subscribe(loadAux => {
       this.loading = loadAux;
@@ -97,14 +104,14 @@ export class ProductsListComponent implements OnInit{
   }
 
   async nextPage() {
-      this.currentPage++;
+      this.productService.setPageNumber(this.currentPage+1);
       await this.filters();
       window.scrollTo(0, 500);
   }
 
   async previousPage() {
     if (this.currentPage > 1) {
-      this.currentPage--;
+      this.productService.setPageNumber(this.currentPage-1);
       await this.filters();
       window.scrollTo(0, 500);
     }
