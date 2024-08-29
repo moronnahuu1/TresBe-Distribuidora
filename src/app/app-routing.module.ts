@@ -24,6 +24,7 @@ import { DiscountsComponent } from './discounts/discounts.component';
 import { ChangePricesComponent } from './change-prices/change-prices.component';
 import { PayedDataComponent } from './payed-proof/payed-data/payed-data.component';
 import { PayedProofComponent } from './payed-proof/payed-proof.component';
+import { RecoverPasswordComponent } from './login/recover-password/recover-password.component';
 
 const routes: Routes = [
   {
@@ -80,15 +81,20 @@ const routes: Routes = [
     component: HasOrderComponent,
     canActivate: [loginGuard]
   },
-  {
+  /*{
     path: 'signup',
     component: SignUpComponent,
     canActivate: [loggedGuard]
-  },
+  },*/
   {
     path: 'admin/signup',
     component: SignUpComponent,
     canActivate: [adminGuard]
+  },
+  {
+    path: 'login/recover',
+    component: RecoverPasswordComponent,
+    ///canActivate: [loggedGuard]
   },
   {
     path: 'admin/signup/shipmentData/:id',

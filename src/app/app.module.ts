@@ -81,6 +81,7 @@ import { PayedDataComponent } from './payed-proof/payed-data/payed-data.componen
 import { LoadingComponent } from './loading/loading.component';
 import { NoProductsComponent } from './products-list/no-products/no-products.component';
 import { NotAvailableComponent } from './not-available/not-available.component';
+import { RecoverPasswordComponent } from './login/recover-password/recover-password.component';
 
 @NgModule({
   declarations: [
@@ -161,6 +162,7 @@ import { NotAvailableComponent } from './not-available/not-available.component';
     LoadingComponent,
     NoProductsComponent,
     NotAvailableComponent,
+    RecoverPasswordComponent,
   ],
   imports: [
     BrowserModule,
