@@ -71,6 +71,9 @@
     font-family: 'globerBold';
     font-size: 12px;
   }
+  #productName{
+    max-width: 40vh;
+  }
   .quantityInp{
     width: 3vi;
     max-width: 3vi;
