@@ -4,6 +4,8 @@ import { Product } from '../models/Product';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { OptionsService } from '../services/options.service';
+import { BrandsService } from '../services/brands.service';
+import { CategoriesService } from '../services/categories.service';
 
 @Component({
   selector: 'app-products-list',
@@ -15,6 +17,7 @@ export class ProductsListComponent implements OnInit{
   productService = inject(ProductService);
   activeRoute = inject(ActivatedRoute);
   category: string = "";
+  categoryService = inject(CategoriesService);
   brand: string = "";
   loading: boolean = false;
   currentPage: number = 1;
@@ -24,6 +27,7 @@ export class ProductsListComponent implements OnInit{
   optionsService = inject(OptionsService);
   onCart: Boolean = false;
   totalPages: number = 0;
+  brandService = inject(BrandsService);
   async ngOnInit() {
     window.scrollTo(0, 0);
     await this.filters();
@@ -47,6 +51,7 @@ export class ProductsListComponent implements OnInit{
     const brandAux = this.activeRoute.snapshot.params['brand'];
     if(brandAux){ //Si es una marca
       this.brand = brandAux; //Se asigna la marca a una variable global para manejarla luego en el html
+      this.brandService.changeSelected(brandAux);
       (await this.productService.readProducts('brand', this.brand)).subscribe(products => { //Se leen los productos desde el servicio con la marca registrada como parametro
         this.productsArray = products;
       });
@@ -54,6 +59,7 @@ export class ProductsListComponent implements OnInit{
     }
     if(categoryAux){ //Si es una categoria
       this.category = categoryAux; //Se asigna la categoria a una variable global para manejarla luego en el html
+      this.categoryService.changeSelected(categoryAux);
       (await this.productService.readProducts('category', this.category)).subscribe(products =>{ //Se leen los productos desde el servicio con la categoria registrada como parametro
         this.productsArray = products;
       }

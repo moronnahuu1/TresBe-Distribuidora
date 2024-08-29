@@ -13,6 +13,9 @@ export class CategoryItemComponent implements OnInit{
   async ngOnInit(): Promise<void> {
       await this.readCategories();
   }
+  selectCategory(name: string){
+    this.categoryService.changeSelected(name);
+  }
   async readCategories(): Promise<void> {
     const categoriesAux = await this.getCategories();
     if(categoriesAux != undefined){

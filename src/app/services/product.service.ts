@@ -9,6 +9,7 @@ import { User } from '../models/User';
 import { OptionsService } from './options.service';
 import { Options } from '../models/Options';
 import { BrandsService } from './brands.service';
+import { CategoriesService } from './categories.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +18,8 @@ export class ProductService {
   private myApiUrl: string;
   optionService = inject(OptionsService);
   brandService = inject(BrandsService);
+  categoryService = inject(CategoriesService);
+  categorySelected: string = '';
   brandSelected: string = 'all';
   pageNumber: number = 1;
   pageTotal: number = 0;
@@ -190,7 +193,10 @@ export class ProductService {
     try {
       this.brandService.getBrandSelected().subscribe(brandAux =>{
         this.brandSelected = brandAux;
-      })
+      });
+      this.categoryService.returnSelected().subscribe(category => {
+        this.categorySelected = category;
+      });
       const data = await this.getProductSearch(name).toPromise();
       console.log(data?.length);
       return data;
@@ -263,10 +269,18 @@ export class ProductService {
   }
   getProductSearch(name: string): Observable<Product[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'search/';
+    let type = 'brand';
     if(this.brandSelected == ''){
       this.brandSelected = 'all';
     }
-    return this.http.get<Product[]>(urlAux + name + '/' + this.brandSelected); 
+    if(this.categorySelected != ''){
+      type = 'category';
+    }
+    if(type == 'brand'){
+      return this.http.get<Product[]>(urlAux + name + '/' + this.brandSelected + '/' + type);
+    }else{
+      return this.http.get<Product[]>(urlAux + name + '/' + this.categorySelected + '/' + type); 
+    }
   }
   getProductsByBrand(brand: string): Observable<Product[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'brand/'

@@ -12,7 +12,7 @@ export class BrandsService {
   private myApiUrl: string;
   brandsArray: Array<Brand> = [];
   _brandsArray: BehaviorSubject<Brand[]> = new BehaviorSubject<Brand[]>(this.brandsArray);
-  brandSelected: string = '';
+  brandSelected: string = 'all';
   _brandSelected: BehaviorSubject<string> = new BehaviorSubject<string>(this.brandSelected);
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
@@ -33,6 +33,7 @@ export class BrandsService {
   changeSelected(brand: string){
     this.brandSelected = brand;
     this._brandSelected.next(this.brandSelected);
+    return this._brandSelected.asObservable();
   }
 
   getBrandSelected(){

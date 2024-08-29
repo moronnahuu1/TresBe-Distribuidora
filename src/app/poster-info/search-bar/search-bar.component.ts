@@ -1,5 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/Product';
+import { BrandsService } from 'src/app/services/brands.service';
+import { CategoriesService } from 'src/app/services/categories.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -10,9 +12,19 @@ import { ProductService } from 'src/app/services/product.service';
 export class SearchBarComponent implements OnInit{
   searchTerm: string = '';
   productService = inject(ProductService);
+  brandService = inject(BrandsService);
+  categoryService = inject(CategoriesService);
+  categorySelected: string = '';
+  brandSelected: string = '';
   products: Product[] = [];
   ngOnInit(): void {
       this.addEventButton();
+      this.brandService.getBrandSelected().subscribe(brand => {
+        this.brandSelected = brand;
+      });
+      this.categoryService.returnSelected().subscribe(category => {
+        this.categorySelected = category;
+      });
   }
   async updateSearchResults(){
     if(this.searchTerm != ''){

@@ -11,10 +11,19 @@ export class CategoriesService {
   private myAppUrl: string;
   private myApiUrl: string;
   categories: Category[] = [];
+  categorySelected: string = ''
+  _categorySelected: BehaviorSubject<string> = new BehaviorSubject<string>(this.categorySelected);
   _categories: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>(this.categories);
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Categories/'
+  }
+  changeSelected(category: string){
+    this.categorySelected = category;
+    this._categorySelected.next(this.categorySelected);
+  }
+  returnSelected(){
+    return this._categorySelected.asObservable();
   }
   returnCategories(){
     return this._categories.asObservable();
