@@ -7,6 +7,10 @@ a, h2{
     text-transform: uppercase;
     color: #ffffff;
 }
+#tresbeimg{
+    width: 25vh;
+    height: auto;
+}
 #container{
     background-color: rgb(29, 29, 29);
     display: flex;
@@ -28,6 +32,9 @@ a, h2{
         margin-top: 2%;
         margin-bottom: 2%;
     }
+}
+.contactList{
+    gap: 2vh;
 }
   .social{
     color: white;
