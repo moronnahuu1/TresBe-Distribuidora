@@ -16,6 +16,7 @@ export class CartService {
   private total: number = 0;
   private discount: number = 0;
   private delivery: number = 0;
+  private _discount: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private _subTotal: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private _Total: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
@@ -28,6 +29,17 @@ export class CartService {
       userLogged = JSON.parse(userAux);
     }
     return userLogged;
+  }
+
+  setDiscount(discountAux: number){
+    this.discount = discountAux;
+    this._discount.next(this.discount);
+    this.getTotal();
+    return this._discount.asObservable();
+  }
+
+  getDiscount(){
+    return this._discount.asObservable();
   }
 
   getProducts(){

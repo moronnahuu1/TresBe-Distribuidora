@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
-import { ShipmentComponent } from '../../shipment/shipment.component';
 import { Order } from 'src/app/models/Order';
 import { OrdersService } from 'src/app/services/orders.service';
 import { OrderXproducts } from 'src/app/models/OrderXproduct';
@@ -11,6 +10,8 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
 import { UserdataService } from 'src/app/services/userdata.service';
+import { UserXcouponService } from 'src/app/services/user-xcoupon.service';
+import { UserXcoupon } from 'src/app/models/UserXcoupon';
 
 @Component({
   selector: 'app-pay',
@@ -22,6 +23,7 @@ export class PayComponent {
   cartService = inject(CartService);
   productService = inject(ProductService);
   orderService = inject(OrdersService);
+  userXcouponService = inject(UserXcouponService);
   oxpService = inject(OrdersXProductsService);
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   userdataService = inject(UserdataService);
@@ -32,6 +34,7 @@ export class PayComponent {
   dataCreated: boolean = false;
   user: User = new User("", "", "", "",'');
   creating: boolean = false;
+  coupon: string = '';
 
   async ngOnInit() {
     this.getUser();
@@ -51,6 +54,17 @@ export class PayComponent {
       this.userdata = userdata;
     });
 
+    this.coupon = this.getCouponID();
+
+  }
+  getCouponID(){
+    let idAux = localStorage.getItem('coupon');
+    let couponID = '';
+    if(idAux){
+      couponID = idAux;
+    }
+    localStorage.removeItem('coupon');
+    return couponID;
   }
 
   getUser(){
@@ -175,6 +189,10 @@ export class PayComponent {
       ///this.modifyStock();
       let totalDebt = 0///await this.getDebts();
       if(this.noDebt(totalDebt)){
+        if(this.coupon != ''){
+          const userXcoupon = new UserXcoupon(this.generateRandomId(16), this.user.id, this.coupon);
+          await this.userXcouponService.saveUser(userXcoupon).toPromise();
+        }
         let orderID = await this.createOrder();
         this.cartService.saveCartAfterOrder(orderID);
         this.router.navigate([`/checkout/${orderID}`]); //Se redirecciona a la ruta del componente 'placed' para informarle al usuario que su orden fue creada

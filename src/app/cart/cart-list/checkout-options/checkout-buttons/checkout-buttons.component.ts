@@ -1,20 +1,41 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Cupon } from 'src/app/models/Cupon';
 import { Order } from 'src/app/models/Order';
 import { User } from 'src/app/models/User';
+import { UserXcoupon } from 'src/app/models/UserXcoupon';
+import { CartService } from 'src/app/services/cart.service';
+import { CouponService } from 'src/app/services/coupon.service';
 import { OrdersService } from 'src/app/services/orders.service';
+import { UserXcouponService } from 'src/app/services/user-xcoupon.service';
 
 @Component({
   selector: 'app-checkout-buttons',
   templateUrl: './checkout-buttons.component.html',
   styleUrls: ['./checkout-buttons.component.css']
 })
-export class CheckoutButtonsComponent {
+export class CheckoutButtonsComponent implements OnInit{
   orderService = inject(OrdersService);
+  couponService = inject(CouponService);
+  cartService = inject(CartService);
+  userXcouponService = inject(UserXcouponService);
+  userXcoupon: UserXcoupon = new UserXcoupon('','','');
+  couponSearched: Cupon = new Cupon('','',0,new Date(), false, 0);
   router = inject(Router);
   user: User = new User('', '', '', '', '');
-  async verifyOrders(){
+  applied: boolean = false;
+  used: boolean = false;
+  notfound: boolean = false;
+  expired: boolean = false;
+  minimum: boolean = false;
+  total: number = 0;
+  ngOnInit(): void {
     this.user = this.getUser();
+    this.cartService.getTotal().subscribe(result => {
+      this.total = result;
+    });
+  }
+  async verifyOrders(){
     if(this.user.email != ''){
       this.router.navigate(['/checkout']);
     }else{
@@ -34,6 +55,82 @@ export class CheckoutButtonsComponent {
        userdata = JSON.parse(userAux);
     }
     return userdata;
+  }
+  async applyCoupon(){
+    let codeAux = document.getElementById('couponInp') as HTMLInputElement;
+    if(codeAux){
+      let input = codeAux.value;
+      if(input != ''){
+        try {
+          this.couponSearched = await this.couponService.searchCoupon(input);
+          // Código que quieres ejecutar después de obtener el resultado
+          console.log('Se ha obtenido el userXcoupon y el código sigue ejecutándose.');
+        } catch (error) {
+          console.error('Error al obtener el userXcoupon:', error);
+          this.couponSearched = new Cupon('','',0,new Date(), false, 0);
+        }
+        if(this.couponSearched.id != ''){
+          if(await this.validateCoupon(this.couponSearched)){
+            this.cartService.setDiscount(this.couponSearched.percentage);
+            this.setCouponApplied(this.couponSearched);
+          }
+        }else{
+          this.notfound = true;
+          this.applied = false;
+          this.used = false;
+        }
+      }
+    }
+  }
+  async validateCoupon(couponAux: Cupon){
+    this.clearInput('couponInp');
+    let currentDate = new Date();
+    let expiresDate = new Date(couponAux.expires);
+    try {
+      this.userXcoupon = await this.userXcouponService.readUser(this.user.id, couponAux.id);
+      // Código que quieres ejecutar después de obtener el resultado
+      console.log('Se ha obtenido el userXcoupon y el código sigue ejecutándose.');
+    } catch (error) {
+      console.error('Error al obtener el userXcoupon:', error);
+    }
+    if(this.userXcoupon.id != ''){
+      couponAux.used = true;
+    }
+    if(couponAux.used){
+      this.applied = false;
+      this.notfound = false;
+      this.used = true;
+      this.minimum = false;
+      this.expired = false;
+      return false;
+    }else{
+      if(expiresDate > currentDate){
+        if(couponAux.minimum <= this.total){
+          localStorage.setItem('coupon', couponAux.id);
+          this.applied = true;
+          this.used = false;
+          this.notfound = false;
+          return true;
+        }else{
+          this.applied = false;
+          this.used = false;
+          this.notfound = false;
+          this.minimum = true;
+          return false;
+        }
+      }else{
+        this.expired = true;
+        this.applied = false;
+        this.used = false;
+        this.notfound = false;
+        this.minimum = false;
+        return false;
+      }
+    }
+  }
+  setCouponApplied(couponAux: Cupon){
+    couponAux.used = true;
+    this.couponService.updateCouponService(couponAux);
   }
   //async hasOrder(){
     /* La funcion se encarga de comprobar que al momento de realizar el pedido no exista otra orden/pedido del usuario sin finalizar,
@@ -69,6 +166,12 @@ async getOrders(){
   } catch (error) {
     console.error('Error obteniendo datos:', error);
     throw error; // Se maneja el error de acuerdo a las necesidades que se requieran en el momento
+  }
+}
+clearInput(name: string) {
+  const inputElement = document.getElementById(name) as HTMLInputElement;
+  if (inputElement) {
+    inputElement.value = ''; // Limpiamos el valor del input
   }
 }
 }

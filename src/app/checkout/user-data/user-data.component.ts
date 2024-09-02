@@ -15,14 +15,14 @@ export class UserDataComponent implements OnInit{
   ngOnInit(): void {
     this.cartService.getProducts().subscribe(products => {
       this.products = products;
-    })
+    });
 
     this.cartService.getSubtotal().subscribe(subtotal => {
       this.subtotal = subtotal;
-    })
+    });
 
     this.cartService.getTotal().subscribe(total => {
       this.total = total;
-    })
+    });
   }
 }
