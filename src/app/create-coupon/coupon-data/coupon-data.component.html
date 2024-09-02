@@ -1,0 +1,26 @@
+<body>
+    <div id="container">
+        <div id="info">
+            <h2>CUPONES DE DESCUENTO</h2>
+        </div>
+        <div id="form">
+            <label for="couponName">Ingrese el codigo del cupon</label>
+            <input type="text" name="couponName" id="couponNameInp">
+    
+            <label for="couponPrice">Ingrese el precio de descuento del cupon</label>
+            <input type="number" name="couponPrice" id="couponPriceInp">
+    
+            <label for="couponMin">Ingrese el minimo de compra del cupon</label>
+            <input type="text" name="couponMin" id="couponMinInp">
+    
+            <label for="couponExp">Ingrese la fecha de expiración del cupon (DD/MM/AAAA)</label>
+            <input type="date" name="couponExp" id="couponExpInp">
+        </div>
+        <div id="buttons">
+            <button (click)="createCoupon()">Crear</button>
+        </div>
+        <div id="messages">
+            <p *ngIf="saved">Cupon creado con éxito</p>
+        </div>
+    </div>
+</body>

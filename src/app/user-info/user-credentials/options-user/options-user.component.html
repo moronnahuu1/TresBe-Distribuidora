@@ -8,6 +8,7 @@
       <li *ngIf="!isAdmin()"><p (click)="changeDisplay('support')"><i class="fa fa-info-circle" aria-hidden="true"></i> Soporte Técnico</p></li>
       <li *ngIf="isAdmin()"><p (click)="changeDisplay('adminSupport')"><i class="fa fa-search" aria-hidden="true"></i> Buscar usuario</p></li>
       <li *ngIf="isAdmin()"><p [routerLink]="['/admin/signup']"><i class="fa fa-plus-circle" aria-hidden="true"></i> Registrar usuario</p></li>
+      <li *ngIf="isAdmin()"><p [routerLink]="['/coupons']"><i class="fa fa-money" aria-hidden="true"></i> Crear Cupón</p></li>
     </ul>
   </aside>
   

@@ -25,6 +25,7 @@ import { ChangePricesComponent } from './change-prices/change-prices.component';
 import { PayedDataComponent } from './payed-proof/payed-data/payed-data.component';
 import { PayedProofComponent } from './payed-proof/payed-proof.component';
 import { RecoverPasswordComponent } from './login/recover-password/recover-password.component';
+import { CreateCouponComponent } from './create-coupon/create-coupon.component';
 
 const routes: Routes = [
   {
@@ -136,6 +137,11 @@ const routes: Routes = [
   {
     path: 'checkout/id/proofment',
     component: PayedProofComponent,
+  },
+  {
+    path: 'coupons',
+    component: CreateCouponComponent,
+    canActivate: [adminGuard]
   }
 ]
 @NgModule({

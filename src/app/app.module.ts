@@ -82,6 +82,8 @@ import { LoadingComponent } from './loading/loading.component';
 import { NoProductsComponent } from './products-list/no-products/no-products.component';
 import { NotAvailableComponent } from './not-available/not-available.component';
 import { RecoverPasswordComponent } from './login/recover-password/recover-password.component';
+import { CreateCouponComponent } from './create-coupon/create-coupon.component';
+import { CouponDataComponent } from './create-coupon/coupon-data/coupon-data.component';
 
 @NgModule({
   declarations: [
@@ -163,6 +165,8 @@ import { RecoverPasswordComponent } from './login/recover-password/recover-passw
     NoProductsComponent,
     NotAvailableComponent,
     RecoverPasswordComponent,
+    CreateCouponComponent,
+    CouponDataComponent,
   ],
   imports: [
     BrowserModule,
