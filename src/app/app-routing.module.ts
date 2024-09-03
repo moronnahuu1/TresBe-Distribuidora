@@ -142,6 +142,11 @@ const routes: Routes = [
     path: 'coupons',
     component: CreateCouponComponent,
     canActivate: [adminGuard]
+  },
+  {
+    path: 'coupons/:id',
+    component: CreateCouponComponent,
+    canActivate: [adminGuard]
   }
 ]
 @NgModule({

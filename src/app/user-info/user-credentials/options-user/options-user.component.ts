@@ -10,6 +10,17 @@ export class OptionsUserComponent{
   displayService = inject(UserDisplayService);
   displayed = this.displayService.displayed;
 
+  displaySubmenu: boolean = false;
+
+toggleSubmenu() {
+  if(this.displaySubmenu){
+    this.displaySubmenu = false;
+  }else{
+    this.displaySubmenu = true;
+  }
+}
+
+
   changeDisplay(name: string){
     this.displayService.changeDisplay(name);
     window.scrollTo(0,0);

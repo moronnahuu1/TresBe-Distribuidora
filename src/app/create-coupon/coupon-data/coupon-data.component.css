@@ -75,3 +75,7 @@ button:hover {
     color: white;
     background-position: left;
 }
+#buttons{
+    display: flex;
+    gap: 20px;
+}

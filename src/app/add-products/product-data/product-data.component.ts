@@ -6,6 +6,7 @@ import { Options } from 'src/app/models/Options';
 import { PriceXproduct } from 'src/app/models/PriceXproduct';
 import { Product } from 'src/app/models/Product';
 import { BrandsService } from 'src/app/services/brands.service';
+import { CouponService } from 'src/app/services/coupon.service';
 import { FeatureService } from 'src/app/services/feature.service';
 import { OptionsService } from 'src/app/services/options.service';
 import { PricesService } from 'src/app/services/prices.service';

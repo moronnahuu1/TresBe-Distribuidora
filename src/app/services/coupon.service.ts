@@ -19,6 +19,15 @@ export class CouponService {
     this.myApiUrl = 'api/coupon/'
   }
 
+  async readCoupon(id: string){
+    const couponAux = await this.readCouponTC(id);
+    if(couponAux){
+      this.couponSearched = couponAux;
+      this._couponSearched.next(this.couponSearched);
+    }
+    return this.couponSearched;
+  }
+
   async searchCoupon(code: string){
     const couponAux = await this.searchCouponTC(code);
     if(couponAux){
@@ -26,6 +35,17 @@ export class CouponService {
       this._couponSearched.next(this.couponSearched);
     }
     return this.couponSearched;
+  }
+
+  async readCouponTC(id: string){
+    try {
+      const data = await this.getCoupon(id).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
   }
 
   async searchCouponTC(code: string){
