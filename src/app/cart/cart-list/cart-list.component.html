@@ -19,7 +19,7 @@
         </td>
         <td >
           <button class="quantity-btn" (click)="incrementQuantity(product, indice)">+</button>
-          <input type="number" name="quantity" class="quantityInp" id="{{product.id}}" (input)="changeQuantity(product)" value="{{product.quantity}}">
+          <input type="number" name="quantity" class="quantityInp" id="{{product.id}}" (input)="changeQuantity(product)" [disabled]="true" value="{{product.quantity}}">
           <button class="quantity-btn" id="decrement" (click)="decrementQuantity(product, indice)">-</button>
         </td>
         <td><button class="remove-btn" (click)="deleteProduct(indice)">x</button></td>

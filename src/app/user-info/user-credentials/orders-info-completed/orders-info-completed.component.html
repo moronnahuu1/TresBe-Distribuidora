@@ -1,5 +1,6 @@
 <div id="container">
-    <h1>ULTIMAS COMPRAS</h1>
+    <h1 *ngIf="!isAdmin()">ULTIMAS COMPRAS</h1>
+    <h1 *ngIf="isAdmin()">PEDIDOS</h1>
     <p *ngIf="isAdmin()">Usuario: {{user.username}}</p>
     <div id="form">
         <label for="search">Buscá la orden que desees</label>

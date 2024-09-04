@@ -4,8 +4,10 @@ import { Order } from 'src/app/models/Order';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
 import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
+import { EmailService } from 'src/app/services/email.service';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { OrdersService } from 'src/app/services/orders.service';
+import { UserService } from 'src/app/services/user.service';
 import { UserdataService } from 'src/app/services/userdata.service';
 
 @Component({
@@ -22,6 +24,9 @@ export class MyBoughtsComponent implements OnInit{
   userdataService = inject(UserdataService);
   orderService = inject(OrdersService);
   user: User = new User('','','','','');
+  emailService = inject(EmailService);
+  userService = inject(UserService);
+  userOrder: string = '';
   async ngOnInit() {
     this.orderService.returnUser().subscribe(user => {
       this.user = user;
@@ -49,6 +54,17 @@ export class MyBoughtsComponent implements OnInit{
     return `${day}/${month}/${year}`;
 }
 
+async getOrderUser(userID: string){
+  try{
+    let userAux = await this.userService.getUser(userID).toPromise();
+    if(userAux){
+      this.userOrder = userAux.email;
+    }
+  }catch(error){
+    console.log(error);
+  }
+}
+
   isAdmin(){
     if(localStorage.getItem('admin')){
       return true;
@@ -67,7 +83,23 @@ export class MyBoughtsComponent implements OnInit{
     let confirmation = confirm("Al dar click está confirmando que la orden ya fue registrada y cargada en NUVIX para luego ser preparada");
     if(confirmation){
       this.selectedOrder.attended = true;
-      this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).subscribe(()=>{});
+      await this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).toPromise();
+      await this.getOrderUser(this.selectedOrder.userID);
+      let to = this.userOrder;
+      let subject = 'Pedido Registrado'
+      let html = `<div style="display: flex; align-items: center; width: 100%; background-color: rgb(239, 239, 239);">
+    <div style="font-family: sans-serif; border: 2px solid orange; padding: 1vi; height: fit-content; width: 35vi; background-color: white;">
+        <div style="display: flex; flex-direction: column; align-items: center">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8NCmCrXwgexWDbhCLBeyLUpFBi4FxQA9Zhw&s" style="margin-left: 20%; margin-right: 20%;" alt="">
+        </div>
+        <h1 style="color: rgb(0, 125, 221); text-align: center;">Tu compra ya fue registrada</h1>
+        <p>Hola! queremos informarte que ya tomamos tu pedido, en breve estaremos despachando los productos!</p>
+        <p>Usuario: ${this.selectedOrder.username}</p>
+        <p>Código de orden: #${this.selectedOrder.code}</p>
+        <p>Total: $${this.selectedOrder.total.toLocaleString()}</p>
+    </div>
+</div>`;
+      await this.emailService.sendEmailTC(to, subject, html);
     }
   }
   async unattendOrder(){

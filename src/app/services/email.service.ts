@@ -14,9 +14,7 @@ export class EmailService {
   }
   async sendEmailTC(to: string, subject: string, text: string){
     try {
-      const data = await this.sendEmail(to, subject, text).subscribe(()=>{});
-      console.log(data);
-      return data;
+      await this.sendEmail(to, subject, text).toPromise();
     } catch (error) {
       console.error('Error obteniendo datos:', error);
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
