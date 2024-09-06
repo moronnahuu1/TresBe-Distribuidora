@@ -9,6 +9,7 @@ import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-o
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserdataService } from 'src/app/services/userdata.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 @Component({
   selector: 'app-my-boughts',
@@ -79,9 +80,52 @@ async getOrderUser(userID: string){
       alert('Orden de compra borrada exitosamente');
     }
   }
+  confirmAttend(type: string){
+    const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger",
+      title: "custom-title",
+    },
+    buttonsStyling: true
+  });
+  swalWithBootstrapButtons.fire({
+    title: "Confirmas que la orden esta registrada en NUVIX?",
+    text: "Si te equivocas, se puede revertir luego!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Si, registrar!",
+    confirmButtonColor: 'rgb(0, 197, 0)',
+    cancelButtonColor: 'red',
+    cancelButtonText: "No, cancelar!",
+    reverseButtons: true
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      if(type == 'attend'){
+        await this.attendOrder();
+      }else if(type == 'unattend'){
+        await this.unattendOrder();
+      }
+      swalWithBootstrapButtons.fire({
+        title: "Registrada!",
+        text: "La orden se ha registrado.",
+        icon: "success"
+      });
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire({
+        title: "Operación cancelada",
+        text: "La orden queda sin registrar :)",
+        icon: "error"
+      });
+    }
+  });
+
+  }
   async attendOrder(){
-    let confirmation = confirm("Al dar click está confirmando que la orden ya fue registrada y cargada en NUVIX para luego ser preparada");
-    if(confirmation){
+    ///let confirmation = confirm("Al dar click está confirmando que la orden ya fue registrada y cargada en NUVIX para luego ser preparada");
       this.selectedOrder.attended = true;
       await this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).toPromise();
       await this.getOrderUser(this.selectedOrder.userID);
@@ -100,7 +144,6 @@ async getOrderUser(userID: string){
     </div>
 </div>`;
       await this.emailService.sendEmailTC(to, subject, html);
-    }
   }
   async unattendOrder(){
     let confirmation = confirm("Al dar click está confirmando que la orden aún no fue registrada y necesita verla en este apartado");

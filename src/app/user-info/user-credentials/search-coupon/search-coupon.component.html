@@ -1,0 +1,9 @@
+<div id="container">
+    <h2>BUSCAR CUPÓN POR CODIGO</h2>
+    <div id="form">
+        <label for="couponName">Ingrese el código del cupon</label>
+    <input type="text" name="couponName" id="couponNameInp">
+    <button (click)="searchCoupon()">Buscar</button>
+    <p *ngIf="notFound">Cupón no encontrado</p>
+    </div>
+</div>

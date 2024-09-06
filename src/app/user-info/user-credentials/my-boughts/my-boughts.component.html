@@ -43,8 +43,8 @@
     <div id="buttonsUser">
       <button style="cursor: auto;" *ngIf="!isAdmin() && selectedOrder.attended">Tu orden ya fue registrada!</button>
       <button *ngIf="isAdmin()" (click)="deleteUserOrder(selectedOrder.code)">Eliminar</button>
-      <button *ngIf="isAdmin() && !selectedOrder.attended" (click)="attendOrder()" id="registerOrder">Orden Registrada</button>
-      <button *ngIf="isAdmin() && selectedOrder.attended" (click)="unattendOrder()">No está registrada</button>
+      <button *ngIf="isAdmin() && !selectedOrder.attended" (click)="confirmAttend('attend')" id="registerOrder">Orden Registrada</button>
+      <button *ngIf="isAdmin() && selectedOrder.attended" (click)="confirmAttend('unattend')">No está registrada</button>
       <button *ngIf="!(user.client) && !(selectedOrder.payed) && !isAdmin()">Ya hice la transferencia</button>
     </div>
   </main>

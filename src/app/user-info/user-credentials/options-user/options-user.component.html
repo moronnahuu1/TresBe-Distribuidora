@@ -29,5 +29,6 @@
     <li><p (click)="changeDisplay('shipment')"><i class="fa fa-truck" aria-hidden="true"></i> Informacion de envío</p></li>
     <li *ngIf="!isAdmin()"><p (click)="changeDisplay('support')"><i class="fa fa-info-circle" aria-hidden="true"></i> Soporte Técnico</p></li>
     <li *ngIf="isAdmin()"><p [routerLink]="['/coupons']"><i class="fa fa-money" aria-hidden="true"></i> Crear Cupón</p></li>
+    <li *ngIf="isAdmin()"><p (click)="changeDisplay('coupon')"><i class="fa fa-sliders" aria-hidden="true"></i> Modificar Cupón</p></li>
   </ul>
 </aside>

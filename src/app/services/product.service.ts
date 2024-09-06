@@ -96,6 +96,7 @@ export class ProductService {
           this.products.push(productsAux[i]);
         }
         this._products.next(this.products);
+        this.hasCostPrice();
       }
       return this._products.asObservable();
   }
@@ -252,6 +253,14 @@ export class ProductService {
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
+  hasCostPrice(){
+    for(let i=0; i<this.products.length; i++){
+      if(this.products[i].price < 2){
+        this.products.splice(i, 1);
+      }
+    }
+    this._products.next(this.products);
+   }
   
   getProducts(page: number): Observable<Product[]> {
     return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl + 'page/'+ page); 

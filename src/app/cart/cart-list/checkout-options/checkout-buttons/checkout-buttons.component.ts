@@ -8,6 +8,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { CouponService } from 'src/app/services/coupon.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserXcouponService } from 'src/app/services/user-xcoupon.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-checkout-buttons',
@@ -39,6 +40,12 @@ export class CheckoutButtonsComponent implements OnInit{
     if(this.user.email != ''){
       this.router.navigate(['/checkout']);
     }else{
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Algo salió mal!",
+        footer: "Parece que no iniciaste sesión",
+      });
       this.router.navigate(['/login']);
     }
     /*let existanceID = await this.hasOrder();

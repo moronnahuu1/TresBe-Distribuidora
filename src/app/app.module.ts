@@ -84,6 +84,9 @@ import { NotAvailableComponent } from './not-available/not-available.component';
 import { RecoverPasswordComponent } from './login/recover-password/recover-password.component';
 import { CreateCouponComponent } from './create-coupon/create-coupon.component';
 import { CouponDataComponent } from './create-coupon/coupon-data/coupon-data.component';
+import { SearchCouponComponent } from './user-info/user-credentials/search-coupon/search-coupon.component';
+import { SwalConfirmComponent } from './swal-confirm/swal-confirm.component';
+import { ManteinanceComponent } from './manteinance/manteinance.component';
 
 @NgModule({
   declarations: [
@@ -167,6 +170,9 @@ import { CouponDataComponent } from './create-coupon/coupon-data/coupon-data.com
     RecoverPasswordComponent,
     CreateCouponComponent,
     CouponDataComponent,
+    SearchCouponComponent,
+    SwalConfirmComponent,
+    ManteinanceComponent,
   ],
   imports: [
     BrowserModule,

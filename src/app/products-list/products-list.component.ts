@@ -6,6 +6,7 @@ import { CartService } from '../services/cart.service';
 import { OptionsService } from '../services/options.service';
 import { BrandsService } from '../services/brands.service';
 import { CategoriesService } from '../services/categories.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-products-list',
@@ -79,10 +80,9 @@ export class ProductsListComponent implements OnInit{
    hasCostPrice(){
     for(let i=0; i<this.productsArray.length; i++){
       if(this.productsArray[i].price < 2){
-        this.productsNotPayed.push(this.productsArray[i]);
+        this.productsArray.splice(i, 1);
       }
     }
-    alert(this.productsNotPayed.length)
    }
   isAdmin(){ //funcion para detectar si el usuario logueado es administrador
     let access = localStorage.getItem("admin");
