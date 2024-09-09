@@ -11,12 +11,21 @@ export class OptionsUserComponent{
   displayed = this.displayService.displayed;
 
   displaySubmenu: boolean = false;
+  displayCoupon: boolean = false;
 
-toggleSubmenu() {
-  if(this.displaySubmenu){
-    this.displaySubmenu = false;
-  }else{
-    this.displaySubmenu = true;
+toggleSubmenu(type: string) {
+  if(type == 'user'){
+    if(this.displaySubmenu){
+      this.displaySubmenu = false;
+    }else{
+      this.displaySubmenu = true;
+    }
+  }else if(type == 'coupon'){
+    if(this.displayCoupon){
+      this.displayCoupon = false;
+    }else{
+      this.displayCoupon = true;
+    }
   }
 }
 

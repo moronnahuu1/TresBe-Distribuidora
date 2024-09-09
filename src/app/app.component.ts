@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +11,12 @@ import { Component, inject, OnInit } from '@angular/core';
 
 export class AppComponent implements OnInit{
   title = 'tresbeApp';
+  private myAppUrl: string;
+  private myApiUrl: string;
+  constructor(private http: HttpClient, private router: Router) {
+    this.myAppUrl = environment.endpoint;
+    this.myApiUrl = 'api/status'
+  }
   async ngOnInit() {
     window.addEventListener('scroll', () => {
       const scrollHeight: number = document.documentElement.scrollHeight;
@@ -37,6 +46,20 @@ export class AppComponent implements OnInit{
         window.scrollTo(0, scrollTop);
       }
     });
+    this.http.get(this.myAppUrl + this.myApiUrl).subscribe((response: any) => {
+      if (response) {
+        if(this.isAdmin()){}else{
+          this.router.navigate(['/maintenance']);
+        }
+      }
+    });
 
+  }
+  isAdmin(){
+    if(localStorage.getItem('admin')){
+      return true;
+    }else{
+      return false;
+    }
   }
 }
