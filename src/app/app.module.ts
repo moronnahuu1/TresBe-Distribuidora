@@ -87,6 +87,7 @@ import { CouponDataComponent } from './create-coupon/coupon-data/coupon-data.com
 import { SearchCouponComponent } from './user-info/user-credentials/search-coupon/search-coupon.component';
 import { SwalConfirmComponent } from './swal-confirm/swal-confirm.component';
 import { ManteinanceComponent } from './manteinance/manteinance.component';
+import { ModifyUserComponent } from './modify-user/modify-user.component';
 
 @NgModule({
   declarations: [
@@ -173,6 +174,7 @@ import { ManteinanceComponent } from './manteinance/manteinance.component';
     SearchCouponComponent,
     SwalConfirmComponent,
     ManteinanceComponent,
+    ModifyUserComponent,
   ],
   imports: [
     BrowserModule,

@@ -27,6 +27,7 @@ import { PayedProofComponent } from './payed-proof/payed-proof.component';
 import { RecoverPasswordComponent } from './login/recover-password/recover-password.component';
 import { CreateCouponComponent } from './create-coupon/create-coupon.component';
 import { ManteinanceComponent } from './manteinance/manteinance.component';
+import { ModifyUserComponent } from './modify-user/modify-user.component';
 
 const routes: Routes = [
   {
@@ -152,6 +153,11 @@ const routes: Routes = [
   {
     path: 'maintenance',
     component: ManteinanceComponent,
+  },
+  {
+    path: 'user/:id',
+    component: ModifyUserComponent,
+    canActivate: [adminGuard]
   }
 ]
 @NgModule({

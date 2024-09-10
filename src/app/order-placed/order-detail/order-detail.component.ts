@@ -84,6 +84,7 @@ async getProducts(): Promise<void>{
   if(cartAux){
     this.products = JSON.parse(cartAux);
   }
+  localStorage.removeItem('cartResolved');
   /*try {
     for(let i=0; i<this.oxp.length; i++){
       let productAux: Product | undefined;

@@ -69,6 +69,7 @@ export class CartService {
   }
 
   saveCartAfterOrder(orderID: string){
+    localStorage.setItem('cartResolved', JSON.stringify(this.cartProducts));
     for(let i = 0; i<this.cartProducts.length; i++){
       let productAux = this.cartProducts[i];
       let cartProductAux: CartProduct = new CartProduct(productAux.id, productAux.name, productAux.price, productAux.quantity, productAux.optionSelected, orderID);

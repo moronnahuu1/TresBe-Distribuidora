@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Usuario | Tresbe Distribuidora</title>
+</head>
+<body>
+    <app-nav-bar></app-nav-bar>
+    <div id="container">
+        <div id="form">
+            <label for="username">Nombre de usuario</label>
+            <input type="text" name="username" id="usernameInp" [value]="getValue('username')" [disabled]="!toModify">
+    
+            <label for="email">Email</label>
+            <input type="email" name="email" id="emailInp" [value]="getValue('email')" [disabled]="!toModify">
+    
+            <label for="pass">Contraseña</label>
+            <div id="passDiv">
+                <input type="password" name="pass" id="passInp" [value]="getValue('password')" [disabled]="!toModify">
+                <i *ngIf="!viewPass" (click)="changeViewPass()" class="fa fa-eye-slash icon" aria-hidden="true"></i>
+                <i *ngIf="viewPass" (click)="changeViewPass()" class="fa fa-eye icon" aria-hidden="true"></i>
+            </div>
+    
+            <label for="priceList">Lista de precio</label>
+            <select name="priceListData" [(ngModel)]="priceListNumber" id="priceSelect" (change)="changeSelect($event)" [disabled]="!toModify">
+                <option *ngFor="let priceList of priceArray" [value]="priceList" >{{priceList}}</option>
+            </select>
+    
+            <button *ngIf="!toModify" (click)="enable()">Cambiar</button>
+            <button *ngIf="toModify" (click)="modifyUser()">Guardar</button>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</body>
+</html>

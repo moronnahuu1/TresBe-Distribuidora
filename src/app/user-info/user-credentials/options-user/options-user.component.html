@@ -30,7 +30,7 @@
     <li *ngIf="!isAdmin()"><p (click)="changeDisplay('support')"><i class="fa fa-info-circle" aria-hidden="true"></i> Soporte Técnico</p></li>
     <li>
       <p *ngIf="isAdmin()" (click)="toggleSubmenu('coupon')">
-        <i class="fa fa-external-link" aria-hidden="true"></i> ABM Cupones
+        <i class="fa fa-tasks" aria-hidden="true"></i> ABM Cupones
       </p>
       <ul class="submenu" [ngClass]="{'open': displayCoupon}">
         <li>

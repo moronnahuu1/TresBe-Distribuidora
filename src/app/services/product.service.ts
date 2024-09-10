@@ -141,7 +141,7 @@ export class ProductService {
       priceAux = data;
     }
     if(this.user.email == ''){
-      return priceAux.priceList1;
+      return priceAux.priceList4;
     }else{
       switch(this.user.priceList){
         case '1':

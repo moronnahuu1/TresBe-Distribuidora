@@ -6,7 +6,8 @@
         <p>{{userdata.company}}</p>
         <p>{{userdata.city}}, {{userdata.province}}, {{userdata.country}}</p>
       </div>
-      <button class="edit-button" (click)="changeDisplay('privacity')">Editar</button>
+      <button *ngIf="!isAdmin()" class="edit-button" (click)="changeDisplay('privacity')">Editar</button>
+      <button *ngIf="isAdmin()" class="edit-button" routerLink="/user/{{user.id}}">Editar</button>
     </section>
     <section class="personal-info">
       <h2>Información Personal</h2>
@@ -29,6 +30,10 @@
       <div class="info-row">
         <span>Empresa</span>
         <span>{{userdata.company}}</span>
+      </div>
+      <div class="info-row">
+        <span>Mi ID</span>
+        <span>{{user.id}}</span>
       </div>
       <button class="edit-button" (click)="changeDisplay('shipment')">Editar</button>
     </section>
