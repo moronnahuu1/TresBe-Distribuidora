@@ -60,10 +60,6 @@
       <input type="text" name="streetNum" id="streetNumInp" class="shipmentInput" value="{{getValue('streetNumb')}}">
     </div>
 
-    <div id="checked">
-      <button id="toggleButton" data-checked="false" class="shipmentInput" (click)="checkButton()"></button>
-      <p>Guardar mis datos para futuras compras</p>
-    </div>
     <button *ngIf="!dataCreated" (click)="createUserData()">Guardar datos</button>
     <button *ngIf="dataCreated" (click)="deleteUserData()">Modificar datos</button>
 </div>

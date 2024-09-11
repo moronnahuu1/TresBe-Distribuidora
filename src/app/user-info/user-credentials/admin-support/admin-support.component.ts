@@ -22,7 +22,7 @@ export class AdminSupportComponent{
   async searchUser(){
     let userID = this.getInput('userInp');
     if(userID != ''){
-      this.user = await this.readUser(userID);
+      this.user = await this.userService.readUserByName(userID);
       this.orderService.changeUser(this.user);
       (await this.orderxproductsxoxpService.getProducts('', null)).subscribe(products => {
         this.ordersAndProducts = products;

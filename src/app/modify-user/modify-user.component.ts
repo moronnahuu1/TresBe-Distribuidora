@@ -1,19 +1,27 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { User } from '../models/User';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-modify-user',
   templateUrl: './modify-user.component.html',
   styleUrls: ['./modify-user.component.css']
 })
-export class ModifyUserComponent {
+export class ModifyUserComponent implements OnInit{
   priceArray: string[] = ['G','E','1','2','3','4'];
   userService = inject(UserService);
-  userLogged: User = this.userService.getUserLogged();
-  priceListNumber: string = this.userLogged.priceList;
+  activeRoute = inject(ActivatedRoute);
+  id = this.activeRoute.snapshot.params['id'];
+  userLogged: User = new User('','','','','');
+  priceListNumber: string = '';
   toModify: boolean = false;
   viewPass: boolean = false;
+
+  async ngOnInit() {
+      this.userLogged = await this.userService.readUser(this.id);
+      this.priceListNumber = this.userLogged.priceList;
+  }
 
   changeSelect(event: Event){
     let priceListAux = (event.target as HTMLSelectElement).value;
@@ -48,8 +56,14 @@ export class ModifyUserComponent {
     let email = this.getString('emailInp');
     let pass = this.getString('passInp');
     let priceList = this.priceListNumber;
+    let client = this.getString('clientInp');
 
     let userNew = new User(this.userLogged.id, email, pass, username, priceList);
+    if(client == 'si'){
+      userNew.client = true;
+    }else{
+      userNew.client = false;
+    }
     return userNew;
   }
 

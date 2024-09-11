@@ -38,7 +38,16 @@ export class CheckoutButtonsComponent implements OnInit{
   }
   async verifyOrders(){
     if(this.user.email != ''){
-      this.router.navigate(['/checkout']);
+      if(this.user.client == true){
+        this.router.navigate(['/checkout']);
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Algo salió mal!",
+          footer: "Parece que no estas habilitado para realizar compras, ponete en contacto con nuestro soporte",
+        });
+      }
     }else{
       Swal.fire({
         icon: "error",

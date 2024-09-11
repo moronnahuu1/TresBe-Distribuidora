@@ -21,6 +21,9 @@
                 <i *ngIf="!viewPass" (click)="changeViewPass()" class="fa fa-eye-slash icon" aria-hidden="true"></i>
                 <i *ngIf="viewPass" (click)="changeViewPass()" class="fa fa-eye icon" aria-hidden="true"></i>
             </div>
+
+            <label for="client">Habilitado para compras</label>
+            <input type="text" name="client" [value]="getValue('client') ? 'si' : 'no'" id="clientInp" [disabled]="!toModify">
     
             <label for="priceList">Lista de precio</label>
             <select name="priceListData" [(ngModel)]="priceListNumber" id="priceSelect" (change)="changeSelect($event)" [disabled]="!toModify">

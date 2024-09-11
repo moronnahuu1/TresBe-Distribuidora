@@ -48,9 +48,45 @@ export class UserService {
       return false;
     }
   }
+  async readUser(id: string){
+    let userAux = await this.getUserTC(id);
+    let user = new User('','','','','');
+    if(userAux){
+      user = userAux;
+    }
+    return user;
+  }
+  async readUserByName(name: string){
+    let userAux = await this.getUserNameTC(name);
+    let user = new User('','','','','');
+    if(userAux){
+      user = userAux;
+    }
+    return user;
+  }
+  async getUserTC(id: string){
+    try {
+      const data = await this.getUser(id).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
   async getUserEmailTC(email: string){
     try {
       const data = await this.getUserByEmail(email).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
+  async getUserNameTC(username: string){
+    try {
+      const data = await this.getUserByName(username).toPromise();
       console.log(data);
       return data;
     } catch (error) {
@@ -67,6 +103,10 @@ export class UserService {
   getUserByEmail(email: string): Observable<User> {
     let urlAux = this.myAppUrl + this.myApiUrl + "/email/";
     return this.http.get<User>(urlAux + email); 
+  }
+  getUserByName(username: string): Observable<User> {
+    let urlAux = this.myAppUrl + this.myApiUrl + "/username/";
+    return this.http.get<User>(urlAux + username);
   }
   deleteUser(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);

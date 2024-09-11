@@ -1,8 +1,11 @@
 #container{
     margin-top: 1%;
-    width: 100%;
+    width: 90%;
 }
 #slide{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     :is(img){
         width: 100%;
         height: auto;
