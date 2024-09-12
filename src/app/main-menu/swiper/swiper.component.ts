@@ -12,8 +12,8 @@ export class SwiperComponent implements OnInit{
   arraySwiper: Array<string> = [];
   ngOnInit(): void {
       this.arraySwiper.push('../../../assets/bienvenida.png');
-      this.arraySwiper.push('../../../assets/gym6.jpg');
-      this.arraySwiper.push('../../../assets/gym5.jpg');
-      this.arraySwiper.push('../../../assets/gym4.jpg');
+      this.arraySwiper.push('../../../assets/marcas.png');
+      this.arraySwiper.push('../../../assets/comprar.png');
+      this.arraySwiper.push('../../../assets/Swiperlast.png');
   }
 }

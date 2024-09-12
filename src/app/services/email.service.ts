@@ -12,7 +12,7 @@ export class EmailService {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/email/'
   }
-  async sendEmailTC(to: string, subject: string, text: string){
+  async sendEmailTC(to: string | string[], subject: string, text: string){
     try {
       await this.sendEmail(to, subject, text).toPromise();
     } catch (error) {
@@ -20,7 +20,7 @@ export class EmailService {
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  sendEmail(to: string, subject: string, text: string){
+  sendEmail(to: string | string[], subject: string, text: string){
     const emailData = {
       to: to,
       subject: subject,

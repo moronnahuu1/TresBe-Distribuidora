@@ -94,6 +94,24 @@ export class UserService {
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
+  async readAllUsers(){
+    let usersAux = await this.getUsersTC();
+    if(usersAux){
+      return usersAux;
+    }else{
+      return null;
+    }
+  }
+  async getUsersTC(){
+    try {
+      const data = await this.getUsers().toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.myAppUrl + this.myApiUrl); 
   }

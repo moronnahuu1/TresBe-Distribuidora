@@ -144,7 +144,6 @@ export class DataPricesComponent implements OnInit{
         let confirmed = confirm('Cambiar los precios en ' + percentage + '% ?');
         if(confirmed){
           await this.getProducts();
-          
           await this.modifyPrices(percentage, option);
         }
       }
