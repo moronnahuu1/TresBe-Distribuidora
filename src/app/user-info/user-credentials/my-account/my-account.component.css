@@ -1,7 +1,7 @@
 .profile {
     width: 40vi;
     padding: 20px;
-    height: fit-content;
+    height: calc(45vi - 40px);
  
   }
   
