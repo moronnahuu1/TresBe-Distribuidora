@@ -19,7 +19,7 @@
             <img src="{{product.image}}" alt="">
             <div id="dataContainer">
                 <h2>{{product.name}}</h2>
-                <p style="margin-top: auto;">{{product.category}}</p>
+                <p id="categoryP">{{product.category}}</p>
             <div id="prices">
                 <p id="price" [ngClass]="{'priceTacched': product.discount > 0}">${{formatNumber(product.price)}}</p>
                 <p id="discounted" *ngIf="product.discount != 0">${{formatNumber(product.priceDiscount)}}</p>

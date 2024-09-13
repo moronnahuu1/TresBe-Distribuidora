@@ -40,7 +40,7 @@ body{
         padding-left: 2vi;
         padding-right: 2vi;
         text-align: center;
-        height: 5vi;
+        height: 3vi;
     }
     :is(img){
         width: 70%;
@@ -191,6 +191,7 @@ body{
         flex-direction: column;
         align-items: center; 
     }
+    
 }
 @media (max-width: 480px) and (min-width: 280px) {
     #container{
@@ -204,6 +205,9 @@ body{
     #product_item{
         height: fit-content;
         padding: 2vh;
+        #categoryP{
+            margin-top: 17%;
+        }
     }
 }
 @media (max-width: 279px) {}
