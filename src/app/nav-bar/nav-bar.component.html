@@ -6,10 +6,10 @@
         <button id="toggleButton" (click)="toggleNav()"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
         <a href=""><img src="../../assets/tresbe.png" alt=""></a>
         <a href="" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Inicio</a>
-        <a href="/products" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Productos</a>
-        <a href="/categories" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Catálogo</a>
-        <a href="/brands" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Marcas</a>
-        <a href="/login" *ngIf="!isLogged()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Iniciar Sesión</a>
+        <a routerLink="/products" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Productos</a>
+        <a routerLink="/categories" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Catálogo</a>
+        <a routerLink="/brands" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Marcas</a>
+        <a routerLink="/login" *ngIf="!isLogged()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Iniciar Sesión</a>
         <a href="" *ngIf="isLogged()" (click)="logout()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Salir</a>
         <p routerLink="/cart" class="fa fa-shopping-cart cartLength" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"> {{products.length}}</p>
         <i *ngIf="isLogged()" class="fa fa-user fa-2x" aria-hidden="true" [routerLink]="['/user']" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"></i>
