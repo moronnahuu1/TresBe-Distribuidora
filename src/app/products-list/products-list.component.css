@@ -40,7 +40,7 @@ body{
         padding-left: 2vi;
         padding-right: 2vi;
         text-align: center;
-        height: 3vi;
+        height: 5vi;
     }
     :is(img){
         width: 70%;
