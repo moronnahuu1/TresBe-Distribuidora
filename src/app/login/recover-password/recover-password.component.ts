@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class RecoverPasswordComponent {
   userService = inject( UserService );
-  userSearched: User = new User('','','','','');
+  userSearched: User = new User('','','','','', '');
   sended: boolean = false;
   async recoverPassword(){
     let emailAux = document.getElementById('emailInp') as HTMLInputElement;

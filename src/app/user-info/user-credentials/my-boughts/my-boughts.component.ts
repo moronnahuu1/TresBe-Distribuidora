@@ -24,7 +24,7 @@ export class MyBoughtsComponent implements OnInit{
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   userdataService = inject(UserdataService);
   orderService = inject(OrdersService);
-  user: User = new User('','','','','');
+  user: User = new User('','','','','','');
   emailService = inject(EmailService);
   userService = inject(UserService);
   userOrder: string = '';

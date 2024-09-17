@@ -13,7 +13,7 @@ export class ModifyUserComponent implements OnInit{
   userService = inject(UserService);
   activeRoute = inject(ActivatedRoute);
   id = this.activeRoute.snapshot.params['id'];
-  userLogged: User = new User('','','','','');
+  userLogged: User = new User('','','','','', '');
   priceListNumber: string = '';
   toModify: boolean = false;
   viewPass: boolean = false;
@@ -57,8 +57,9 @@ export class ModifyUserComponent implements OnInit{
     let pass = this.getString('passInp');
     let priceList = this.priceListNumber;
     let client = this.getString('clientInp');
+    let seller = this.getString('sellerInp')
 
-    let userNew = new User(this.userLogged.id, email, pass, username, priceList);
+    let userNew = new User(this.userLogged.id, email, pass, username, priceList, seller);
     if(client == 'si'){
       userNew.client = true;
     }else{
@@ -77,6 +78,8 @@ export class ModifyUserComponent implements OnInit{
         return this.userLogged.password;
       case 'client':
         return this.userLogged.client;
+      case 'seller':
+        return this.userLogged.seller;
       default:
         return '';
     }

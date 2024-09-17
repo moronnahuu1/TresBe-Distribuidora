@@ -32,7 +32,7 @@ export class PayComponent {
   subtotal: number = 0;
   total: number = 0;
   dataCreated: boolean = false;
-  user: User = new User("", "", "", "",'');
+  user: User = new User("", "", "", "",'', '');
   creating: boolean = false;
   coupon: string = '';
 

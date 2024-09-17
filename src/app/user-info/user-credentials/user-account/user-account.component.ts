@@ -14,7 +14,7 @@ export class UserAccountComponent implements OnInit{
   displayService = inject(UserDisplayService);
   userdataService = inject(UserdataService);
   displayed = this.displayService.displayed;
-  user: User = new User('','','','','');
+  user: User = new User('','','','','', '');
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   orderService = inject(OrdersService);
 

@@ -17,6 +17,11 @@
                 <p *ngIf="noUsername">No puede dejar el usuario vacío</p>
             </div>
 
+            <div *ngIf="isAdmin()" id="sellerDiv">
+                <label for="seller">Vendedor</label>
+                <input type="text" name="seller" [(ngModel)]="sellerTerm" id="sellerInp">
+            </div>
+
             <div *ngIf="isAdmin()" id="priceDiv">
                 <label for="priceList">Lista de precios</label>
                 <input type="text" name="priceList" [(ngModel)]="priceTerm" id="priceListInp">

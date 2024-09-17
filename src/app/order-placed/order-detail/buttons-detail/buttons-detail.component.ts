@@ -23,7 +23,7 @@ export class ButtonsDetailComponent implements OnInit{
   activeRoute = inject(ActivatedRoute);
   oxp: Array<OrderXproducts> = [];
   userdataArray: Array<Userdata> = [];
-  user: User = new User("", "", "", "",'');
+  user: User = new User("", "", "", "",'', '');
   userdata: Userdata = new Userdata("", "","","","","","","","","",0,"","");
   users: Array<Userdata> = [];
 
@@ -55,7 +55,7 @@ export class ButtonsDetailComponent implements OnInit{
   }
   getUser(){
     let userAux = localStorage.getItem("userLogged");
-    let userAux1 = new User("", "", "", "",'');
+    let userAux1 = new User("", "", "", "",'', '');
     if(userAux){
       userAux1 = JSON.parse(userAux);
     }

@@ -16,7 +16,7 @@ export class UserService {
   }
   getUserLogged(){
     let userAux = localStorage.getItem('userLogged');
-    let userdata: User = new User('', '', '', '', '');
+    let userdata: User = new User('', '', '', '', '', '');
     if(userAux){
        userdata = JSON.parse(userAux);
     }
@@ -50,7 +50,7 @@ export class UserService {
   }
   async readUser(id: string){
     let userAux = await this.getUserTC(id);
-    let user = new User('','','','','');
+    let user = new User('','','','','', '');
     if(userAux){
       user = userAux;
     }
@@ -58,7 +58,7 @@ export class UserService {
   }
   async readUserByName(name: string){
     let userAux = await this.getUserNameTC(name);
-    let user = new User('','','','','');
+    let user = new User('','','','','', '');
     if(userAux){
       user = userAux;
     }

@@ -23,7 +23,7 @@ export class CheckoutButtonsComponent implements OnInit{
   userXcoupon: UserXcoupon = new UserXcoupon('','','');
   couponSearched: Cupon = new Cupon('','',0,new Date(), false, 0);
   router = inject(Router);
-  user: User = new User('', '', '', '', '');
+  user: User = new User('', '', '', '', '', '');
   applied: boolean = false;
   used: boolean = false;
   notfound: boolean = false;
@@ -66,7 +66,7 @@ export class CheckoutButtonsComponent implements OnInit{
   }
   getUser(){
     let userAux = localStorage.getItem('userLogged');
-    let userdata: User = new User('', '', '', '', '');
+    let userdata: User = new User('', '', '', '', '', '');
     if(userAux){
        userdata = JSON.parse(userAux);
     }

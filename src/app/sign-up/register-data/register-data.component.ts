@@ -20,6 +20,8 @@ export class RegisterDataComponent {
   noUsername: boolean = false;
   userService = inject(UserService);
   dataCreated: boolean = false;
+  sellerTerm: string = '';
+  noSeller: boolean = false;
   async verifyEmail(){
     if(this.searchTerm != ''){
       this.noMail = false;
@@ -69,12 +71,15 @@ export class RegisterDataComponent {
     if(this.usernameTerm == ''){
       this.noUsername = true;
     }
+    if(this.sellerTerm == ''){
+      this.noSeller = true;
+    }
     if(this.searchTerm != '' && this.passTerm != '' && this.usernameTerm != '' && !this.emailRepeated && this.passwordFormat){
       let priceList = '4';
       if(this.isAdmin()){
         priceList = this.getString('priceListInp');
       }
-      let newUser = new User(this.generateRandomId(16), this.getString('emailInp'), this.getString('passwordInp'), this.getString('usernameInp'), priceList);
+      let newUser = new User(this.generateRandomId(16), this.getString('emailInp'), this.getString('passwordInp'), this.getString('usernameInp'), priceList, this.getString('sellerInp'));
       if(this.isAdmin()){
         newUser.client = true;
       }

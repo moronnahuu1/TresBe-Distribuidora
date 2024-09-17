@@ -16,7 +16,7 @@ export class AdminSupportComponent{
   ordersAndProducts: OrdersAndProducts[] = [];
   orderService = inject(OrdersService);
   userService = inject(UserService);
-  user: User = new User('','','','','');
+  user: User = new User('','','','','','');
   userdataService = inject(UserdataService);
 
   async searchUser(){
@@ -43,7 +43,7 @@ export class AdminSupportComponent{
 
   async readUser(id: string){
     let userAux = await this.getUser(id);
-    let userAux1: User = new User('','','','','');
+    let userAux1: User = new User('','','','','','');
     if(userAux){
       userAux1 = userAux;
     }

@@ -30,7 +30,7 @@ export class ProductService {
    products: Array<Product> = [];
    _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   productXpriceService = inject(PricesService);
-  user: User = new User('', '', '', '', '');
+  user: User = new User('', '', '', '', '', '');
   loading: boolean = false;
   _loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.loading);
   constructor(private http: HttpClient) { 
@@ -163,7 +163,7 @@ export class ProductService {
   }
   getUser(){
     let userAux = localStorage.getItem('userLogged');
-    let userdata: User = new User('', '', '', '', '');
+    let userdata: User = new User('', '', '', '', '', '');
     if(userAux){
        userdata = JSON.parse(userAux);
     }

@@ -24,6 +24,9 @@
 
             <label for="client">Habilitado para compras</label>
             <input type="text" name="client" [value]="getValue('client') ? 'si' : 'no'" id="clientInp" [disabled]="!toModify">
+
+            <label for="seller">Vendedor</label>
+            <input type="text" name="seller" [value]="getValue('seller')" id="sellerInp" [disabled]="!toModify">
     
             <label for="priceList">Lista de precio</label>
             <select name="priceListData" [(ngModel)]="priceListNumber" id="priceSelect" (change)="changeSelect($event)" [disabled]="!toModify">

@@ -30,7 +30,7 @@ export class ProductItemComponent implements OnInit{
   productSelected: Product = new Product('','','','',0,'',0,'', 1, 0);
   allFeatures: Feature[]= [];
   activeRoute = inject(ActivatedRoute);
-  user: User = new User('', '', '', '', '');
+  user: User = new User('', '', '', '', '', '');
   onCart: Boolean = false;
   searchTerm: string = '';
   optionsSearched: Options[] = [];
@@ -161,7 +161,7 @@ export class ProductItemComponent implements OnInit{
       priceAux = data;
     }
     if(this.user.email == ''){ //Si el usuario está logueado de forma incorrecta, entra aca y asigna la lista de precios por defecto, en este caso la lista 1
-      return priceAux.priceList1;
+      return priceAux.priceList4;
     }else{
       switch(this.user.priceList){ //Si el usuario esta logueado de forma correcta, entra al else y hace el switch, revisando la lista de precios que tiene el usuario
         case '1':

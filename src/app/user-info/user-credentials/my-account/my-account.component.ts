@@ -14,7 +14,7 @@ export class MyAccountComponent implements OnInit{
   displayService = inject(UserDisplayService);
   userdataService = inject(UserdataService);
   displayed = this.displayService.displayed;
-  user: User = new User('','','','','');
+  user: User = new User('','','','','','');
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
 
   async ngOnInit() {
@@ -31,7 +31,7 @@ export class MyAccountComponent implements OnInit{
 
   getUser(){
     let userAux = localStorage.getItem('userLogged');
-    let userParsed: User = new User('','','','','');
+    let userParsed: User = new User('','','','','','');
     if(userAux){
       userParsed = JSON.parse(userAux);
     }

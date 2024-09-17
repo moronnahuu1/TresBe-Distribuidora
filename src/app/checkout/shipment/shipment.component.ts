@@ -21,7 +21,7 @@ export class ShipmentComponent implements OnInit{
   dataCreated: boolean = false;
   userdataService = inject(UserdataService);
   userID: string = "";
-  user: User = new User("", "", "", "",'');
+  user: User = new User("", "", "", "",'', '');
   users: Array<Userdata> = [];
   userdata: Userdata = new Userdata("", "", "", "", "", "", "", "", "", "", 0, "", "false");
   saveData: boolean = false;

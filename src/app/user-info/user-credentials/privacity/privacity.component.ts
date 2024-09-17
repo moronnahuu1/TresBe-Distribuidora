@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./privacity.component.css']
 })
 export class PrivacityComponent implements OnInit{
-  user: User = new User('', '', '','','');
+  user: User = new User('', '', '','','','');
   userService = inject(UserService);
   displayService = inject(UserDisplayService);
   ngOnInit(): void {
