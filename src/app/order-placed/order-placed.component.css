@@ -1,5 +1,7 @@
 #container{
     display: flex;
+    height: fit-content;
+    background-color: rgb(50, 191, 126);
 }
 @media (min-width: 768px) and (max-width: 1199px) {
     #container{

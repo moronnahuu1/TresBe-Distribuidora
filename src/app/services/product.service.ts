@@ -256,7 +256,8 @@ export class ProductService {
   hasCostPrice(){
     for(let i=0; i<this.products.length; i++){
       if(this.products[i].price < 2){
-        this.products.splice(i, 1);
+        //alert(this.products[i].name);
+        //this.products.splice(i, 1);
       }
     }
     this._products.next(this.products);

@@ -47,7 +47,7 @@ export class AppComponent implements OnInit{
       }
     });
     this.http.get(this.myAppUrl + this.myApiUrl).subscribe((response: any) => {
-      if (response) {
+      if (response == 'true') {
         if(this.isAdmin()){}else{
           this.router.navigate(['/maintenance']);
         }

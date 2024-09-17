@@ -5,9 +5,9 @@
     padding-right: 2vh;
     font-family: sans-serif;
     text-align: center;
-    width: 114.5vh;
-    height: 80vh;
-    background-color: rgb(50, 191, 126);
+    width: 65vi;
+    height: fit-content;
+    background: none;
     color: white;
     h1{
         letter-spacing: 3px;
