@@ -48,8 +48,10 @@ button {
     width: 15vh;
     cursor: pointer;
     border: none;
-    background-color: rgb(169, 234, 72);
-    transition: transform 1s ease;
+    background: linear-gradient(90deg, #4d7e98 50%, #b1c946 50%);
+    background-size: 200%;
+    background-position: right;
+    transition: transform 1.2s ease, color 1.2s, background-position 1.2s ease;
     letter-spacing: 1px;
     font-family: sans-serif;
     border-radius: 0 4px 4px 0; /* Bordes redondeados */
@@ -58,6 +60,7 @@ button {
 
 button:hover {
     transform: scale(1.07);
+    background-position: left;
 }
 
 button i {

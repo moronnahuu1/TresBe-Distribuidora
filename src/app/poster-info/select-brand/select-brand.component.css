@@ -14,7 +14,7 @@
     justify-self: center;
 }
 .brands{
-    background-color: rgb(32, 113, 199);
+    background-color: #4d7e98;
     color: white;
     border: 1px solid black;
     font-family: sans-serif;
@@ -27,8 +27,12 @@
     transition: background-color 1s ease;
 }
 .brands:hover{
-    background-color: rgb(163, 233, 50);
+    background-color: white;
     color: black;
+}
+
+.selected-brand{
+    background-color: #a4bb43;
 }
 
 @media (min-width: 1200px) {}

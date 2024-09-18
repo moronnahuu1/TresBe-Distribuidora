@@ -10,10 +10,14 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class SelectBrandComponent implements OnInit{
   brandService = inject(BrandsService);
+  brandSelected: string = '';
   brandsArray: Array<Brand> = [];
   productService = inject(ProductService);
   ngOnInit(): void {
       this.readBrands();
+      this.brandService.getBrandSelected().subscribe(result => {
+        this.brandSelected = result;
+      });
   }
   async readBrands(){
     const brandsAux = await this.getBrands();
@@ -46,6 +50,20 @@ export class SelectBrandComponent implements OnInit{
   }
   isAdmin(){
     if(localStorage.getItem('admin')){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  selected(name: string){
+    if(name == this.brandSelected){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  allBrandsSelected(){
+    if(this.brandSelected == 'all'){
       return true;
     }else{
       return false;

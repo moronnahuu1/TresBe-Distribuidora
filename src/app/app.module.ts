@@ -88,6 +88,12 @@ import { SearchCouponComponent } from './user-info/user-credentials/search-coupo
 import { SwalConfirmComponent } from './swal-confirm/swal-confirm.component';
 import { ManteinanceComponent } from './manteinance/manteinance.component';
 import { ModifyUserComponent } from './modify-user/modify-user.component';
+import { CompanyComponent } from './company/company.component';
+import { CompanyDataComponent } from './company/company-data/company-data.component';
+import { CompanyHeaderComponent } from './company/company-header/company-header.component';
+import { CompanyFooterComponent } from './company/company-footer/company-footer.component';
+import { CompanyTextComponent } from './company/company-text/company-text.component';
+import { ArticlesComponent } from './company/articles/articles.component';
 
 @NgModule({
   declarations: [
@@ -175,6 +181,12 @@ import { ModifyUserComponent } from './modify-user/modify-user.component';
     SwalConfirmComponent,
     ManteinanceComponent,
     ModifyUserComponent,
+    CompanyComponent,
+    CompanyDataComponent,
+    CompanyHeaderComponent,
+    CompanyFooterComponent,
+    CompanyTextComponent,
+    ArticlesComponent,
   ],
   imports: [
     BrowserModule,

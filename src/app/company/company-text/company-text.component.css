@@ -1,0 +1,8 @@
+#container{
+    padding: 0.5vi 2vi;
+    width: calc(50vi - 4vi);
+    background-color: #4d7e98;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 0.5px;
+}

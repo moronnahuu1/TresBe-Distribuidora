@@ -47,7 +47,7 @@ input, label{
     font-family: 'globerBold';
     letter-spacing: 1px;
 }
-#priceDiv{
+#priceDiv, #sellerDiv{
     display: flex;
     flex-direction: column;
     gap: 10px;

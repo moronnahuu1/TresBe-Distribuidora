@@ -67,7 +67,8 @@ body{
     background: none;
     width: 130px;
     padding: 5% 3%;
-    border: 1px solid rgb(25, 25, 25);
+    border: 1px solid rgb(41, 41, 41);
+    border: none;
     font-size: 10px;
     border-radius: 50px;
     margin-bottom: 2%;
@@ -76,13 +77,12 @@ body{
     font-weight: 800;
     transition: transform 0.5s ease, background-color 0.5s ease, color 0.5s ease;
     cursor: pointer;
-    background-color: rgb(29, 29, 29);
+    background-color: #4d7e98;
     color: white;
 }
 .buttonProducts:hover{
     transform: scale(1.05);
-    background: none;
-    color: rgb(0, 0, 0);
+    background-color: black;
 }
 #containerButtons{
     bottom: 0;
@@ -90,8 +90,8 @@ body{
     justify-content: space-around;
 }
 #watch{
-    color: black;
-    background: none;
+    color: white;
+    background: #a4bb43;
 }
 #watch:hover{
     color: white;
@@ -153,7 +153,6 @@ body{
     border-radius: 50px;
     border: 0;
     cursor: pointer;
-    background-color: rgb(65, 113, 172);
     color: rgb(255, 255, 255);
     font-family: sans-serif;
     letter-spacing: 1px;

@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: black;
+    background-color: rgb(37, 37, 37);
     color: white;
     padding-top: 2vi;
     padding-bottom: 3vi;

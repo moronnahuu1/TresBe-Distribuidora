@@ -28,6 +28,7 @@ import { RecoverPasswordComponent } from './login/recover-password/recover-passw
 import { CreateCouponComponent } from './create-coupon/create-coupon.component';
 import { ManteinanceComponent } from './manteinance/manteinance.component';
 import { ModifyUserComponent } from './modify-user/modify-user.component';
+import { CompanyComponent } from './company/company.component';
 
 const routes: Routes = [
   {
@@ -158,6 +159,10 @@ const routes: Routes = [
     path: 'user/:id',
     component: ModifyUserComponent,
     canActivate: [adminGuard]
+  },
+  {
+    path: 'company',
+    component: CompanyComponent,
   }
 ]
 @NgModule({

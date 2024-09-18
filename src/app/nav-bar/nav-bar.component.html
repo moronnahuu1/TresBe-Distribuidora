@@ -9,6 +9,7 @@
         <a routerLink="/products" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Productos</a>
         <a routerLink="/categories" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Catálogo</a>
         <a routerLink="/brands" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Marcas</a>
+        <a routerLink="/company" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Nosotros</a>
         <a routerLink="/login" *ngIf="!isLogged()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Iniciar Sesión</a>
         <a href="" *ngIf="isLogged()" (click)="logout()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Salir</a>
         <p routerLink="/cart" class="fa fa-shopping-cart cartLength" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"> {{products.length}}</p>
