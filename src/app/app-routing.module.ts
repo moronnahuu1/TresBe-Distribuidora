@@ -29,6 +29,7 @@ import { CreateCouponComponent } from './create-coupon/create-coupon.component';
 import { ManteinanceComponent } from './manteinance/manteinance.component';
 import { ModifyUserComponent } from './modify-user/modify-user.component';
 import { CompanyComponent } from './company/company.component';
+import { ModifyOrderComponent } from './modify-order/modify-order.component';
 
 const routes: Routes = [
   {
@@ -163,6 +164,10 @@ const routes: Routes = [
   {
     path: 'company',
     component: CompanyComponent,
+  },
+  {
+    path: 'modify/order/:orderID',
+    component: ModifyOrderComponent,
   }
 ]
 @NgModule({

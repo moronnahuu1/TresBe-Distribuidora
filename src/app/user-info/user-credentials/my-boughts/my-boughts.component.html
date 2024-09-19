@@ -45,6 +45,7 @@
       <button *ngIf="isAdmin()" (click)="deleteUserOrder(selectedOrder.code)">Eliminar</button>
       <button *ngIf="isAdmin() && !selectedOrder.attended" (click)="confirmAttend('attend')" id="registerOrder">Orden Registrada</button>
       <button *ngIf="isAdmin() && selectedOrder.attended" (click)="confirmAttend('unattend')">No está registrada</button>
+      <button *ngIf="isAdmin()" routerLink="/modify/order/{{selectedOrder.id}}">Modificar</button>
       <button *ngIf="!(user.client) && !(selectedOrder.payed) && !isAdmin()">Ya hice la transferencia</button>
     </div>
   </main>

@@ -48,6 +48,10 @@ export class OrdersXProductsService {
   deleteOrderXproducts(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
   }
+  deleteOrderXproductsByIDs(productID: string, orderID: string): Observable<void> {
+    let urlAux = this.myAppUrl + this.myApiUrl + 'products/' + productID + '/' + orderID;
+    return this.http.delete<void>(urlAux);
+  }
   deleteOrdersXproducts(): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
   }

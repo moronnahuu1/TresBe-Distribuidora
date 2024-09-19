@@ -65,6 +65,24 @@ export class OrdersService {
     }
     return this._orders.asObservable();
   }
+  async readOneOrder(id: string){
+    let orderAux = await this.readOneOrderTC(id);
+    if(orderAux){
+      return orderAux;
+    }else{
+      return null;
+    }
+  }
+  async readOneOrderTC(id: string){
+    try {
+      const data = await this.getOrder(id).toPromise();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error obteniendo datos:', error);
+      throw error; // Puedes manejar el error de acuerdo a tus necesidades
+    }
+  }
   returnUser(){
     return this._user.asObservable();
   }

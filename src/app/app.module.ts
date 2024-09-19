@@ -94,6 +94,8 @@ import { CompanyHeaderComponent } from './company/company-header/company-header.
 import { CompanyFooterComponent } from './company/company-footer/company-footer.component';
 import { CompanyTextComponent } from './company/company-text/company-text.component';
 import { ArticlesComponent } from './company/articles/articles.component';
+import { ModifyOrderComponent } from './modify-order/modify-order.component';
+import { OrderDataComponent } from './modify-order/order-data/order-data.component';
 
 @NgModule({
   declarations: [
@@ -187,6 +189,8 @@ import { ArticlesComponent } from './company/articles/articles.component';
     CompanyFooterComponent,
     CompanyTextComponent,
     ArticlesComponent,
+    ModifyOrderComponent,
+    OrderDataComponent,
   ],
   imports: [
     BrowserModule,

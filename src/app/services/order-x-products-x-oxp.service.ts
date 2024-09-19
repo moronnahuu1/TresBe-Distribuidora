@@ -61,6 +61,19 @@ export class OrderXProductsXOxpService {
     this.ordenacionPorInsercion();
     return this._orderAndproducts.asObservable();
   }
+  async readOrderModify(id: string){
+    let orderAux = await this.orderService.readOneOrder(id);
+    if(orderAux != null){
+      let productsArray: CartProduct[] = [];
+      (await this.cartProductService.readCartProducts('order', orderAux.id)).subscribe(result => {
+        productsArray = result;
+      });
+      let orderAndProductAux: OrdersAndProducts = new OrdersAndProducts(orderAux, productsArray);
+      return orderAndProductAux;
+    }else{
+      return null;
+    }
+  }
   getOap(){
     return this._orderAndproducts.asObservable();
   }

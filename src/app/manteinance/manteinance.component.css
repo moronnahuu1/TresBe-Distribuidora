@@ -60,3 +60,20 @@ p {
 .blog-note a:hover {
     text-decoration: underline;
 }
+@media (min-width: 1200px) {}
+@media (min-width: 768px) and (max-width: 1199px) {
+    .maintenance-container {
+        max-width: 70vi;
+    }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+    .maintenance-container {
+        max-width: 70vi;
+    }
+}
+@media (max-width: 480px) and (min-width: 280px) {
+    .maintenance-container {
+        max-width: 90vi;
+    }
+}
+@media (max-width: 279px) {}
