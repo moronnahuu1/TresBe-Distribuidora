@@ -48,6 +48,14 @@ export class UserService {
       return false;
     }
   }
+  async loginEmail(email: string){
+    let userAux = await this.getUserEmailTC(email);
+    if(userAux){
+      return userAux;
+    }else{
+      return null;
+    }
+  }
   async readUser(id: string){
     let userAux = await this.getUserTC(id);
     let user = new User('','','','','', '');
@@ -67,7 +75,6 @@ export class UserService {
   async getUserTC(id: string){
     try {
       const data = await this.getUser(id).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -77,7 +84,6 @@ export class UserService {
   async getUserEmailTC(email: string){
     try {
       const data = await this.getUserByEmail(email).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -87,7 +93,6 @@ export class UserService {
   async getUserNameTC(username: string){
     try {
       const data = await this.getUserByName(username).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -105,7 +110,6 @@ export class UserService {
   async getUsersTC(){
     try {
       const data = await this.getUsers().toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -119,8 +123,37 @@ export class UserService {
     return this.http.get<User>(this.myAppUrl + this.myApiUrl + id); 
   }
   getUserByEmail(email: string): Observable<User> {
-    let urlAux = this.myAppUrl + this.myApiUrl + "/email/";
-    return this.http.get<User>(urlAux + email); 
+    let userAux = this.getUserLogged();
+    let urlAux = this.myAppUrl + this.myApiUrl + "email/";
+    if(userAux.email == ''){
+      userAux.email = 'null';
+    }
+    return this.http.get<User>(urlAux + email + '/' + userAux.email);
+  }
+  async readLogin(email: string, password: string){
+    let userAux = await this.loginTC(email, password);
+    if(userAux != null){
+      localStorage.setItem("userLogged", JSON.stringify(userAux));  //Se guarda en local storage una copia del usuario que se loguea, para saber que está logueado en cualquier parte de la pagina
+      if(userAux.email == "nahuelarielmoron1@gmail.com"){
+        localStorage.setItem("admin", JSON.stringify(true)); //Se guarda en local storage una comprobacion de admin, para saber en cualquier parte de la pagina que el usuario logueado es admin
+      }
+      return true;
+    }else{
+      return false;
+    }
+  }
+  async loginTC(email: string, password: string){    
+    try{
+      let userAux = await this.login(email, password).toPromise();
+    if(userAux){
+      return userAux;
+    }else{
+      return null;
+    }
+    }catch(error){
+      console.log(error);
+      return null;
+    }
   }
   getUserByName(username: string): Observable<User> {
     let urlAux = this.myAppUrl + this.myApiUrl + "/username/";
@@ -134,6 +167,15 @@ export class UserService {
   }
   saveUser(productAux: User): Observable<void>{
     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+  }
+  login(email: string, password: string): Observable<User>{
+    const userdata = {
+      email,
+      password
+    }
+    const urlAux = this.myAppUrl + this.myApiUrl + 'login/';
+    
+    return this.http.post<User>(urlAux, userdata);
   }
   sendEmail(to: string, subject: string, text: string): Observable<void>{
     const emailData = {

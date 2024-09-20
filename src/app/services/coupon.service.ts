@@ -40,7 +40,6 @@ export class CouponService {
   async readCouponTC(id: string){
     try {
       const data = await this.getCoupon(id).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -51,7 +50,6 @@ export class CouponService {
   async searchCouponTC(code: string){
     try {
       const data = await this.searchCouponByCode(code).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -73,7 +71,6 @@ export class CouponService {
   async setCoupons(){
     try {
       const data = await this.getCoupons().toPromise();
-      console.log(data?.length);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);

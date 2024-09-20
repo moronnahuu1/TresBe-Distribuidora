@@ -34,7 +34,6 @@ export class OptionsService {
   async getProductOptionsTC(productID: string){
     try {
       const data = await this.getProductOptions(productID).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -53,7 +52,6 @@ export class OptionsService {
   async getProductOptionsByNameTC(id: string){
     try {
       const data = await this.getOption(id).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);

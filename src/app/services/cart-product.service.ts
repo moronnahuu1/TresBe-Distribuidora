@@ -39,27 +39,23 @@ export class CartProductService {
         case 'order':
           if(value){
             const data = await this.getCartProductsByOrder(value).toPromise();
-            console.log(data?.length);
             return data;
           }
           break;
         case 'product':
           if(value){
             const data = await this.getCartProductsByProduct(value).toPromise();
-            console.log(data?.length);
             return data;
           }
           break;
         /*case 'id':
           if(value){
             const data = await this.getCartProduct(value).toPromise();
-            console.log(data);
             return data;
           }
           break;*/
         default:
           const data = await this.getCartProducts().toPromise();
-          console.log(data?.length);
           return data;
       }
       return null;
@@ -81,7 +77,6 @@ export class CartProductService {
   async getByID(id: string){
     try{
       const data = await this.getCartProduct(id).toPromise();
-      console.log(data);
       return data;
     }catch (error) {
       console.error('Error obteniendo datos:', error);

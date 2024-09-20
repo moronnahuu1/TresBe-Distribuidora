@@ -43,7 +43,6 @@ export class BrandsService {
   async setBrands(){
     try {
       const data = await this.getBrands().toPromise();
-      console.log(data?.length);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);

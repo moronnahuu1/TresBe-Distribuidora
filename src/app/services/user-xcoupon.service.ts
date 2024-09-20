@@ -29,7 +29,6 @@ export class UserXcouponService {
   async getUserTC(userID: string, couponID: string){
     try {
       const data = await this.getUser(userID, couponID).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);

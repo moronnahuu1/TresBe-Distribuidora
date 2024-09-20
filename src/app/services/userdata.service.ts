@@ -36,7 +36,6 @@ export class UserdataService {
   async getUserdataByID(id: string){
     try {
       const data = await this.getUserdata(id).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -46,7 +45,6 @@ export class UserdataService {
   async setUserdataID(userID: string){
     try {
       const data = await this.getUserdataByUserID(userID).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);

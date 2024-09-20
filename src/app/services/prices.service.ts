@@ -33,7 +33,6 @@ export class PricesService {
   async getTableProductTC(optionID: string){
     try {
       const data = await this.getTableByProduct(optionID).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);

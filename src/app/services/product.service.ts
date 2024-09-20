@@ -104,7 +104,6 @@ export class ProductService {
   async getByCategory(category: string){
     try {
       const data = await this.getProductsByCategory(category).toPromise();
-      console.log(data?.length);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -115,7 +114,6 @@ export class ProductService {
   async getByBrands(brand: string){
     try {
       const data = await this.getProductsByBrand(brand).toPromise();
-      console.log(data?.length);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -126,7 +124,6 @@ export class ProductService {
   async getRand(){
     try {
       const data = await this.getRandomProducts().toPromise();      
-      console.log(data?.length);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -172,7 +169,6 @@ export class ProductService {
   async getPrice(id: string){
     try {
       const data = await this.productXpriceService.getTableByProduct(id).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -182,7 +178,6 @@ export class ProductService {
   async setProducts(page: number): Promise<Product[] | undefined>{
     try {
       const data = await this.getProducts(page).toPromise();
-      console.log(data?.length);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -199,7 +194,6 @@ export class ProductService {
         this.categorySelected = category;
       });
       const data = await this.getProductSearch(name).toPromise();
-      console.log(data?.length);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -226,7 +220,6 @@ export class ProductService {
   async getOneProduct(id: string){
     try {
       const data = await this.getProduct(id).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -246,7 +239,6 @@ export class ProductService {
   async countProductsTC(value: string, type: string){
     try {
       const data = await this.countProducts(value, type).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);

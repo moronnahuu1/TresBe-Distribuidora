@@ -27,7 +27,6 @@ export class FeatureService {
   async getProductFeaturesTC(productID: string){
     try {
       const data = await this.getProductFeatures(productID).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);

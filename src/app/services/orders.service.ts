@@ -76,7 +76,6 @@ export class OrdersService {
   async readOneOrderTC(id: string){
     try {
       const data = await this.getOrder(id).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -115,7 +114,6 @@ export class OrdersService {
   async findUserOrders(){
       try {
         const data = await this.getOrdersByID().toPromise();
-        console.log(data?.length);
         return data;
       } catch (error) {
         console.error('Error obteniendo datos:', error);
@@ -135,7 +133,6 @@ export class OrdersService {
   async getAdminOrdersTC(){
     try {
       const data = await this.getOrdersAdmin().toPromise();
-      console.log(data?.length);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);
@@ -146,7 +143,6 @@ export class OrdersService {
 async getSearchedOrders(input: string){
   try {
     const data = await this.getOrdersSearched(input).toPromise();
-    console.log(data?.length);
     return data;
   } catch (error) {
     console.error('Error obteniendo datos:', error);
@@ -157,7 +153,6 @@ async getSearchedOrders(input: string){
 async getSearchedOrdersUser(input: string){
   try {
     const data = await this.getOrdersSearchedNotAdmin(input, this.user.id).toPromise();
-    console.log(data?.length);
     return data;
   } catch (error) {
     console.error('Error obteniendo datos:', error);

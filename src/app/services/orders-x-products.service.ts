@@ -28,7 +28,6 @@ export class OrdersXProductsService {
   async setOxpByOrders(orderID: string){
     try {
       const data = await this.getOxpByOrders(orderID).toPromise();
-      console.log(data);
       return data;
     } catch (error) {
       console.error('Error obteniendo datos:', error);

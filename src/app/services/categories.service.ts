@@ -39,10 +39,8 @@ export class CategoriesService {
   async getCategoriesTC(){
     try{
       const data = await this.getCategories().toPromise();
-      console.log(data);
       return data;
     }catch(error){
-      console.log(error);
       throw error;
     }
   }
