@@ -45,10 +45,18 @@ async validateUser(){
   if(emailInp && passwordInp){ //Se verifica que tanto el email como la contraseña ingresadas por los inputs tengan algun valor
     email = emailInp.value; //Se le asigna a la variable email el input de email ingresado
     password = passwordInp.value; //Se le asigna a la variable password el input de password ingresado
-    let access = await this.userService.readLogin(email,password);
+    let access = await this.userService.readTempLogin(email, password);
+    if(access != null){
+        localStorage.setItem('userLogged', JSON.stringify(access));
+        if(access.email == "nahuelarielmoron1@gmail.com"){
+          localStorage.setItem('admin', JSON.stringify(true));
+        }
+        window.location.href = '';
+    }
+    /*let access = await this.userService.readLogin(email,password);
     if(access){
       window.location.href = ''; //Se redirecciona al menu de inicio, con el usuario ya logueado
-    }
+    }*/
 }
 }
 }
