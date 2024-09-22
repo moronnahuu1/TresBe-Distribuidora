@@ -1,5 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-main-menu',
@@ -7,12 +6,7 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent implements OnInit{
-    userService = inject(UserService);
-  async ngOnInit() {
-    try{
-        await this.userService.getUsers().toPromise();
-    }catch(error){console.log(error);
-    }
+  ngOnInit() {
     window.scrollTo(0, 0);
     document.addEventListener("DOMContentLoaded", function () {
       const faders = document.querySelectorAll('.fade-in');
