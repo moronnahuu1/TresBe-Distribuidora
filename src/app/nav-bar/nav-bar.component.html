@@ -12,7 +12,7 @@
         <a routerLink="/company" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Nosotros</a>
         <a routerLink="/company" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Artículos</a>
         <a routerLink="/login" *ngIf="!logged" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Iniciar Sesión</a>
-        <a href="" *ngIf="logged" (click)="logout()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Salir</a>
+        <button *ngIf="logged" (click)="logout()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning">Salir</button>
         <p routerLink="/cart" class="fa fa-shopping-cart cartLength" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"> {{products.length}}</p>
         <i *ngIf="logged" class="fa fa-user fa-2x" aria-hidden="true" [routerLink]="['/user']" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"></i>
     </div>

@@ -20,6 +20,7 @@ export class NavBarComponent implements OnInit{
   userService = inject(UserService);
   async ngOnInit() {
     this.logged = await this.isLogged();
+    
     this.isTransitioning = true;
     this.areNavItemsVisible = !this.areNavItemsVisible;
     if (this.areNavItemsVisible) {
@@ -45,7 +46,11 @@ export class NavBarComponent implements OnInit{
   return logged;
  }
  async logout(){
-  await this.userService.logout().toPromise();
+  try{
+    await this.userService.logoutTC();
+  }catch(error){
+    console.log("Hubo un error!");
+  }
  }
  toggleNav(): void {
   this.isTransitioning = true;

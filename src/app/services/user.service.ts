@@ -212,12 +212,19 @@ export class UserService {
       withCredentials: true // Esto permite que las cookies se envíen y se reciban
     });  
   }
+  async logoutTC(){
+    try{
+      let access = await this.logout().toPromise();
+      return access;
+    }catch(error){
+      console.log(error);
+      return false;
+    }
+  }
 
   logout(): Observable<void>{
-    const urlAux = this.myAppUrl + this.myApiUrl + 'logout';
-    return this.http.post<void>(urlAux, {
-      withCredentials: true // Esto permite que las cookies se envíen y se reciban
-    });  
+    const urlAux = this.myAppUrl + this.myApiUrl + 'validate/logout/user/logged';
+    return this.http.post<void>(urlAux, '', { withCredentials: true });
   }
   sendEmail(to: string, subject: string, text: string): Observable<void>{
     const emailData = {
