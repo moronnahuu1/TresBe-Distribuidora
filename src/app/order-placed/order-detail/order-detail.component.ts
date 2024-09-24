@@ -3,8 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Order } from 'src/app/models/Order';
 import { OrderXproducts } from 'src/app/models/OrderXproduct';
 import { Product } from 'src/app/models/Product';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
+import { CookieService } from 'src/app/services/cookie.service';
 import { OrdersXProductsService } from 'src/app/services/orders-x-products.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -27,14 +29,20 @@ export class OrderDetailComponent implements OnInit{
   products: Array<Product> = [];
   order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "", false, '');
   id: string = "";
-  user: User = new User("", "", "", "",'', ''); //USER va a ser el usuario logueado en el momento
+  user: PublicUser = new PublicUser("", "", "", "",false); //USER va a ser el usuario logueado en el momento
+  admin: PublicUser = new PublicUser("", "", "", "",false); //USER va a ser el usuario logueado en el momento
   users: Array<Userdata> = []; //USERS va a ser la informacion de envio de cada usuario logueado, nombre, apellido, lugar de residencia, telefono, mail, etc.
   userdata: Userdata = new Userdata("", "", "", "", "", "", "", "", "", "", 0, "", "false"); //USERDATA va aser la informacion de envio DEL USUARIO LOGUEADO
   router = inject(Router);
-
+  cookieService = inject(CookieService);
 
   async ngOnInit(): Promise<void> {
-      this.user = this.getUser();
+    (await this.cookieService.getUser()).subscribe(data => {
+      this.user = data;
+    });
+    (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
+    });
       this.id = this.activeRoute.snapshot.params['id'];      
       await this.readOXP();
       await this.getProducts();
@@ -56,16 +64,6 @@ export class OrderDetailComponent implements OnInit{
       this.router.navigate(['/']); //Se envia al usuario al menu principal
       return false;
     }
-  }
-  getUser(){
-    /* Funcion para leer el usuario logueado, si el usuario esta logueado deberia cargarlo de forma correcta, 
-    sino, las funciones del componente cuando llamen a esta funcion se van a encargar de redireccionar a otro sitio de la pagina */
-    let userAux = localStorage.getItem("userLogged");
-    let userParsed: User = new User("", "", "", "",'',''); //USER va a ser el usuario logueado en el momento
-    if(userAux){
-      userParsed = JSON.parse(userAux);
-    }
-    return userParsed;
   }
 async getOrder(){
   /* La funcion se conecta directamente con el servicio de ordenes para leer la base de datos 

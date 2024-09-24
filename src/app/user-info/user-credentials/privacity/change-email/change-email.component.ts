@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
 
@@ -9,11 +10,11 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ChangeEmailComponent implements OnInit{
   userService = inject(UserService);
-  user: User = new User('','','','','', '');
+  user: PublicUser = new PublicUser('','','','',false);
   updated: boolean = false;
   badEmail: boolean = false;
-  ngOnInit(): void {
-      this.user = this.userService.getUserLogged();
+  async ngOnInit() {
+      this.user = await this.userService.getUserLogged();
   }
   isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,7 +27,7 @@ export class ChangeEmailComponent implements OnInit{
       if(newMail != ''){
         if(this.isValidEmail(newMail)){
           this.user.email = newMail;
-          this.userService.updateUser(this.user.id, this.user).subscribe(()=>{});
+          ///this.userService.updateUser(this.user.id, this.user).subscribe(()=>{});
           this.updated = true;
           this.badEmail = false;
         }else{

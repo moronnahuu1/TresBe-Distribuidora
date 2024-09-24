@@ -1,4 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { adminGuard } from 'src/app/guards/admin.guard';
+import { PublicUser } from 'src/app/models/PublicUser';
+import { CookieService } from 'src/app/services/cookie.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
 
 @Component({
@@ -9,9 +12,19 @@ import { UserDisplayService } from 'src/app/services/user-display.service';
 export class UserCredentialsComponent implements OnInit{
   displayService = inject(UserDisplayService);
   displayed: string = '';
+  cookieService = inject(CookieService);
+  user: PublicUser = new PublicUser('','','','', false);
+  admin: PublicUser = new PublicUser('','','','', false);
+
   async ngOnInit() {
     this.displayService._displayed.subscribe(data => {
       this.displayed = data;
+    });
+    (await this.cookieService.getUser()).subscribe(data => {
+      this.user = data;
+    });
+    (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
     });
     this.getParameters();
   }
@@ -25,7 +38,7 @@ export class UserCredentialsComponent implements OnInit{
     }
   }
   isAdmin(){
-    if(localStorage.getItem('admin')){
+    if(this.admin.email != ''){
       return true;
     }else{
       return false;

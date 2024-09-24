@@ -1,9 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { adminGuard } from 'src/app/guards/admin.guard';
 import { CartProduct } from 'src/app/models/CartProduct';
 import { Order } from 'src/app/models/Order';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
+import { CookieService } from 'src/app/services/cookie.service';
 import { EmailService } from 'src/app/services/email.service';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { OrdersService } from 'src/app/services/orders.service';
@@ -24,13 +27,18 @@ export class MyBoughtsComponent implements OnInit{
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   userdataService = inject(UserdataService);
   orderService = inject(OrdersService);
-  user: User = new User('','','','','','');
+  user: PublicUser = new PublicUser('','','','',false);
+  admin: PublicUser = new PublicUser('','','','',false);
   emailService = inject(EmailService);
   userService = inject(UserService);
   userOrder: string = '';
+  cookieService = inject(CookieService);
   async ngOnInit() {
-    this.orderService.returnUser().subscribe(user => {
-      this.user = user;
+    (this.cookieService.returnUser()).subscribe(data => {
+      this.user = data;
+    });
+    (this.cookieService.returnAdmin()).subscribe(data => {
+      this.admin = data;
     });
     this.ordersAndProductsService.selectedDefault().subscribe(oxpSelected => {
       this.selectedOXP = oxpSelected;
@@ -67,7 +75,7 @@ async getOrderUser(userID: string){
 }
 
   isAdmin(){
-    if(localStorage.getItem('admin')){
+    if(this.admin.email != ''){
       return true;
     }else{
       return false;

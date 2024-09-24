@@ -1,9 +1,12 @@
 import { Component, inject } from '@angular/core';
+import { adminGuard } from 'src/app/guards/admin.guard';
 import { CartProduct } from 'src/app/models/CartProduct';
 import { Order } from 'src/app/models/Order';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
 import { CartProductService } from 'src/app/services/cart-product.service';
+import { CookieService } from 'src/app/services/cookie.service';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
@@ -19,18 +22,22 @@ export class OrdersInfoCompletedComponent {
   displayService = inject(UserDisplayService);
   orderService = inject(OrdersService);
   cartProductService = inject(CartProductService);
+  cookieService = inject(CookieService);
   cartProducts: CartProduct[] = [];
   orders: Order[] = [];
-  user: User = new User('','','','','', '');
+  user: PublicUser = new PublicUser('','','','',false);
+  admin: PublicUser = new PublicUser('','','','',false);
   
   async ngOnInit() {
+    this.cookieService.returnUser().subscribe(data => {
+      this.user = data;
+    });
+    this.cookieService.returnAdmin().subscribe(data => {
+      this.admin = data;
+    });
      this.oxpService.getOap().subscribe(products => {
       this.ordersAndProducts = products;
-     })
-     this.orderService.returnUser().subscribe(user => {
-      this.user = user;
-     });
-     
+     }); 
   }
   changeDisplay(name: string, orderID: string){
     this.oxpService.selectOrder(orderID);
@@ -51,11 +58,11 @@ export class OrdersInfoCompletedComponent {
 }
 
 isAdmin(){
-  if(localStorage.getItem('admin')){
-    return true;
-  }else{
-    return false;
-  }
+    if(this.admin.email != ''){
+        return true;
+    }else{
+        return false;
+    }
 }
 getInput(name: string){
   if(name != undefined && name != ''){

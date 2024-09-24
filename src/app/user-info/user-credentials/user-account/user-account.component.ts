@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
 import { OrdersService } from 'src/app/services/orders.service';
@@ -14,7 +15,7 @@ export class UserAccountComponent implements OnInit{
   displayService = inject(UserDisplayService);
   userdataService = inject(UserdataService);
   displayed = this.displayService.displayed;
-  user: User = new User('','','','','', '');
+  user: PublicUser = new PublicUser('','','','',false);
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   orderService = inject(OrdersService);
 

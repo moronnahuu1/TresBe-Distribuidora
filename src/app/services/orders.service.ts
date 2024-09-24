@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { Order } from '../models/Order';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -7,21 +7,26 @@ import { UserService } from './user.service';
 import { User } from '../models/User';
 import { OrdersXProductsService } from './orders-x-products.service';
 import { OrderXproducts } from '../models/OrderXproduct';
+import { PublicUser } from '../models/PublicUser';
+import { adminGuard } from '../guards/admin.guard';
+import { CookieService } from './cookie.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class OrdersService {
+export class OrdersService{
   private myAppUrl: string;
   private myApiUrl: string;
   private orders: Order[] = [];
   private _orders: BehaviorSubject<Order[]> = new BehaviorSubject<Order[]>([]);
   userService = inject(UserService);
-  user: User = this.userService.getUserLogged();
-  _user: BehaviorSubject<User> = new BehaviorSubject<User>(this.user);
+  user: PublicUser = new PublicUser('','','','',false); 
+  admin: PublicUser = new PublicUser('','','','',false); 
+  _user: BehaviorSubject<PublicUser> = new BehaviorSubject<PublicUser>(this.user);
   oxpService = inject(OrdersXProductsService);
   oxps: OrderXproducts[] = [];
   _oxps: BehaviorSubject<OrderXproducts[]> = new BehaviorSubject<OrderXproducts[]>([]);
+  cookieService = inject(CookieService);
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Orders/'
@@ -35,7 +40,10 @@ export class OrdersService {
     return this._orders.asObservable();
   }
   isAdmin(){
-    if(localStorage.getItem('admin')){
+    this.cookieService.returnAdmin().subscribe(data => {
+      this.admin = data;
+    });
+    if(this.admin.email != ''){
       return true;
     }else{
       return false;
@@ -113,6 +121,8 @@ export class OrdersService {
   }
   async findUserOrders(){
       try {
+        this.user = await this.userService.getUserLogged();
+        this._user.next(this.user);
         const data = await this.getOrdersByID().toPromise();
         return data;
       } catch (error) {

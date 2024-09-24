@@ -11,6 +11,8 @@ import { User } from 'src/app/models/User';
 import { OptionsService } from 'src/app/services/options.service';
 import { Options } from 'src/app/models/Options';
 import { UserService } from 'src/app/services/user.service';
+import { PublicUser } from 'src/app/models/PublicUser';
+import { CookieService } from 'src/app/services/cookie.service';
 
 @Component({
   selector: 'app-product-item',
@@ -30,14 +32,17 @@ export class ProductItemComponent implements OnInit{
   productSelected: Product = new Product('','','','',0,'',0,'', 1, 0);
   allFeatures: Feature[]= [];
   activeRoute = inject(ActivatedRoute);
-  user: User = new User('', '', '', '', '', '');
+  user: PublicUser = new PublicUser('', '', '', '',false);
   onCart: Boolean = false;
   searchTerm: string = '';
   optionsSearched: Options[] = [];
+  cookieService = inject(CookieService);
 
   async ngOnInit(): Promise<void> {
     window.scrollTo(0,0); //Se pone la vista de la pantalla en la forma original, en la parte de arriba
-    this.user = this.userService.getUserLogged() ///Se lee el usuario logueado
+    (await this.cookieService.getUser()).subscribe(data => {
+      this.user = data;
+    });
     const id = this.activeRoute.snapshot.params['id']; //Se busca mediante la ruta el ID del producto al que se quiere acceder
     this.productSelected = await this.productService.returnOneProduct(id); //Se busca el producto con el ID del parametro y se retorna desde la BDD
 
@@ -146,14 +151,7 @@ export class ProductItemComponent implements OnInit{
       return null;
     }
   }
-  isAdmin(){
-    let access = localStorage.getItem("admin");
-    let admin = false;
-    if(access){
-      admin = JSON.parse(access);
-    }
-    return admin;
-  }
+  
   async setProductPrice(optionID: string){ //Funcion para asignarle al producto su lista de precios
     let data = await this.getPrice(optionID); //Se lee la lista de precios desde la BDD con el ID del producto
     let priceAux: PriceXproduct = new PriceXproduct('','',0, 0,0,0,0,0,0);
@@ -177,7 +175,7 @@ export class ProductItemComponent implements OnInit{
         case 'G':
           return priceAux.priceListG;
         default:
-          return priceAux.priceList1;
+          return priceAux.priceList4;
       }
     }
   }

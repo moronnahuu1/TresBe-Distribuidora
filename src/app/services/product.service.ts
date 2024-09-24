@@ -10,6 +10,8 @@ import { OptionsService } from './options.service';
 import { Options } from '../models/Options';
 import { BrandsService } from './brands.service';
 import { CategoriesService } from './categories.service';
+import { CookieService } from './cookie.service';
+import { PublicUser } from '../models/PublicUser';
 @Injectable({
   providedIn: 'root'
 })
@@ -25,12 +27,13 @@ export class ProductService {
   pageTotal: number = 0;
   _pageNumber: BehaviorSubject<number> = new BehaviorSubject<number>(this.pageNumber);
   _pageTotal: BehaviorSubject<number> = new BehaviorSubject<number>(this.pageTotal);
+  cookieService = inject(CookieService);
 
   options: Options[] = [];
    products: Array<Product> = [];
    _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   productXpriceService = inject(PricesService);
-  user: User = new User('', '', '', '', '', '');
+  user: PublicUser = new PublicUser('', '', '', '', false);
   loading: boolean = false;
   _loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.loading);
   constructor(private http: HttpClient) { 
@@ -56,7 +59,9 @@ export class ProductService {
     return productAux.priceDiscount;
   }
   async readProducts(type: string, value: string | null){
-    this.user = this.getUser();
+    (await this.cookieService.getUser()).subscribe(data => {
+      this.user = data;
+    })
     let productsAux;
     this.products = [];
     switch(type){
@@ -154,17 +159,9 @@ export class ProductService {
         case 'G':
           return priceAux.priceListG;
         default:
-          return priceAux.priceList1;
+          return priceAux.priceList4;
       }
     }
-  }
-  getUser(){
-    let userAux = localStorage.getItem('userLogged');
-    let userdata: User = new User('', '', '', '', '', '');
-    if(userAux){
-       userdata = JSON.parse(userAux);
-    }
-    return userdata;
   }
   async getPrice(id: string){
     try {

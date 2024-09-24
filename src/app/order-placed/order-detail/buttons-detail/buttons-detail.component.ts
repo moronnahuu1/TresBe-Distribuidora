@@ -2,8 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Order } from 'src/app/models/Order';
 import { OrderXproducts } from 'src/app/models/OrderXproduct';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
+import { CookieService } from 'src/app/services/cookie.service';
 import { OrdersXProductsService } from 'src/app/services/orders-x-products.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserdataService } from 'src/app/services/userdata.service';
@@ -23,12 +25,19 @@ export class ButtonsDetailComponent implements OnInit{
   activeRoute = inject(ActivatedRoute);
   oxp: Array<OrderXproducts> = [];
   userdataArray: Array<Userdata> = [];
-  user: User = new User("", "", "", "",'', '');
+  user: PublicUser = new PublicUser("", "", "", "", false);
+  admin: PublicUser = new PublicUser("", "", "", "", false);
   userdata: Userdata = new Userdata("", "","","","","","","","","",0,"","");
   users: Array<Userdata> = [];
+  cookieService = inject(CookieService);
 
   async ngOnInit() {
-    this.user = this.getUser();
+    (await this.cookieService.getUser()).subscribe(data => {
+      this.user = data;
+    });
+    (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
+    });
     this.orderID = this.activeRoute.snapshot.params['id'];
     await this.readOXP();
     await this.readUserdata();
@@ -52,14 +61,6 @@ export class ButtonsDetailComponent implements OnInit{
       console.error('Error obteniendo datos:', error);
       throw error;
     }
-  }
-  getUser(){
-    let userAux = localStorage.getItem("userLogged");
-    let userAux1 = new User("", "", "", "",'', '');
-    if(userAux){
-      userAux1 = JSON.parse(userAux);
-    }
-    return userAux1;
   }
   async cancelOrder(){
     const userConfirmed: boolean = window.confirm("Desea cancelar la orden?");

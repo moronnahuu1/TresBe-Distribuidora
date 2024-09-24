@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { User } from 'src/app/models/User';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { Userdata } from 'src/app/models/Userdata';
-import { OrdersService } from 'src/app/services/orders.service';
+import { CookieService } from 'src/app/services/cookie.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
 import { UserdataService } from 'src/app/services/userdata.service';
 
@@ -14,11 +14,18 @@ export class MyAccountComponent implements OnInit{
   displayService = inject(UserDisplayService);
   userdataService = inject(UserdataService);
   displayed = this.displayService.displayed;
-  user: User = new User('','','','','','');
+  user: PublicUser = new PublicUser('','','','',false);
+  admin: PublicUser = new PublicUser('','','','',false);
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
+  cookieService = inject(CookieService);
 
   async ngOnInit() {
-      this.user = this.getUser();
+      (await this.cookieService.getUser()).subscribe(data => {
+        this.user = data;
+      });
+      (await this.cookieService.getAdmin()).subscribe(data => {
+        this.admin = data;
+      });
       const usersAux = await this.getUserData();
       if(usersAux != undefined){
         this.userdata = usersAux;
@@ -28,17 +35,8 @@ export class MyAccountComponent implements OnInit{
   changeDisplay(name: string){
     this.displayService.changeDisplay(name);
   }
-
-  getUser(){
-    let userAux = localStorage.getItem('userLogged');
-    let userParsed: User = new User('','','','','','');
-    if(userAux){
-      userParsed = JSON.parse(userAux);
-    }
-    return userParsed;
-  }
   isAdmin(){
-    if(localStorage.getItem('admin')){
+    if(this.admin.email != ''){
       return true;
     }else{
       return false;

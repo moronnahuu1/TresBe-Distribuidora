@@ -2,6 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Order } from '../models/Order';
 import { OrdersService } from '../services/orders.service';
+import { CookieService } from '../services/cookie.service';
+import { PublicUser } from '../models/PublicUser';
 
 @Component({
   selector: 'app-order-placed',
@@ -17,8 +19,7 @@ export class OrderPlacedComponent implements OnInit{
       window.scrollTo(0, 0);
       try {
         const data = await this.orderService.getOrder(this.id).toPromise();
-        if(data != undefined){          
-            console.log(data.code);
+        if(data != undefined){    
         }else{
             window.location.href = '';
         }

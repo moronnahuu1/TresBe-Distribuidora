@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit{
-  ngOnInit(): void {
+  ngOnInit() {
     window.scrollTo(0, 0);
   }
 }

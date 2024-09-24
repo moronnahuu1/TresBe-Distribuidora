@@ -7,6 +7,8 @@ import { OptionsService } from '../services/options.service';
 import { BrandsService } from '../services/brands.service';
 import { CategoriesService } from '../services/categories.service';
 import Swal from 'sweetalert2';
+import { PublicUser } from '../models/PublicUser';
+import { CookieService } from '../services/cookie.service';
 
 @Component({
   selector: 'app-products-list',
@@ -29,8 +31,13 @@ export class ProductsListComponent implements OnInit{
   onCart: Boolean = false;
   totalPages: number = 0;
   brandService = inject(BrandsService);
+  admin: PublicUser = new PublicUser('','','','',false);
+  cookieService = inject(CookieService);
   async ngOnInit() {
     window.scrollTo(0, 0);
+    (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
+    });
     await this.filters();
     ///this.hasCostPrice();
   }
@@ -85,12 +92,11 @@ export class ProductsListComponent implements OnInit{
     }
    }
   isAdmin(){ //funcion para detectar si el usuario logueado es administrador
-    let access = localStorage.getItem("admin");
-    let admin = false;
-    if(access){
-      admin = JSON.parse(access);
+    if(this.admin.email != ''){
+      return true;
+    }else{
+      return false;
     }
-    return admin;
   }
   formatNumber(number: number): string { //Funcion de front, se usa en HTML para mostrar los numeros grandes de forma mas legible.
     return number.toLocaleString(); // Esto añadirá separadores de miles

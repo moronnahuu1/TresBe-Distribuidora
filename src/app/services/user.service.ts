@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { User } from '../models/User';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PublicUser } from '../models/PublicUser';
+import { CookieService } from './cookie.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +12,17 @@ import { environment } from 'src/environments/environment';
 export class UserService {
   private myAppUrl: string;
   private myApiUrl: string;
+  user: PublicUser = new PublicUser('','','','',false);
+  cookieService = inject(CookieService);
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Users/'
   }
-  getUserLogged(){
-    let userAux = localStorage.getItem('userLogged');
-    let userdata: User = new User('', '', '', '', '', '');
-    if(userAux){
-       userdata = JSON.parse(userAux);
-    }
-    return userdata;
+  async getUserLogged(){
+    (await this.cookieService.getUser()).subscribe(data => {
+      this.user = data;
+    });
+    return this.user;
   }
   async readUserEmail(email: string){
     let userAux = await this.getUserEmailTC(email);
@@ -83,6 +85,7 @@ export class UserService {
   }
   async getUserEmailTC(email: string){
     try {
+      await this.getUserLogged();
       const data = await this.getUserByEmail(email).toPromise();
       return data;
     } catch (error) {
@@ -124,12 +127,11 @@ export class UserService {
     return this.http.get<User>(this.myAppUrl + this.myApiUrl + id); 
   }
   getUserByEmail(email: string): Observable<User> {
-    let userAux = this.getUserLogged();
     let urlAux = this.myAppUrl + this.myApiUrl + "email/";
-    if(userAux.email == ''){
-      userAux.email = 'null';
+    if(this.user.email == ''){
+      this.user.email = 'null';
     }
-    return this.http.get<User>(urlAux + email + '/' + userAux.email);
+    return this.http.get<User>(urlAux + email + '/' + this.user.email);
   }
   async readLogin(email: string, password: string){
     let userAux = await this.loginTC(email, password);
@@ -207,6 +209,13 @@ export class UserService {
     const urlAux = this.myAppUrl + this.myApiUrl + 'login/';
     
     return this.http.post<User>(urlAux, userdata, {
+      withCredentials: true // Esto permite que las cookies se envíen y se reciban
+    });  
+  }
+
+  logout(): Observable<void>{
+    const urlAux = this.myAppUrl + this.myApiUrl + 'logout';
+    return this.http.post<void>(urlAux, {
       withCredentials: true // Esto permite que las cookies se envíen y se reciban
     });  
   }

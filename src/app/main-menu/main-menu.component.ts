@@ -1,12 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { PublicUser } from '../models/PublicUser';
+import { CookieService } from '../services/cookie.service';
 
 @Component({
   selector: 'app-main-menu',
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.css']
 })
+
 export class MainMenuComponent implements OnInit{
-  ngOnInit() {
+    cookieService = inject(CookieService);
+    user: PublicUser = new PublicUser('','','','', false);
+    admin: PublicUser = new PublicUser('','','','', false);
+  async ngOnInit() {
     window.scrollTo(0, 0);
     document.addEventListener("DOMContentLoaded", function () {
       const faders = document.querySelectorAll('.fade-in');
@@ -31,5 +37,12 @@ export class MainMenuComponent implements OnInit{
           appearOnScroll.observe(fader);
       });
   });  
+
+  (await this.cookieService.getUser()).subscribe(data => {
+    this.user = data;
+  });
+  (await this.cookieService.getAdmin()).subscribe(data => {
+    this.admin = data;
+  });
   }
 }

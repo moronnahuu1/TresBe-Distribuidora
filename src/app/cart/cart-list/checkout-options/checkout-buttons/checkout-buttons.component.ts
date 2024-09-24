@@ -2,9 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cupon } from 'src/app/models/Cupon';
 import { Order } from 'src/app/models/Order';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
 import { UserXcoupon } from 'src/app/models/UserXcoupon';
 import { CartService } from 'src/app/services/cart.service';
+import { CookieService } from 'src/app/services/cookie.service';
 import { CouponService } from 'src/app/services/coupon.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserXcouponService } from 'src/app/services/user-xcoupon.service';
@@ -19,19 +21,23 @@ export class CheckoutButtonsComponent implements OnInit{
   orderService = inject(OrdersService);
   couponService = inject(CouponService);
   cartService = inject(CartService);
+  cookieService = inject(CookieService);
   userXcouponService = inject(UserXcouponService);
   userXcoupon: UserXcoupon = new UserXcoupon('','','');
   couponSearched: Cupon = new Cupon('','',0,new Date(), false, 0);
   router = inject(Router);
-  user: User = new User('', '', '', '', '', '');
+  user: PublicUser = new PublicUser('', '', '', '', false);
   applied: boolean = false;
   used: boolean = false;
   notfound: boolean = false;
   expired: boolean = false;
   minimum: boolean = false;
   total: number = 0;
-  ngOnInit(): void {
-    this.user = this.getUser();
+  islogged: boolean = false;
+  async ngOnInit() {
+    (await this.cookieService.getUser()).subscribe(data => {
+      this.user = data;
+    });
     this.cartService.getTotal().subscribe(result => {
       this.total = result;
     });
@@ -63,14 +69,6 @@ export class CheckoutButtonsComponent implements OnInit{
     }else{
       this.router.navigate(['/checkout']);
     }*/
-  }
-  getUser(){
-    let userAux = localStorage.getItem('userLogged');
-    let userdata: User = new User('', '', '', '', '', '');
-    if(userAux){
-       userdata = JSON.parse(userAux);
-    }
-    return userdata;
   }
   async applyCoupon(){
     let codeAux = document.getElementById('couponInp') as HTMLInputElement;

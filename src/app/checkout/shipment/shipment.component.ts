@@ -1,11 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { City } from 'src/app/models/City';
 import { Province } from 'src/app/models/Province';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
 import { cityJSON } from 'src/app/models/cityJSON';
 import { ProvinceJSON } from 'src/app/models/provinceJSON';
 import { CityService } from 'src/app/services/city.service';
+import { CookieService } from 'src/app/services/cookie.service';
 import { ProvinceService } from 'src/app/services/province.service';
 import { UserdataService } from 'src/app/services/userdata.service';
 
@@ -21,7 +23,7 @@ export class ShipmentComponent implements OnInit{
   dataCreated: boolean = false;
   userdataService = inject(UserdataService);
   userID: string = "";
-  user: User = new User("", "", "", "",'', '');
+  user: PublicUser = new PublicUser("", "", "", "",false);
   users: Array<Userdata> = [];
   userdata: Userdata = new Userdata("", "", "", "", "", "", "", "", "", "", 0, "", "false");
   saveData: boolean = false;
@@ -34,9 +36,13 @@ export class ShipmentComponent implements OnInit{
   provinces: Array<Province> = [];
   provinciaSeleccionada: string | null = null; // Inicializar como null o un valor adecuado
   searchTerm: string = '';
+  isLogged: boolean = false;
+  cookieService = inject(CookieService);
 
   async ngOnInit() {
-    this.getUser();
+    (await this.cookieService.getUser()).subscribe(data => {
+      this.user = data;
+    });
     const usersAux = await this.getUserData();
     if(usersAux != undefined){
       for(let i=0; i<usersAux.length; i++){
@@ -254,13 +260,6 @@ export class ShipmentComponent implements OnInit{
     } catch (error) {
       console.error('Error obteniendo datos:', error);
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
-    }
-  }
-
-  getUser(){
-    let userAux = localStorage.getItem("userLogged");
-    if(userAux){
-      this.user = JSON.parse(userAux);
     }
   }
 }

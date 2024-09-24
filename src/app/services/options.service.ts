@@ -105,8 +105,8 @@ export class OptionsService {
   }
   getProductOptionsByTwo(productID: string, optionName: string): Observable<Options> {
     optionName = encodeURIComponent(optionName);
-    let urlAux = this.myAppUrl + this.myApiUrl + 'product/option/'
-    return this.http.get<Options>(urlAux + productID + '/' + optionName); 
+    let urlAux = this.myAppUrl + this.myApiUrl + 'product/option/'    
+    return this.http.get<Options>(urlAux + productID + '/' + encodeURIComponent(optionName)); 
   }
 
   getProductOptionByName(name: string): Observable<Options> {

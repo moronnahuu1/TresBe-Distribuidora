@@ -12,6 +12,8 @@ import { Userdata } from 'src/app/models/Userdata';
 import { UserdataService } from 'src/app/services/userdata.service';
 import { UserXcouponService } from 'src/app/services/user-xcoupon.service';
 import { UserXcoupon } from 'src/app/models/UserXcoupon';
+import { PublicUser } from 'src/app/models/PublicUser';
+import { CookieService } from 'src/app/services/cookie.service';
 
 @Component({
   selector: 'app-pay',
@@ -28,16 +30,21 @@ export class PayComponent {
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   userdataService = inject(UserdataService);
   cartProducts: Array<Product> = [];
+  cookieService = inject(CookieService);
   ///products: Array<Product> = [];
   subtotal: number = 0;
   total: number = 0;
   dataCreated: boolean = false;
-  user: User = new User("", "", "", "",'', '');
+  user: PublicUser = new PublicUser("", "", "", "", false);
   creating: boolean = false;
   coupon: string = '';
+  isLogged: boolean = false;
 
   async ngOnInit() {
-    this.getUser();
+    (await this.cookieService.getUser()).subscribe(data => {
+      this.user = data;
+    });
+
     this.cartService.getProducts().subscribe(products => {
       this.cartProducts = products;
     })
@@ -53,9 +60,8 @@ export class PayComponent {
     (await this.userdataService.returnUserdata(this.user.id)).subscribe(userdata => {
       this.userdata = userdata;
     });
-
+    
     this.coupon = this.getCouponID();
-
   }
   getCouponID(){
     let idAux = localStorage.getItem('coupon');
@@ -65,14 +71,6 @@ export class PayComponent {
     }
     localStorage.removeItem('coupon');
     return couponID;
-  }
-
-  getUser(){
-    /* La funcion se encarga de comprobar que el usuario este logueado, de lo contrario, no se podra continuar con la operacion. */
-    let userAux = localStorage.getItem("userLogged");
-    if(userAux){
-      this.user = JSON.parse(userAux);
-    }
   }
 
   modifyStock(){
