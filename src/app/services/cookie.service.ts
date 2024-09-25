@@ -14,6 +14,11 @@ export class CookieService {
   _user: BehaviorSubject<PublicUser> = new BehaviorSubject<PublicUser>(this.user);
   admin: PublicUser = new PublicUser('','','','', false);
   _admin: BehaviorSubject<PublicUser> = new BehaviorSubject<PublicUser>(this.admin);
+  isLogged: boolean = false;
+  isAdmin: boolean = false;
+  _islogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isLogged);
+  _isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isAdmin);
+
   constructor(private http: HttpClient) { 
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/cookies/'
@@ -23,25 +28,33 @@ export class CookieService {
     return this._user.asObservable();
   }
 
+  returnLogged(){
+    return this._islogged.asObservable();
+  }
+
   returnAdmin(){
     return this._admin.asObservable();
   }
 
   async getAdmin(){
-    let isLogged = await this.tokenExistTC('admin_token');
-    if(isLogged){
+    (await this.tokenExistTC('admin_token')).subscribe(data => {
+      this.isAdmin = data;
+    });
+    if(this.isAdmin){
       let userAux = await this.getTokenTC("admin_token");
       if(userAux != null){
         this.admin = userAux;
-        this._admin.next(this.user)
+        this._admin.next(this.admin);
       }
     }
     return this._admin.asObservable();
   }
 
   async getUser(){
-    let isLogged = await this.tokenExistTC('access_token');
-    if(isLogged){
+    (await this.tokenExistTC('access_token')).subscribe(data => {
+      this.isLogged = data;
+    });
+    if(this.isLogged){
       let userAux = await this.getTokenTC("access_token");
       if(userAux != null){
         this.user = userAux;
@@ -62,11 +75,11 @@ export class CookieService {
 
   async tokenExistTC(cookieName: string){
     let tokenAux = await this.tokenExist(cookieName).toPromise();
-    let exist: boolean = false;
     if(tokenAux != undefined){
-      exist = tokenAux;
+      this.isLogged = tokenAux;
+      this._islogged.next(this.isLogged);
     }
-    return exist;
+    return this._islogged.asObservable();
   }
 
   tokenExist(cookieName: string): Observable<boolean> {

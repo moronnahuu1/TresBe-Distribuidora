@@ -18,9 +18,14 @@ export class NavBarComponent implements OnInit{
   cookieService = inject(CookieService);
   logged: boolean = false;
   userService = inject(UserService);
+  elementsVisible: boolean = true;
+  constructor(){
+  }
   async ngOnInit() {
-    this.logged = await this.isLogged();
-    
+    this.isLogged();
+    setTimeout(() => {
+      this.elementsVisible = true;  // Esto aplicará la clase `show`
+    }, 200);
     this.isTransitioning = true;
     this.areNavItemsVisible = !this.areNavItemsVisible;
     if (this.areNavItemsVisible) {
@@ -40,14 +45,15 @@ export class NavBarComponent implements OnInit{
       this.products = products;
     })
 }
- async isLogged(){
-  let logged: boolean = false;
-  logged = await this.cookieService.tokenExistTC('access_token');
-  return logged;
+async isLogged(){
+  (await this.cookieService.tokenExistTC('access_token')).subscribe(data => {
+    this.logged = data;
+  })
  }
  async logout(){
   try{
     await this.userService.logoutTC();
+    window.location.href = '';
   }catch(error){
     console.log("Hubo un error!");
   }

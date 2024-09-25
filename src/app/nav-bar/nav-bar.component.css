@@ -3,26 +3,22 @@
     width: 100%;
     height: 70px;
    display: flex;
-   justify-content: center;
+   justify-content: space-around;
    align-items: center;
-    :is(a), button{
+    a, button{
         background: none;
         border: 0;
         font-family: "Posterama 1919 W01 SemiBold";
         text-decoration: none;
         text-transform: uppercase;
-        margin-left: 2.3%;
-        margin-right: 2.3%;
         color: rgb(0, 25, 93);
+        font-size: 15px;
         transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
     }
-    :is(p){
+    p, button{
         cursor: pointer;
-        font-size: 20px;
         text-decoration: none;
         text-transform: uppercase;
-        margin-left: 2.3%;
-        margin-right: 2.3%;
         text-align: center;
         color: rgb(0, 25, 93);
         transition: transform 0.5s ease;
@@ -38,13 +34,17 @@
     img{
         width: 20vh;
         height: 6vh;
-        margin-left: -100px;
         padding: 0;
+    }
+    .point{
+        width: fit-content;
     }
 }
 #toggleButton {
+    position: absolute;
     opacity: 0;
 }
+
 @media (min-width: 1200px) {}
 @media (min-width: 768px) and (max-width: 1199px) {
     .navBar{
@@ -71,7 +71,7 @@
         }
     }
     
-    .navBar a, .navBar p{
+    .navBar a, .navBar p, .navbar button{
         text-decoration: none;
         margin-top: 10px;
         margin-bottom: 5px;
@@ -85,22 +85,22 @@
         visibility: visible;
     }
     
-    .navBar a.hidden, .navBar p.hidden, .navBar i.hidden {
+    .navBar a.hidden, .navBar p.hidden, .navBar i.hidden, .navbar button.hidden {
         opacity: 0;
         max-height: 0;
         visibility: hidden;
         overflow: hidden;
     }
     
-    .navBar a.collapsing, .navBar p.collapsing {
+    .navBar a.collapsing, .navBar p.collapsing, .navbar button.collapsing {
         transition: max-height 0.5s, opacity 0.5s, visibility 0.5s;
     }
     
-    .navBar a:hover, .navBar p:hover {
+    .navBar a:hover, .navBar p:hover, .navbar button:hover {
         background-color: #001f40;
     }
     
-    .navBar a:nth-of-type(n+2):nth-of-type(-n+7), .navBar p {
+    .navBar a:nth-of-type(n+2):nth-of-type(-n+7), .navBar p, .navbar button {
         width: 48%;
         margin: 1%;
     }
@@ -139,10 +139,11 @@
         width: 100%;
         img{
             margin-left: 0px;
+            margin-top: 15px;
         }
     }
     
-    .navBar a, .navBar p{
+    .navBar a, .navBar p, .navBar button, .navBar i{
         text-decoration: none;
         margin-top: 10px;
         margin-bottom: 5px;
@@ -156,22 +157,22 @@
         visibility: visible;
     }
     
-    .navBar a.hidden, .navBar p.hidden, .navBar i.hidden {
+    .navBar a.hidden, .navBar p.hidden, .navBar i.hidden, .navBar button.hidden {
         opacity: 0;
         max-height: 0;
         visibility: hidden;
         overflow: hidden;
     }
     
-    .navBar a.collapsing, .navBar p.collapsing {
+    .navBar a.collapsing, .navBar p.collapsing, .navBar button.collapsing {
         transition: max-height 0.5s, opacity 0.5s, visibility 0.5s;
     }
     
-    .navBar a:hover, .navBar p:hover {
+    .navBar a:hover, .navBar p:hover, .navBar button:hover {
         background-color: #001f40;
     }
     
-    .navBar a:nth-of-type(n+2):nth-of-type(-n+7), .navBar p {
+    .navBar a:nth-of-type(n+2):nth-of-type(-n+7), .navBar p, .navBar button {
         width: 48%;
         margin: 1%;
     }
@@ -182,9 +183,10 @@
     
     #toggleButton {
         opacity: 1;
+        width: 2vi;
         position: absolute;
         top: 10px;
-        right: 10px;
+        right: 40px;
         background-color: rgb(215, 215, 215);
         color: black;
         border: none;
@@ -196,6 +198,10 @@
     }
     #toggleButton:hover{
         color: rgb(0, 25, 93);
+    }
+    .userlogo{
+        position: relative;
+        right: auto;
     }
      
 }

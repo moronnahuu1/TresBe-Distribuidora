@@ -36,13 +36,6 @@ export class MainMenuComponent implements OnInit{
       faders.forEach(fader => {
           appearOnScroll.observe(fader);
       });
-  });  
-
-  (await this.cookieService.getUser()).subscribe(data => {
-    this.user = data;
-  });
-  (await this.cookieService.getAdmin()).subscribe(data => {
-    this.admin = data;
   });
   }
 }

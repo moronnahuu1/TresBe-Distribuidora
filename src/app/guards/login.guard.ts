@@ -5,7 +5,10 @@ import { CookieService } from "../services/cookie.service";
 export const loginGuard = async() => {
     const router = inject(Router);
     const cookieService = inject(CookieService);
-    const tokenExist = await cookieService.tokenExistTC('access_token');
+    let tokenExist = false;
+    (await cookieService.tokenExistTC('access_token')).subscribe(data => {
+        tokenExist = data;
+    });
     if(tokenExist){
         return true;
     }else{

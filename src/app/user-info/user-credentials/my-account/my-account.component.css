@@ -2,7 +2,6 @@
     width: 40vi;
     padding: 20px;
     height: calc(45vi - 40px);
- 
   }
   
   .profile-header {
@@ -117,6 +116,7 @@
   .profile {
       width: 90vi;
       padding: 8px;
+      height: calc(100vh - 16px);
   }
   .profile-picture {
       width: 60px;

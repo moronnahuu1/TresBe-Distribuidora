@@ -87,6 +87,7 @@ export class ProductsListComponent implements OnInit{
    hasCostPrice(){
     for(let i=0; i<this.productsArray.length; i++){
       if(this.productsArray[i].price < 2){
+      }else{
         this.productsArray.splice(i, 1);
       }
     }
