@@ -7,34 +7,11 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './entry-data.component.html',
   styleUrls: ['./entry-data.component.css']
 })
-export class EntryDataComponent implements OnInit{
+export class EntryDataComponent{
   userService = inject(UserService);
   incorrectEmail: boolean = false;
   incorrectPassword: boolean = false;
   users: Array<User> = [];
-  async ngOnInit(): Promise<void> {
-      ///await this.readUsers();
-  }
-  async readUsers(): Promise<void> {
-    /* La funcion se encarga de llamar al getUsers y asignarle a la variable global 'users' todos los usuarios de la base de datos */
-    const usersAux = await this.getUsers();
-    if(usersAux != undefined){
-      for(let i=0; i<usersAux.length; i++){
-        this.users.push(usersAux[i]);
-      }
-    }
-}
-async getUsers(): Promise<User[] | undefined>{
-  /* La funcion se encarga de leer todos los usuarios EN LA BASE DE DATOS y retornarlos para luego asignarlos a una variable global del componente */
-  try {
-    const data = await this.userService.getUsers().toPromise();
-    console.log(data?.length);
-    return data;
-  } catch (error) {
-    console.error('Error obteniendo datos:', error);
-    throw error; // Puedes manejar el error de acuerdo a tus necesidades
-  }
-}
 async validateUser(){
   /* Funcion principal que se va a utilizar cuando el usuario hace click en login. Reune a todas las demas funciones necesarias para
   validar que el ingreso del usuario al sistema sea el correcto, de no ser correcto informará al usuario cual es el error. */

@@ -14,7 +14,7 @@ export class ChangeEmailComponent implements OnInit{
   updated: boolean = false;
   badEmail: boolean = false;
   async ngOnInit() {
-      this.user = await this.userService.getUserLogged();
+      ///this.user = await this.userService.getUserLogged();
   }
   isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

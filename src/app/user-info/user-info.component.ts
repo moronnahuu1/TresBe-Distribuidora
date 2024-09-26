@@ -25,7 +25,10 @@ export class UserInfoComponent implements OnInit{
     }
   }
   async isAdmin(){
-    const tokenExist = await this.cookieService.tokenExistTC('admin_token');
+    let tokenExist: boolean = false;
+    (await this.cookieService.tokenExistTC('admin_token')).subscribe(data => {
+      tokenExist = data;
+    });
     if(tokenExist){
         return true;
     }else{

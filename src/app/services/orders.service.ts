@@ -31,11 +31,6 @@ export class OrdersService{
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Orders/'
   }
-  changeUser(userAux: User){
-    this.user = userAux;
-    localStorage.setItem('searchedUser', JSON.stringify(true));
-    this._user.next(this.user);
-  }
   returnOrders(){
     return this._orders.asObservable();
   }

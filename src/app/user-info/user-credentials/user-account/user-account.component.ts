@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
+import { CookieService } from 'src/app/services/cookie.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserDisplayService } from 'src/app/services/user-display.service';
 import { UserdataService } from 'src/app/services/userdata.service';
@@ -18,10 +19,13 @@ export class UserAccountComponent implements OnInit{
   user: PublicUser = new PublicUser('','','','',false);
   userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
   orderService = inject(OrdersService);
+  cookieService = inject(CookieService);
+  admin: boolean = false;
 
   async ngOnInit() {
-      this.orderService.returnUser().subscribe(user => {
-        this.user = user;
+    this.admin = await this.isAdmin();
+      (this.cookieService.returnUser()).subscribe(data => {
+        this.user = data;
       });
       (await this.userdataService.returnUserdata(this.user.id)).subscribe(userdata => {
         this.userdata = userdata;
@@ -31,11 +35,15 @@ export class UserAccountComponent implements OnInit{
   changeDisplay(name: string){
     this.displayService.changeDisplay(name);
   }
-  isAdmin(){
-    if(localStorage.getItem('admin')){
-      return true;
+  async isAdmin(){
+    let tokenExist: boolean = false;
+    (await this.cookieService.tokenExistTC('admin_token')).subscribe(data => {
+      tokenExist = data;
+    });
+    if(tokenExist){
+        return true;
     }else{
-      return false;
+        return false;
     }
-  }
+}
 }

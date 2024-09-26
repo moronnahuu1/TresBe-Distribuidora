@@ -14,7 +14,7 @@ export class PrivacityComponent implements OnInit{
   userService = inject(UserService);
   displayService = inject(UserDisplayService);
   async ngOnInit() {
-      this.user = await this.userService.getUserLogged();
+      ///this.user = await this.userService.getUserLogged();
   }
   changeDisplay(name: string){
     this.displayService.changeDisplay(name);

@@ -54,12 +54,11 @@ export class ModifyUserComponent implements OnInit{
   createNewUser(){
     let username = this.getString('usernameInp');
     let email = this.getString('emailInp');
-    let pass = this.getString('passInp');
     let priceList = this.priceListNumber;
     let client = this.getString('clientInp');
     let seller = this.getString('sellerInp')
 
-    let userNew = new User(this.userLogged.id, email, pass, username, priceList, seller);
+    let userNew = new User(this.userLogged.id, email, this.userLogged.password, username, priceList, seller);
     if(client == 'si'){
       userNew.client = true;
     }else{

@@ -40,7 +40,7 @@ export class ShipmentComponent implements OnInit{
   cookieService = inject(CookieService);
 
   async ngOnInit() {
-    (await this.cookieService.getUser()).subscribe(data => {
+    (await this.cookieService.returnUser()).subscribe(data => {
       this.user = data;
     });
     const usersAux = await this.getUserData();

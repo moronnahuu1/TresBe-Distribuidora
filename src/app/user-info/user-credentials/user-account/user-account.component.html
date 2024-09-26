@@ -2,7 +2,7 @@
     <section class="profile-header">
       <img src="assets/profile-picture.jpg" alt="Profile Picture" class="profile-picture">
       <div class="profile-info">
-        <h1>{{user.username}} <i *ngIf="isAdmin()" id="admin" class="fa fa-plus-circle" aria-hidden="true"></i></h1>
+        <h1>{{user.username}} <i *ngIf="admin" id="admin" class="fa fa-plus-circle" aria-hidden="true"></i></h1>
         <p>{{userdata.company}}</p>
         <p>{{userdata.city}}, {{userdata.province}}, {{userdata.country}}</p>
       </div>

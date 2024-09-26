@@ -20,9 +20,6 @@ export class UserCredentialsComponent implements OnInit{
     this.displayService._displayed.subscribe(data => {
       this.displayed = data;
     });
-    (await this.cookieService.getUser()).subscribe(data => {
-      this.user = data;
-    });
     (await this.cookieService.getAdmin()).subscribe(data => {
       this.admin = data;
     });

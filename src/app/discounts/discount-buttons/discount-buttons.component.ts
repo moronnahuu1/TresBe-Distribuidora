@@ -24,8 +24,6 @@ export class DiscountButtonsComponent implements OnInit{
   discountService = inject(DiscountsService);
   progress: number = 0;
   progressService = inject(ProgressService);
-  userService = inject(UserService);
-  users: Array<User> = [];
   emails: Array<string> = [];
   emailService = inject(EmailService);
   onBrand: boolean = true;
@@ -42,7 +40,6 @@ export class DiscountButtonsComponent implements OnInit{
       this.progressService.returnNumber().subscribe(numberAux => {
         this.progress = numberAux;
       });
-      await this.readUsers();
       await this.getBrands();
       await this.getCategories();
   }
@@ -166,15 +163,6 @@ export class DiscountButtonsComponent implements OnInit{
       window.scrollTo(0,0);
     }else{
       this.discountService.changeBoolean('added', false);
-    }
-  }
-  async readUsers(){
-    let userAux = await this.userService.readAllUsers();
-    if(userAux != null){
-      this.users = userAux;
-    }
-    for(let i = 0; i < this.users.length; i++){
-      this.emails.push(this.users[i].email);
     }
   }
   async deleteDiscounts(){

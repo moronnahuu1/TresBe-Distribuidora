@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
+import { CookieService } from 'src/app/services/cookie.service';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserService } from 'src/app/services/user.service';
@@ -16,14 +18,17 @@ export class AdminSupportComponent{
   ordersAndProducts: OrdersAndProducts[] = [];
   orderService = inject(OrdersService);
   userService = inject(UserService);
-  user: User = new User('','','','','','');
+  user: PublicUser = new PublicUser('','','','',false);
   userdataService = inject(UserdataService);
+  cookieService = inject(CookieService);
 
   async searchUser(){
-    let userID = this.getInput('userInp');
-    if(userID != ''){
-      this.user = await this.userService.readUserByName(userID);
-      this.orderService.changeUser(this.user);
+    let username = this.getInput('userInp');
+    if(username != ''){
+      this.user = await this.userService.readUserByName(username);
+      this.cookieService.changeUser(this.user).subscribe(data => {
+        this.user = data;
+      });
       (await this.orderxproductsxoxpService.getProducts('', null)).subscribe(products => {
         this.ordersAndProducts = products;
       });
@@ -39,26 +44,6 @@ export class AdminSupportComponent{
       inpValue = miInp.value;
     }
     return inpValue;
-  }
-
-  async readUser(id: string){
-    let userAux = await this.getUser(id);
-    let userAux1: User = new User('','','','','','');
-    if(userAux){
-      userAux1 = userAux;
-    }
-    return userAux1;
-  }
-
-  async getUser(id: string){
-    try {
-      const data = await this.userService.getUser(id).toPromise();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error('Error obteniendo datos:', error);
-      throw error; // Puedes manejar el error de acuerdo a tus necesidades
-    }
   }
 
   getDates(orderDate: Date): string {

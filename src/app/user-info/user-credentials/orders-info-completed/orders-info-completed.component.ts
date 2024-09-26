@@ -37,7 +37,7 @@ export class OrdersInfoCompletedComponent {
     });
      this.oxpService.getOap().subscribe(products => {
       this.ordersAndProducts = products;
-     }); 
+     });
   }
   changeDisplay(name: string, orderID: string){
     this.oxpService.selectOrder(orderID);

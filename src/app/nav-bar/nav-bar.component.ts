@@ -19,10 +19,8 @@ export class NavBarComponent implements OnInit{
   logged: boolean = false;
   userService = inject(UserService);
   elementsVisible: boolean = true;
-  constructor(){
-  }
   async ngOnInit() {
-    this.isLogged();
+    this.logged = await this.isLogged();
     setTimeout(() => {
       this.elementsVisible = true;  // Esto aplicará la clase `show`
     }, 200);
@@ -48,7 +46,8 @@ export class NavBarComponent implements OnInit{
 async isLogged(){
   (await this.cookieService.tokenExistTC('access_token')).subscribe(data => {
     this.logged = data;
-  })
+  });
+  return this.logged;
  }
  async logout(){
   try{

@@ -24,6 +24,12 @@ export class CookieService {
     this.myApiUrl = 'api/cookies/'
   }
 
+  changeUser(userAux: PublicUser){
+    this.user = userAux;
+    this._user.next(this.user);
+    return this._user.asObservable();
+  }
+
   returnUser(){
     return this._user.asObservable();
   }
@@ -53,7 +59,7 @@ export class CookieService {
   async getUser(){
     (await this.tokenExistTC('access_token')).subscribe(data => {
       this.isLogged = data;
-    });
+    });    
     if(this.isLogged){
       let userAux = await this.getTokenTC("access_token");
       if(userAux != null){
@@ -76,6 +82,11 @@ export class CookieService {
   async tokenExistTC(cookieName: string){
     let tokenAux = await this.tokenExist(cookieName).toPromise();
     if(tokenAux != undefined){
+      if(cookieName == 'admin_token'){
+        this.isAdmin = tokenAux;
+        this._isAdmin.next(this.isAdmin);
+        return this._isAdmin.asObservable();
+      }
       this.isLogged = tokenAux;
       this._islogged.next(this.isLogged);
     }

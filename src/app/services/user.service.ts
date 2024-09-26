@@ -19,7 +19,7 @@ export class UserService {
     this.myApiUrl = 'api/Users/'
   }
   async getUserLogged(){
-    (await this.cookieService.getUser()).subscribe(data => {
+    (await this.cookieService.returnUser()).subscribe(data => {
       this.user = data;
     });
     return this.user;
@@ -102,27 +102,6 @@ export class UserService {
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  async readAllUsers(){
-    let usersAux = await this.getUsersTC();
-    if(usersAux){
-      return usersAux;
-    }else{
-      return null;
-    }
-  }
-  async getUsersTC(){
-    try {
-      const data = await this.getUsers().toPromise();
-      return data;
-    } catch (error) {
-      console.error('Error obteniendo datos:', error);
-      throw error; // Puedes manejar el error de acuerdo a tus necesidades
-    }
-  }
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.myAppUrl + this.myApiUrl + 'nul', {
-      withCredentials: true // Esto es necesario para enviar las cookies
-    });  }
   getUser(id: string): Observable<User> {
     return this.http.get<User>(this.myAppUrl + this.myApiUrl + id); 
   }
@@ -158,31 +137,8 @@ export class UserService {
       return null;
     }
   }
-
-  async readTempLogin(email: string, password: string){
-    let userAux = await this.tempLoginTC(email, password);
-    if(userAux){
-      return userAux;
-    }else{
-      return null;
-    }
-  }
-
-  async tempLoginTC(email: string, password: string){    
-    try{
-      let userAux = await this.tempLogin(email, password).toPromise();
-    if(userAux){
-      return userAux;
-    }else{
-      return null;
-    }
-    }catch(error){
-      console.log(error);
-      return null;
-    }
-  }
   getUserByName(username: string): Observable<User> {
-    let urlAux = this.myAppUrl + this.myApiUrl + "/username/";
+    let urlAux = this.myAppUrl + this.myApiUrl + "username/";
     return this.http.get<User>(urlAux + username);
   }
   deleteUser(id: string): Observable<void> {
@@ -193,13 +149,6 @@ export class UserService {
   }
   saveUser(productAux: User): Observable<void>{
     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
-  }
-  tempLogin(email: string, password: string): Observable<User>{
-    const user = {
-      email,
-      password
-    }
-    return this.http.post<User>(this.myAppUrl + this.myApiUrl + 'tempLogin', user);
   }
   login(email: string, password: string): Observable<User>{
     const userdata = {
