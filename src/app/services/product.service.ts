@@ -30,122 +30,128 @@ export class ProductService {
   cookieService = inject(CookieService);
 
   options: Options[] = [];
-   products: Array<Product> = [];
-   _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
+  products: Array<Product> = [];
+  _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   productXpriceService = inject(PricesService);
   user: PublicUser = new PublicUser('', '', '', '', false);
   loading: boolean = false;
   _loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.loading);
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Products/'
   }
-  returnObservable(){
+  returnObservable() {
     return this._products.asObservable();
   }
-  changeLoading(name: string){
-    if(name == 'false'){
+  changeLoading(name: string) {
+    if (name == 'false') {
       this.loading = false;
-    }else{
+    } else {
       this.loading = true;
     }
     this._loading.next(this.loading);
     return this._loading.asObservable();
   }
-  getDiscounts(productAux: Product){
-    if(productAux.discount != 0){
+  getDiscounts(productAux: Product) {
+    if (productAux.discount != 0) {
       productAux.priceDiscount = (productAux.price - (productAux.price * productAux.discount));
     }
     return productAux.priceDiscount;
   }
-  async readProducts(type: string, value: string | null){
+  async readProducts(type: string, value: string | null) {
     (await this.cookieService.getUser()).subscribe(data => {
       this.user = data;
     })
     let productsAux;
     this.products = [];
-    switch(type){
+    switch (type) {
       case 'brand':
-        if(value != null){
+        if (value != null) {
           productsAux = await this.getByBrands(value);
         }
         break;
       case 'category':
-        if(value != null){
+        if (value != null) {
           productsAux = await this.getByCategory(value);
         }
         break;
       case 'search':
-        if(value){
+        if (value) {
           productsAux = await this.searchProducts(value);
         }
         break;
       case 'rand':
-        productsAux = await this.getRand();        
+        productsAux = await this.getRand();
         break;
       default:
         productsAux = await this.setProducts(this.pageNumber);
         break;
     }
-      if(productsAux != undefined){
-        this.options = [];
-        for(let i=0; i<productsAux.length; i++){
-            (await this.optionService.readProductOptions(productsAux[i].id)).subscribe(products => {
-            this.options = products;
-          });
-          if(this.options.length>0){
-            productsAux[i].optionSelected = this.options[0].name;
-            productsAux[i].price = await this.setProductPrice(this.options[0].id);
-          }
-          productsAux[i].priceDiscount = this.getDiscounts(productsAux[i]);
-          this.products.push(productsAux[i]);
+    if (productsAux != undefined) {
+      this.options = [];
+      for (let i = 0; i < productsAux.length; i++) {
+        (await this.optionService.readProductOptions(productsAux[i].id)).subscribe(products => {
+          this.options = products;
+        });
+        if (this.options.length > 0) {
+          productsAux[i].optionSelected = this.options[0].name;
+          productsAux[i].price = await this.setProductPrice(this.options[0].id);
         }
-        this._products.next(this.products);
-        this.hasCostPrice();
+        productsAux[i].priceDiscount = this.getDiscounts(productsAux[i]);
+        this.products.push(productsAux[i]);
       }
-      return this._products.asObservable();
+      this._products.next(this.products);
+      this.hasCostPrice();
+    }
+    return this._products.asObservable();
   }
 
-  async getByCategory(category: string){
+  async getByCategory(category: string) {
     try {
       const data = await this.getProductsByCategory(category).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
 
-  async getByBrands(brand: string){
+  async getByBrands(brand: string) {
     try {
       const data = await this.getProductsByBrand(brand).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
 
-  async getRand(){
+  async getRand() {
     try {
-      const data = await this.getRandomProducts().toPromise();      
+      const data = await this.getRandomProducts().toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  
-  async setProductPrice(optionID: string){
+
+  async setProductPrice(optionID: string) {
     let data = await this.getPrice(optionID);
-    let priceAux: PriceXproduct = new PriceXproduct('','',0, 0,0,0,0,0,0);
-    if(data != undefined){
+    let priceAux: PriceXproduct = new PriceXproduct('', '', 0, 0, 0, 0, 0, 0, 0);
+    if (data != undefined) {
       priceAux = data;
     }
-    if(this.user.email == ''){
+    if (this.user.email == '') {
       return priceAux.priceList4;
-    }else{
-      switch(this.user.priceList){
+    } else {
+      switch (this.user.priceList) {
         case '1':
           return priceAux.priceList1;
         case '2':
@@ -163,28 +169,32 @@ export class ProductService {
       }
     }
   }
-  async getPrice(id: string){
+  async getPrice(id: string) {
     try {
       const data = await this.productXpriceService.getTableByProduct(id).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  async setProducts(page: number): Promise<Product[] | undefined>{
+  async setProducts(page: number): Promise<Product[] | undefined> {
     try {
       const data = await this.getProducts(page).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
 
-  async searchProducts(name: string){
+  async searchProducts(name: string) {
     try {
-      this.brandService.getBrandSelected().subscribe(brandAux =>{
+      this.brandService.getBrandSelected().subscribe(brandAux => {
         this.brandSelected = brandAux;
       });
       this.categoryService.returnSelected().subscribe(category => {
@@ -193,101 +203,107 @@ export class ProductService {
       const data = await this.getProductSearch(name).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
 
-  async returnOneProduct(id: string){
+  async returnOneProduct(id: string) {
     let productAux = await this.getOneProduct(id);
-    let productReturn: Product = new Product('','','','',0,'',0,'',0,0);
-    if(productAux != undefined){
+    let productReturn: Product = new Product('', '', '', '', 0, '', 0, '', 0, 0);
+    if (productAux != undefined) {
       productReturn = productAux;
     }
     return productReturn;
   }
-  setPageNumber(page: number){
+  setPageNumber(page: number) {
     this.pageNumber = page;
     this._pageNumber.next(this.pageNumber);
   }
-  getCurrentPage(){
+  getCurrentPage() {
     return this._pageNumber.asObservable();
   }
 
-  async getOneProduct(id: string){
+  async getOneProduct(id: string) {
     try {
       const data = await this.getProduct(id).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
 
-  async readCounts(value: string, type: string){
+  async readCounts(value: string, type: string) {
     let countedAux = await this.countProductsTC(value, type);
-    if(countedAux){
+    if (countedAux) {
       this.pageTotal = countedAux;
       this._pageTotal.next(this.pageTotal);
     }
     return this._pageTotal.asObservable();
   }
 
-  async countProductsTC(value: string, type: string){
+  async countProductsTC(value: string, type: string) {
     try {
       const data = await this.countProducts(value, type).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  hasCostPrice(){
-    for(let i=0; i<this.products.length; i++){
-      if(this.products[i].price < 2){
+  hasCostPrice() {
+    for (let i = 0; i < this.products.length; i++) {
+      if (this.products[i].price < 2) {
         //alert(this.products[i].name);
         //this.products.splice(i, 1);
       }
     }
     this._products.next(this.products);
-   }
-  
+  }
+
   getProducts(page: number): Observable<Product[]> {
-    return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl + 'page/'+ page); 
+    return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl + 'page/' + page);
   }
 
   countProducts(value: string, type: string): Observable<number> {
-    return this.http.get<number>(this.myAppUrl + this.myApiUrl + 'count/' + value + '/' + type); 
+    return this.http.get<number>(this.myAppUrl + this.myApiUrl + 'count/' + value + '/' + type);
   }
 
   getRandomProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl + 'random');
   }
   getProduct(id: string): Observable<Product> {
-    return this.http.get<Product>(this.myAppUrl + this.myApiUrl + id); 
+    return this.http.get<Product>(this.myAppUrl + this.myApiUrl + id);
   }
   getProductSearch(name: string): Observable<Product[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'search/';
     let type = 'brand';
-    if(this.brandSelected == ''){
+    if (this.brandSelected == '') {
       this.brandSelected = 'all';
     }
-    if(this.categorySelected != ''){
+    if (this.categorySelected != '') {
       type = 'category';
     }
-    if(type == 'brand'){
+    if (type == 'brand') {
       return this.http.get<Product[]>(urlAux + name + '/' + this.brandSelected + '/' + type);
-    }else{
-      return this.http.get<Product[]>(urlAux + name + '/' + this.categorySelected + '/' + type); 
+    } else {
+      return this.http.get<Product[]>(urlAux + name + '/' + this.categorySelected + '/' + type);
     }
   }
   getProductsByBrand(brand: string): Observable<Product[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'brand/'
-    return this.http.get<Product[]>(urlAux + brand + '/' + this.pageNumber); 
+    return this.http.get<Product[]>(urlAux + brand + '/' + this.pageNumber);
   }
   getProductsByCategory(category: string): Observable<Product[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'category/'
-    return this.http.get<Product[]>(urlAux + category + '/' + this.pageNumber); 
+    return this.http.get<Product[]>(urlAux + category + '/' + this.pageNumber);
   }
   deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
@@ -295,10 +311,10 @@ export class ProductService {
   deleteProducts(): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
   }
-  saveProduct(productAux: Product): Observable<void>{
+  saveProduct(productAux: Product): Observable<void> {
     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
   }
-  updateProduct(id: string, productAux: Product): Observable<void>{
+  updateProduct(id: string, productAux: Product): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);
   }
 }

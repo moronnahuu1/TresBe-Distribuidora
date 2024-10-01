@@ -12,106 +12,110 @@ export class OptionsService {
   private myApiUrl: string;
   options: Options[] = [];
   _options: BehaviorSubject<Options[]> = new BehaviorSubject<Options[]>([]);
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/options/'
   }
-  async readProductOptions(productID: string){
+  async readProductOptions(productID: string) {
     let featuresAux = await this.getProductOptionsTC(productID);
-    if(featuresAux){
+    if (featuresAux) {
       this.options = featuresAux;
       this._options.next(this.options);
       this.decodeOptions();
     }
     return this._options.asObservable();
   }
-  decodeOptions(){
-    for(let i = 0; i<this.options.length; i++){
+  decodeOptions() {
+    for (let i = 0; i < this.options.length; i++) {
       this.options[i].name = decodeURIComponent(this.options[i].name);
     }
     this._options.next(this.options);
   }
-  async getProductOptionsTC(productID: string){
+  async getProductOptionsTC(productID: string) {
     try {
       const data = await this.getProductOptions(productID).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  async returnProductByName(id: string){
+  async returnProductByName(id: string) {
     let prodAux = await this.getProductOptionsByNameTC(id);
-    if(prodAux){
+    if (prodAux) {
       prodAux.name = decodeURIComponent(prodAux.name);
       return prodAux;
-    }else{
+    } else {
       return null;
     }
-    }
-  async getProductOptionsByNameTC(id: string){
+  }
+  async getProductOptionsByNameTC(id: string) {
     try {
       const data = await this.getOption(id).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  deleteOneOption(featureID: string){
-    this.deleteOption(featureID).subscribe(()=>{});
+  deleteOneOption(featureID: string) {
+    this.deleteOption(featureID).subscribe(() => { });
     let index = this.searchOptionIndex(featureID);
-    if(index >= 0){
+    if (index >= 0) {
       this.options.splice(index, 1);
       this._options.next(this.options);
     }
   }
-  searchOptionIndex(optionID: string){
+  searchOptionIndex(optionID: string) {
     let i = 0;
     let access = false;
-    while(i<this.options.length && !access){
-      if(this.options[i].id == optionID){
+    while (i < this.options.length && !access) {
+      if (this.options[i].id == optionID) {
         access = true;
-      }else{
+      } else {
         i++;
       }
     }
-    if(access){
+    if (access) {
       return i;
-    }else{
+    } else {
       return -1;
     }
   }
-  createOption(featureAux: Options){
-    this.saveOptions(featureAux).subscribe(()=>{});
+  createOption(featureAux: Options) {
+    this.saveOptions(featureAux).subscribe(() => { });
     this.options.unshift(featureAux);
     this._options.next(this.options);
   }
-  updateOneOption(index: number, featureAux: Options){
+  updateOneOption(index: number, featureAux: Options) {
     featureAux.name = encodeURIComponent(featureAux.name);
-    this.updateOptions(featureAux.id, featureAux).subscribe(()=>{});
+    this.updateOptions(featureAux.id, featureAux).subscribe(() => { });
     this.options[index] = featureAux;
     this._options.next(this.options);
   }
   getOptions(): Observable<Options[]> {
-    return this.http.get<Options[]>(this.myAppUrl + this.myApiUrl); 
+    return this.http.get<Options[]>(this.myAppUrl + this.myApiUrl);
   }
   getOption(id: string): Observable<Options> {
-    return this.http.get<Options>(this.myAppUrl + this.myApiUrl + id); 
+    return this.http.get<Options>(this.myAppUrl + this.myApiUrl + id);
   }
   getProductOptions(productID: string): Observable<Options[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'product/'
-    return this.http.get<Options[]>(urlAux + productID); 
+    return this.http.get<Options[]>(urlAux + productID);
   }
   getProductOptionsByTwo(productID: string, optionName: string): Observable<Options> {
     optionName = encodeURIComponent(optionName);
-    let urlAux = this.myAppUrl + this.myApiUrl + 'product/option/'    
-    return this.http.get<Options>(urlAux + productID + '/' + encodeURIComponent(optionName)); 
+    let urlAux = this.myAppUrl + this.myApiUrl + 'product/option/'
+    return this.http.get<Options>(urlAux + productID + '/' + encodeURIComponent(optionName));
   }
 
   getProductOptionByName(name: string): Observable<Options> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'name/'
-    return this.http.get<Options>(urlAux + name); 
+    return this.http.get<Options>(urlAux + name);
   }
 
   deleteOptionByProduct(id: string): Observable<void> {
@@ -125,11 +129,11 @@ export class OptionsService {
   deleteOptions(): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
   }
-  saveOptions(productAux: Options): Observable<void>{
+  saveOptions(productAux: Options): Observable<void> {
     productAux.name = encodeURIComponent(productAux.name);
     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
   }
-  updateOptions(id: string, productAux: Options): Observable<void>{
+  updateOptions(id: string, productAux: Options): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);
   }
 }

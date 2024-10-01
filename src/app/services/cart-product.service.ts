@@ -14,18 +14,18 @@ export class CartProductService {
   cartProducts: Array<CartProduct> = [];
   _cartProducts: BehaviorSubject<CartProduct[]> = new BehaviorSubject<CartProduct[]>([]);
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/cart/'
   }
 
-  getCartProductsAsObservable(){
+  getCartProductsAsObservable() {
     return this._cartProducts.asObservable();
   }
 
-  async readCartProducts(option: string, value: string | null){
+  async readCartProducts(option: string, value: string | null) {
     let cartAux = await this.getCartProductsTC(option, value);
-    if(cartAux){
+    if (cartAux) {
       this.cartProducts = [];
       this.cartProducts = cartAux;
       this._cartProducts.next(this.cartProducts);
@@ -33,17 +33,17 @@ export class CartProductService {
     return this._cartProducts.asObservable();
   }
 
-  async getCartProductsTC(option: string, value: string | null){
+  async getCartProductsTC(option: string, value: string | null) {
     try {
-      switch(option){
+      switch (option) {
         case 'order':
-          if(value){
+          if (value) {
             const data = await this.getCartProductsByOrder(value).toPromise();
             return data;
           }
           break;
         case 'product':
-          if(value){
+          if (value) {
             const data = await this.getCartProductsByProduct(value).toPromise();
             return data;
           }
@@ -60,35 +60,39 @@ export class CartProductService {
       }
       return null;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
 
-  async readByID(id: string){
+  async readByID(id: string) {
     let prodAux = await this.getByID(id);
-    if(prodAux){
+    if (prodAux) {
       return prodAux;
-    }else{
+    } else {
       return null;
     }
   }
 
-  async getByID(id: string){
-    try{
+  async getByID(id: string) {
+    try {
       const data = await this.getCartProduct(id).toPromise();
       return data;
-    }catch (error) {
-      console.error('Error obteniendo datos:', error);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
 
   getCartProducts(): Observable<CartProduct[]> {
-    return this.http.get<CartProduct[]>(this.myAppUrl + this.myApiUrl); 
+    return this.http.get<CartProduct[]>(this.myAppUrl + this.myApiUrl);
   }
   getCartProduct(id: string): Observable<CartProduct> {
-    return this.http.get<CartProduct>(this.myAppUrl + this.myApiUrl + id); 
+    return this.http.get<CartProduct>(this.myAppUrl + this.myApiUrl + id);
   }
   getCartProductsByOrder(orderID: string): Observable<CartProduct[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'order/'
@@ -96,7 +100,7 @@ export class CartProductService {
   }
   getCartProductsByProduct(productID: string): Observable<CartProduct[]> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'product/'
-    return this.http.get<CartProduct[]>(urlAux + productID); 
+    return this.http.get<CartProduct[]>(urlAux + productID);
   }
   deleteCartProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
@@ -104,10 +108,10 @@ export class CartProductService {
   deleteCartProducts(): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
   }
-  saveCartProduct(productAux: CartProduct): Observable<void>{
+  saveCartProduct(productAux: CartProduct): Observable<void> {
     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
   }
-  updateCartProduct(id: string, productAux: CartProduct): Observable<void>{
+  updateCartProduct(id: string, productAux: CartProduct): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);
   }
 }

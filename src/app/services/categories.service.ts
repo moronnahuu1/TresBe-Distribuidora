@@ -14,41 +14,44 @@ export class CategoriesService {
   categorySelected: string = ''
   _categorySelected: BehaviorSubject<string> = new BehaviorSubject<string>(this.categorySelected);
   _categories: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>(this.categories);
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Categories/'
   }
-  changeSelected(category: string){
+  changeSelected(category: string) {
     this.categorySelected = category;
     this._categorySelected.next(this.categorySelected);
   }
-  returnSelected(){
+  returnSelected() {
     return this._categorySelected.asObservable();
   }
-  returnCategories(){
+  returnCategories() {
     return this._categories.asObservable();
   }
-  async readCategories(){
+  async readCategories() {
     let categoriesAux = await this.getCategoriesTC();
-    if(categoriesAux){
+    if (categoriesAux) {
       this.categories = categoriesAux;
       this._categories.next(this.categories);
     }
     return this._categories.asObservable();
   }
-  async getCategoriesTC(){
-    try{
+  async getCategoriesTC() {
+    try {
       const data = await this.getCategories().toPromise();
       return data;
-    }catch(error){
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error;
     }
   }
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.myAppUrl + this.myApiUrl); 
+    return this.http.get<Category[]>(this.myAppUrl + this.myApiUrl);
   }
   getCategory(id: string): Observable<Category> {
-    return this.http.get<Category>(this.myAppUrl + this.myApiUrl + id); 
+    return this.http.get<Category>(this.myAppUrl + this.myApiUrl + id);
   }
   deleteCategory(id: string): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
@@ -56,10 +59,10 @@ export class CategoriesService {
   deleteCategories(): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
   }
-  saveCategory(categoryAux: Category): Observable<void>{
+  saveCategory(categoryAux: Category): Observable<void> {
     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, categoryAux);
   }
-  updateCategory(id: string, productAux: Category): Observable<void>{
+  updateCategory(id: string, productAux: Category): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);
   }
 }

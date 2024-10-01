@@ -12,23 +12,23 @@ import { CookieService } from './cookie.service';
 export class UserService {
   private myAppUrl: string;
   private myApiUrl: string;
-  user: PublicUser = new PublicUser('','','','',false);
+  user: PublicUser = new PublicUser('', '', '', '', false);
   cookieService = inject(CookieService);
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/Users/'
   }
-  async getUserLogged(){
-    (await this.cookieService.returnUser()).subscribe(data => {
+  async getUserLogged() {
+    (await this.cookieService.getUser()).subscribe(data => {
       this.user = data;
     });
     return this.user;
   }
-  async readUserEmail(email: string){
+  async readUserEmail(email: string) {
     let userAux = await this.getUserEmailTC(email);
-    if(userAux){
-      if(userAux.email == email){
-        
+    if (userAux) {
+      if (userAux.email == email) {
+
         let to = userAux.email;
         let subject = 'RECUPERACIÓN DE CONTRASEÑA'
         let html = `<div style="display: flex; align-items: center; width: 100%; background-color: rgb(239, 239, 239);">
@@ -43,147 +43,159 @@ export class UserService {
 </div>`;
         await this.sendEmail(to, subject, html).toPromise();
         return true;
-      }else{
+      } else {
         return false;
       }
-    }else{
+    } else {
       return false;
     }
   }
-  async loginEmail(email: string){
+  async loginEmail(email: string) {
     let userAux = await this.getUserEmailTC(email);
-    if(userAux){
+    if (userAux) {
       return userAux;
-    }else{
+    } else {
       return null;
     }
   }
-  async readUser(id: string){
+  async readUser(id: string) {
     let userAux = await this.getUserTC(id);
-    let user = new User('','','','','', '');
-    if(userAux){
+    let user = new User('', '', '', '', '', '');
+    if (userAux) {
       user = userAux;
     }
     return user;
   }
-  async readUserByName(name: string){
+  async readUserByName(name: string) {
     let userAux = await this.getUserNameTC(name);
-    let user = new User('','','','','', '');
-    if(userAux){
+    let user = new User('', '', '', '', '', '');
+    if (userAux) {
       user = userAux;
     }
     return user;
   }
-  async getUserTC(id: string){
+  async getUserTC(id: string) {
     try {
       const data = await this.getUser(id).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  async getUserEmailTC(email: string){
+  async getUserEmailTC(email: string) {
     try {
       await this.getUserLogged();
       const data = await this.getUserByEmail(email).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  async getUserNameTC(username: string){
+  async getUserNameTC(username: string) {
     try {
       const data = await this.getUserByName(username).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
   getUser(id: string): Observable<User> {
-    return this.http.get<User>(this.myAppUrl + this.myApiUrl + id); 
+    return this.http.get<User>(this.myAppUrl + this.myApiUrl + id, { withCredentials: true });
   }
   getUserByEmail(email: string): Observable<User> {
     let urlAux = this.myAppUrl + this.myApiUrl + "email/";
-    if(this.user.email == ''){
+    if (this.user.email == '') {
       this.user.email = 'null';
     }
-    return this.http.get<User>(urlAux + email + '/' + this.user.email);
+    return this.http.get<User>(urlAux + email + '/' + this.user.email, { withCredentials: true });
   }
-  async readLogin(email: string, password: string){
+  async readLogin(email: string, password: string) {
     let userAux = await this.loginTC(email, password);
-    if(userAux != null){
+    if (userAux != null) {
       localStorage.setItem("userLogged", JSON.stringify(userAux));  //Se guarda en local storage una copia del usuario que se loguea, para saber que está logueado en cualquier parte de la pagina
-      if(userAux.email == "nahuelarielmoron1@gmail.com"){
+      if (userAux.email == "nahuelarielmoron1@gmail.com") {
         localStorage.setItem("admin", JSON.stringify(true)); //Se guarda en local storage una comprobacion de admin, para saber en cualquier parte de la pagina que el usuario logueado es admin
       }
       return true;
-    }else{
+    } else {
       return false;
     }
   }
-  async loginTC(email: string, password: string){    
-    try{
+  async loginTC(email: string, password: string) {
+    try {
       let userAux = await this.login(email, password).toPromise();
-    if(userAux){
-      return userAux;
-    }else{
-      return null;
-    }
-    }catch(error){
-      console.log(error);
+      if (userAux) {
+        return userAux;
+      } else {
+        return null;
+      }
+    } catch (error: any) {
+      if (error.status === 404 && error.error?.message) {
+        console.error(error.error.message); // Accediendo al mensaje del backend
+      } else {
+        console.error('Error desconocido', error);
+      }
       return null;
     }
   }
   getUserByName(username: string): Observable<User> {
     let urlAux = this.myAppUrl + this.myApiUrl + "username/";
-    return this.http.get<User>(urlAux + username);
+    return this.http.get<User>(urlAux + username, { withCredentials: true });
   }
   deleteUser(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, { withCredentials: true });
   }
   deleteUsers(): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`, { withCredentials: true });
   }
-  saveUser(productAux: User): Observable<void>{
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+  saveUser(productAux: User): Observable<void> {
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux, { withCredentials: true });
   }
-  login(email: string, password: string): Observable<User>{
+  login(email: string, password: string): Observable<User> {
     const userdata = {
       email,
       password
     }
     const urlAux = this.myAppUrl + this.myApiUrl + 'login/';
-    
+
     return this.http.post<User>(urlAux, userdata, {
       withCredentials: true // Esto permite que las cookies se envíen y se reciban
-    });  
+    });
   }
-  async logoutTC(){
-    try{
+  async logoutTC() {
+    try {
       let access = await this.logout().toPromise();
       return access;
-    }catch(error){
-      console.log(error);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       return false;
     }
   }
 
-  logout(): Observable<void>{
+  logout(): Observable<void> {
     const urlAux = this.myAppUrl + this.myApiUrl + 'validate/logout/user/logged';
     return this.http.post<void>(urlAux, '', { withCredentials: true });
   }
-  sendEmail(to: string, subject: string, text: string): Observable<void>{
+  sendEmail(to: string, subject: string, text: string): Observable<void> {
     const emailData = {
       to: to,
       subject: subject,
       text: text,
     };
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}` + 'email', emailData);
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}` + 'email', emailData, { withCredentials: true });
   }
-  updateUser(id: string, productAux: User): Observable<void>{
+  updateUser(id: string, productAux: User): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);
   }
 }

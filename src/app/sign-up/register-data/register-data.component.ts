@@ -1,5 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { PublicUser } from 'src/app/models/PublicUser';
 import { User } from 'src/app/models/User';
+import { CookieService } from 'src/app/services/cookie.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -7,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './register-data.component.html',
   styleUrls: ['./register-data.component.css']
 })
-export class RegisterDataComponent {
+export class RegisterDataComponent implements OnInit {
   emailFormat: boolean = true;
   passwordFormat: boolean = true;
   emailRepeated: boolean = false;
@@ -22,36 +24,44 @@ export class RegisterDataComponent {
   dataCreated: boolean = false;
   sellerTerm: string = '';
   noSeller: boolean = false;
-  async verifyEmail(){
-    if(this.searchTerm != ''){
+  admin: PublicUser = new PublicUser('', '', '', '', false);
+  cookieService = inject(CookieService);
+
+  async ngOnInit() {
+    (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
+    });
+  }
+  async verifyEmail() {
+    if (this.searchTerm != '') {
       this.noMail = false;
       let userAux = await this.getUser();
-      if(userAux != undefined){
+      if (userAux != undefined) {
         this.emailRepeated = true;
-      }else{
+      } else {
         this.emailRepeated = false;
       }
-    }else{
+    } else {
       this.emailRepeated = false;
     }
   }
-  async verifyPassword(){
-    if(this.passTerm != ''){
+  async verifyPassword() {
+    if (this.passTerm != '') {
       this.noPass = false;
       const hasUpperCase = /[A-Z]/.test(this.passTerm);
       const hasLowerCase = /[a-z]/.test(this.passTerm);
       const hasNumber = /[0-9]/.test(this.passTerm);
       const hasValidLength = this.passTerm.length >= 8;
-      if(hasUpperCase && hasLowerCase && hasNumber && hasValidLength){
+      if (hasUpperCase && hasLowerCase && hasNumber && hasValidLength) {
         this.passwordFormat = true;
-      }else{
+      } else {
         this.passwordFormat = false;
       }
-    }else{
+    } else {
       this.passwordFormat = true;
     }
   }
-  async getUser(): Promise<User | undefined>{
+  async getUser(): Promise<User | undefined> {
     try {
       const data = await this.userService.getUserByEmail(this.searchTerm).toPromise();
       console.log(data?.id);
@@ -61,51 +71,51 @@ export class RegisterDataComponent {
       return undefined;
     }
   }
-  async createUser(){
-    if(this.passTerm == ''){
+  async createUser() {
+    if (this.passTerm == '') {
       this.noPass = true;
     }
-    if(this.searchTerm == ''){
+    if (this.searchTerm == '') {
       this.noMail = true;
     }
-    if(this.usernameTerm == ''){
+    if (this.usernameTerm == '') {
       this.noUsername = true;
     }
-    if(this.sellerTerm == ''){
+    if (this.sellerTerm == '') {
       this.noSeller = true;
     }
-    if(this.searchTerm != '' && this.passTerm != '' && this.usernameTerm != '' && !this.emailRepeated && this.passwordFormat){
+    if (this.searchTerm != '' && this.passTerm != '' && this.usernameTerm != '' && !this.emailRepeated && this.passwordFormat) {
       let priceList = '4';
-      if(this.isAdmin()){
+      if (this.isAdmin()) {
         priceList = this.getString('priceListInp');
       }
       let newUser = new User(this.generateRandomId(16), this.getString('emailInp'), this.getString('passwordInp'), this.getString('usernameInp'), priceList, this.getString('sellerInp'));
-      if(this.isAdmin()){
+      if (this.isAdmin()) {
         newUser.client = true;
       }
       ///this.userService.saveUser(newUser).subscribe(() => {});
-      await this.userService.saveUser(newUser).toPromise();      
+      await this.userService.saveUser(newUser).toPromise();
       this.dataCreated = true;
       localStorage.setItem('userCreated', JSON.stringify(true));
-      if(this.isAdmin()){
+      if (this.isAdmin()) {
         window.location.href = `/admin/signup/shipmentData/${newUser.id}`;
-      }else{
+      } else {
         window.location.href = `signup/shipmentdata/${newUser.id}`
       }
     }
   }
-  getString(name: string){
+  getString(name: string) {
     let inpAux = document.getElementById(name) as HTMLInputElement;
     let input: string = "";
-    if(inpAux){
+    if (inpAux) {
       input = inpAux.value;
     }
     return input;
   }
-  getNumber(name: string){
+  getNumber(name: string) {
     let inpAux = document.getElementById(name) as HTMLInputElement;
     let input: number = 0;
-    if(inpAux){
+    if (inpAux) {
       input = parseInt(inpAux.value);
     }
     return input;
@@ -114,18 +124,18 @@ export class RegisterDataComponent {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     const charactersLength = characters.length;
-    
+
     for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
 
     return result;
-}
-isAdmin(){
-  if(localStorage.getItem('admin')){
-    return true;
-  }else{
-    return false;
   }
-}
+  isAdmin() { //funcion para detectar si el usuario logueado es administrador
+    if (this.admin.email != '') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

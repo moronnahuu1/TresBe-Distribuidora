@@ -10,52 +10,56 @@ import { environment } from 'src/environments/environment';
 export class UserdataService {
   private myAppUrl: string;
   private myApiUrl: string;
-  userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
+  userdata: Userdata = new Userdata('', '', '', '', '', '', '', '', '', '', 0, '', '');
   _userData: BehaviorSubject<Userdata> = new BehaviorSubject<Userdata>(this.userdata);
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/userdata/'
   }
 
-  async returnUserdata(userID: string){
+  async returnUserdata(userID: string) {
     let userdataAux = await this.setUserdataID(userID);
-    if(userdataAux){
+    if (userdataAux) {
       this.userdata = userdataAux;
       this._userData.next(this.userdata);
     }
     return this._userData.asObservable();
   }
-  async returnUserID(id: string){
+  async returnUserID(id: string) {
     let userdataAux = await this.getUserdataByID(id);
-    if(userdataAux){
+    if (userdataAux) {
       this.userdata = userdataAux;
       this._userData.next(this.userdata);
     }
     return this._userData.asObservable();
   }
-  async getUserdataByID(id: string){
+  async getUserdataByID(id: string) {
     try {
       const data = await this.getUserdata(id).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  async setUserdataID(userID: string){
+  async setUserdataID(userID: string) {
     try {
       const data = await this.getUserdataByUserID(userID).toPromise();
       return data;
     } catch (error) {
-      console.error('Error obteniendo datos:', error);
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
   getUsersdata(): Observable<Userdata[]> {
-    return this.http.get<Userdata[]>(this.myAppUrl + this.myApiUrl); 
+    return this.http.get<Userdata[]>(this.myAppUrl + this.myApiUrl);
   }
   getUserdata(id: string): Observable<Userdata> {
-    return this.http.get<Userdata>(this.myAppUrl + this.myApiUrl + id); 
+    return this.http.get<Userdata>(this.myAppUrl + this.myApiUrl + id);
   }
   getUserdataByUserID(userid: string): Observable<Userdata> {
     let urlAux = this.myAppUrl + this.myApiUrl + "userid/";
@@ -67,10 +71,10 @@ export class UserdataService {
   deleteUsersdata(): Observable<void> {
     return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
   }
-  saveUserdata(productAux: Userdata): Observable<void>{
+  saveUserdata(productAux: Userdata): Observable<void> {
     return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
   }
-  updateUserdata(id: string, productAux: Userdata): Observable<void>{
+  updateUserdata(id: string, productAux: Userdata): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);
   }
 }
