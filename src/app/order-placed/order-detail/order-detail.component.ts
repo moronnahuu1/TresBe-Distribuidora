@@ -40,9 +40,6 @@ export class OrderDetailComponent implements OnInit{
     (await this.cookieService.getUser()).subscribe(data => {
       this.user = data;
     });
-    (await this.cookieService.getAdmin()).subscribe(data => {
-      this.admin = data;
-    });
       this.id = this.activeRoute.snapshot.params['id'];      
       await this.readOXP();
       await this.getProducts();
@@ -55,6 +52,9 @@ export class OrderDetailComponent implements OnInit{
       if(usersAux != undefined){
         this.userdata = usersAux;
       }
+      (await this.cookieService.getAdmin()).subscribe(data => {
+        this.admin = data;
+      });
   }
   checkOrderByUser(){
     /* Con esta funcion se verifica que la orden creada pertenezca al usuario logueado */

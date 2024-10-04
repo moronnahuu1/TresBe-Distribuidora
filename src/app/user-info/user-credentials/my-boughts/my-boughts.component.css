@@ -1,8 +1,8 @@
 .profile {
-    width: 40vi !important;
+    width: 40vi;
     padding: 20px !important;
-    height: fit-content !important;
-    max-height: 42vi !important;
+    height: fit-content;
+    max-height: 42vi;
     overflow: auto !important;
   }
   
@@ -182,7 +182,8 @@
   .profile {
       width: 90vi;
       padding: 8px;
-      max-height: fit-content;
+      height: fit-content;
+      max-height: 100vh;
   }
   .profile-picture {
       width: 60px;

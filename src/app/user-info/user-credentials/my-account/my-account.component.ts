@@ -23,13 +23,13 @@ export class MyAccountComponent implements OnInit{
       (await this.cookieService.getUser()).subscribe(data => {
         this.user = data;
       });
-      (await this.cookieService.getAdmin()).subscribe(data => {
-        this.admin = data;
-      });
       const usersAux = await this.getUserData();
       if(usersAux != undefined){
         this.userdata = usersAux;
       }
+      (await this.cookieService.getAdmin()).subscribe(data => {
+        this.admin = data;
+      });
   }
 
   changeDisplay(name: string){

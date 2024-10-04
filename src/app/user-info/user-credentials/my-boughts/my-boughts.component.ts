@@ -28,16 +28,17 @@ export class MyBoughtsComponent implements OnInit{
   userdataService = inject(UserdataService);
   orderService = inject(OrdersService);
   user: PublicUser = new PublicUser('','','','',false);
-  admin: PublicUser = new PublicUser('','','','',false);
+  admin: boolean = false;
   emailService = inject(EmailService);
   userService = inject(UserService);
   userOrder: string = '';
   cookieService = inject(CookieService);
   async ngOnInit() {
-    (this.cookieService.returnUser()).subscribe(data => {
+
+    (await this.cookieService.getUser()).subscribe(data => {
       this.user = data;
     });
-    (this.cookieService.returnAdmin()).subscribe(data => {
+    (await this.cookieService.tokenExistTC('admin_token')).subscribe(data => {
       this.admin = data;
     });
     this.ordersAndProductsService.selectedDefault().subscribe(oxpSelected => {
@@ -75,7 +76,7 @@ async getOrderUser(userID: string){
 }
 
   isAdmin(){
-    if(this.admin.email != ''){
+    if(this.admin){
       return true;
     }else{
       return false;

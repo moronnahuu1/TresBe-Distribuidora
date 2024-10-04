@@ -31,7 +31,7 @@
                 <input type="text" name="description" class="productInfo" [value]="getValue('description')" id="descriptionInp">
     
                 <label for="stock">Stock</label>
-                <input type="number" name="stock" class="productInfo" [value]="getValue('stock')" id="stockInp">
+                <input type="number" name="stock" class="productInfo" [value]="getValue('stock')" id="stockInpAux">
     
                 <button *ngIf="(!onModify)" (click)="addNewProduct()">AGREGAR</button>
                 <button *ngIf="onModify && !toModify" (click)="modify()">MODIFICAR</button>
@@ -100,6 +100,10 @@
                     <label for="modifyPrice1">Costo de producto</label>
                     <input type="number" name="modifyPrice1" [value]="productList.costPrice" id="modifyCostPriceInp">
                 </div>
+                <div class="priceList">
+                    <label for="modifyPrice1">Stock</label>
+                    <input type="number" name="stockInpName" [value]="optionSelected.stock" id="modifyStockInp">
+                </div>
                 <div id="buttons">
                     <button (click)="modifyOptions(optionSelected, 1)">Modificar</button>
                     <button id="delete" (click)="deleteOption(optionSelected)">Eliminar</button>
@@ -116,6 +120,10 @@
                 <div class="priceList">
                     <label for="price1">Costo de producto</label>
                     <input type="number" name="price1" id="costPriceInp">
+                </div>
+                <div class="priceList">
+                    <label for="stock1">Stock</label>
+                    <input type="number" name="price1" id="stockInp">
                 </div>
                 <button (click)="addOption()">Agregar</button>
             </div>

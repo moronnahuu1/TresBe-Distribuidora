@@ -27,7 +27,7 @@ export class ProductItemComponent implements OnInit{
   cartService = inject(CartService);
   optionService = inject(OptionsService);
   options: Options[] = [];
-  optionSelected: Options = new Options('','','');
+  optionSelected: Options = new Options('','','',0);
   cartProducts: Array<Product> = [];
   productSelected: Product = new Product('','','','',0,'',0,'', 1, 0);
   allFeatures: Feature[]= [];

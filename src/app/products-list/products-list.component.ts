@@ -35,10 +35,10 @@ export class ProductsListComponent implements OnInit{
   cookieService = inject(CookieService);
   async ngOnInit() {
     window.scrollTo(0, 0);
+    await this.filters();
     (await this.cookieService.getAdmin()).subscribe(data => {
       this.admin = data;
     });
-    await this.filters();
     ///this.hasCostPrice();
   }
 
@@ -121,7 +121,11 @@ export class ProductsListComponent implements OnInit{
       await this.filters();
       window.scrollTo(0, 500);
   }
-
+  async pageChange(){
+    this.productService.setPageNumber(this.currentPage);
+    await this.filters();
+      window.scrollTo(0, 500);
+  }
   async previousPage() {
     if (this.currentPage > 1) {
       this.productService.setPageNumber(this.currentPage-1);

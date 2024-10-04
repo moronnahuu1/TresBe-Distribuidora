@@ -35,12 +35,12 @@ export class ButtonsDetailComponent implements OnInit{
     (await this.cookieService.getUser()).subscribe(data => {
       this.user = data;
     });
-    (await this.cookieService.getAdmin()).subscribe(data => {
-      this.admin = data;
-    });
     this.orderID = this.activeRoute.snapshot.params['id'];
     await this.readOXP();
     await this.readUserdata();
+    (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
+    });
   }
 
   async readUserdata(): Promise<void> {

@@ -20,10 +20,10 @@ export class UserCredentialsComponent implements OnInit{
     this.displayService._displayed.subscribe(data => {
       this.displayed = data;
     });
+    this.getParameters();
     (await this.cookieService.getAdmin()).subscribe(data => {
       this.admin = data;
     });
-    this.getParameters();
   }
   getParameters(){
     if(localStorage.getItem('userOrders')){

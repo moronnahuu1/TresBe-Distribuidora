@@ -14,7 +14,7 @@ import { PricesService } from 'src/app/services/prices.service';
 export class CartListComponent {
   cartService = inject(CartService);
   optionService = inject(OptionsService);
-  option: Options = new Options('','','');
+  option: Options = new Options('','','',0);
   pricesService = inject(PricesService);
   prices: PriceXproduct = new PriceXproduct('','',0,0,0,0,0,0,0);
   products: Array<Product> = [];

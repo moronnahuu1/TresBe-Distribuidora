@@ -129,7 +129,7 @@ h1{
 @media (max-width: 480px) and (min-width: 280px) {
     #container {
         width: calc(100vi - 4vi);
-        height: 75vi;
+        height: 90vh;
         padding: 2vi;
     }
     .items {

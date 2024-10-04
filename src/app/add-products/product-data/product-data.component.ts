@@ -39,7 +39,7 @@ export class ProductDataComponent implements OnInit{
   options: Options[] = [];
   optionService = inject(OptionsService);
   allPrices: PriceXproduct[] = [];
-  optionSelected: Options = new Options('','','');
+  optionSelected: Options = new Options('','','', 0);
   optionTerm: string = '';
   optionUpdated: boolean = false;
   searchTerm: string = '';
@@ -417,8 +417,9 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
   }
   addOption(){
     let optionName = this.getString('optionInp');
+    let optionStock = this.getNumber('stockInp');
     if(optionName.length > 0){
-      let optionAux = new Options(this.generateRandomId(16), optionName, this.productID);
+      let optionAux = new Options(this.generateRandomId(16), optionName, this.productID, optionStock);
       let pricesAux: PriceXproduct | null = this.getItemsPrice(optionAux.id, 'add');
       if(pricesAux != null){
         this.optionService.createOption(optionAux);

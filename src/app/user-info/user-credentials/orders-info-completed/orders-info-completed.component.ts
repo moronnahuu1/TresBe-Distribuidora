@@ -29,15 +29,15 @@ export class OrdersInfoCompletedComponent {
   admin: PublicUser = new PublicUser('','','','',false);
   
   async ngOnInit() {
-    this.cookieService.returnUser().subscribe(data => {
+    (await this.cookieService.getUser()).subscribe(data => {
       this.user = data;
-    });
-    this.cookieService.returnAdmin().subscribe(data => {
-      this.admin = data;
     });
      this.oxpService.getOap().subscribe(products => {
       this.ordersAndProducts = products;
      });
+     (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
+    });
   }
   changeDisplay(name: string, orderID: string){
     this.oxpService.selectOrder(orderID);

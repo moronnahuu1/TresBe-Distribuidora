@@ -18,12 +18,12 @@ export class SelectBrandComponent implements OnInit {
   admin: PublicUser = new PublicUser('', '', '', '', false);
   cookieService = inject(CookieService);
   async ngOnInit() {
-    (await this.cookieService.getAdmin()).subscribe(data => {
-      this.admin = data;
-    });
     this.readBrands();
     this.brandService.getBrandSelected().subscribe(result => {
       this.brandSelected = result;
+    });
+    (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
     });
   }
   async readBrands() {
