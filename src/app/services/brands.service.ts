@@ -59,13 +59,13 @@ export class BrandsService {
     return this.http.get<Brand>(this.myAppUrl + this.myApiUrl + id);
   }
   deleteBrand(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, { withCredentials: true });
   }
   deleteBrands(): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`, { withCredentials: true });
   }
   saveBrand(productAux: Brand): Observable<void> {
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux, { withCredentials: true });
   }
   updateBrand(id: string, productAux: Brand): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);

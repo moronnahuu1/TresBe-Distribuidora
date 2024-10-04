@@ -306,13 +306,13 @@ export class ProductService {
     return this.http.get<Product[]>(urlAux + category + '/' + this.pageNumber);
   }
   deleteProduct(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, { withCredentials: true });
   }
   deleteProducts(): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`, { withCredentials: true });
   }
   saveProduct(productAux: Product): Observable<void> {
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux, { withCredentials: true });
   }
   updateProduct(id: string, productAux: Product): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);

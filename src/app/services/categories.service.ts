@@ -54,13 +54,13 @@ export class CategoriesService {
     return this.http.get<Category>(this.myAppUrl + this.myApiUrl + id);
   }
   deleteCategory(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, { withCredentials: true });
   }
   deleteCategories(): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`, { withCredentials: true });
   }
   saveCategory(categoryAux: Category): Observable<void> {
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, categoryAux);
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, categoryAux, { withCredentials: true });
   }
   updateCategory(id: string, productAux: Category): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);
