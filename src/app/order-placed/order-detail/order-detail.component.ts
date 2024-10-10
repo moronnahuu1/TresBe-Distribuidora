@@ -25,13 +25,11 @@ export class OrderDetailComponent implements OnInit{
   activeRoute = inject(ActivatedRoute);
 
   oxp: Array<OrderXproducts> = [];
-  orders: Array<Order> = [];
   products: Array<Product> = [];
   order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "", false, '');
   id: string = "";
   user: PublicUser = new PublicUser("", "", "", "",false); //USER va a ser el usuario logueado en el momento
   admin: PublicUser = new PublicUser("", "", "", "",false); //USER va a ser el usuario logueado en el momento
-  users: Array<Userdata> = []; //USERS va a ser la informacion de envio de cada usuario logueado, nombre, apellido, lugar de residencia, telefono, mail, etc.
   userdata: Userdata = new Userdata("", "", "", "", "", "", "", "", "", "", 0, "", "false"); //USERDATA va aser la informacion de envio DEL USUARIO LOGUEADO
   router = inject(Router);
   cookieService = inject(CookieService);
@@ -41,17 +39,14 @@ export class OrderDetailComponent implements OnInit{
       this.user = data;
     });
       this.id = this.activeRoute.snapshot.params['id'];      
-      await this.readOXP();
+      await this.getOXP();
       await this.getProducts();
       let orderAux = await this.getOrder();
       if(orderAux != undefined){
         this.order = orderAux;
         this.checkOrderByUser();
       }
-      const usersAux = await this.getUserData();
-      if(usersAux != undefined){
-        this.userdata = usersAux;
-      }
+      await this.getUserData();
       (await this.cookieService.getAdmin()).subscribe(data => {
         this.admin = data;
       });
@@ -97,37 +92,15 @@ async getProducts(): Promise<void>{
     throw error; // Puedes manejar el error de acuerdo a tus necesidades
   }*/
 }
-
-async readOXP(): Promise<void> {
-  const oxpAux = await this.getOXP();
-  if(oxpAux != undefined){
-    for(let i=0; i<oxpAux.length; i++){
-      this.oxp.push(oxpAux[i]);
-    }
-  }
-}
-async getOXP(): Promise<OrderXproducts[] | undefined>{
-  /* La funcion se conecta con el servicio de orden por productos, para leer el id de orden 
-  y el id de cada producto que se haya reservado en la orden */
-try {
-  const data = await this.orderXproductsService.getOrdersXproducts().toPromise();
-  console.log(data?.length);
-  return data;
-} catch (error) {
-  console.error('Error obteniendo datos:', error);
-  throw error; // Puedes manejar el error de acuerdo a tus necesidades
-}
+async getOXP(){
+  (await this.orderXproductsService.readOxp(this.id)).subscribe(data => {
+    this.oxp = data;
+  });
 }
 
 async getUserData(){
-  /* La funcion se conecta con el servicio de userdata para leer la base de datos de la informacion del envio para los usuarios */
-  try {
-    const data = await this.userdataService.getUserdataByUserID(this.user.id).toPromise();
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.error('Error obteniendo datos:', error);
-    throw error; // Puedes manejar el error de acuerdo a tus necesidades
-  }
+  (await this.userdataService.returnUserdata(this.user.id)).subscribe(data => {
+    this.userdata = data;
+  });
 }
 }

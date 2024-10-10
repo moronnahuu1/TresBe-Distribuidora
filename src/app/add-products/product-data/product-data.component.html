@@ -104,6 +104,10 @@
                     <label for="modifyPrice1">Stock</label>
                     <input type="number" name="stockInpName" [value]="optionSelected.stock" id="modifyStockInp">
                 </div>
+                <div class="priceList">
+                    <label for="modifyID">ID</label>
+                    <input type="text" name="idInpName" [value]="optionSelected.id" id="modifyIdInp">
+                </div>
                 <div id="buttons">
                     <button (click)="modifyOptions(optionSelected, 1)">Modificar</button>
                     <button id="delete" (click)="deleteOption(optionSelected)">Eliminar</button>

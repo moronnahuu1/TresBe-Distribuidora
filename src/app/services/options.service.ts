@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Options } from '../models/Options';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PricesService } from './prices.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class OptionsService {
   private myApiUrl: string;
   options: Options[] = [];
   _options: BehaviorSubject<Options[]> = new BehaviorSubject<Options[]>([]);
+  pricesService = inject(PricesService);
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;
     this.myApiUrl = 'api/options/'
@@ -91,14 +93,19 @@ export class OptionsService {
     this.options.unshift(featureAux);
     this._options.next(this.options);
   }
-  updateOneOption(index: number, featureAux: Options) {
+  async updateOneOption(index: number, featureAux: Options, oldID: string) {
     featureAux.name = encodeURIComponent(featureAux.name);
-    this.updateOptions(featureAux.id, featureAux).subscribe(() => { });
-    this.options[index] = featureAux;
-    this._options.next(this.options);
+    try {
+      (await this.pricesService.updateOptionID(oldID, featureAux.id)).toPromise();
+      await this.updateOptions(featureAux, oldID).toPromise();
+      this.options[index] = featureAux;
+      this._options.next(this.options);
+    } catch (error) {
+      console.log(error);
+    }
   }
   getOptions(): Observable<Options[]> {
-    return this.http.get<Options[]>(this.myAppUrl + this.myApiUrl);
+    return this.http.get<Options[]>(this.myAppUrl + this.myApiUrl, { withCredentials: true });
   }
   getOption(id: string): Observable<Options> {
     return this.http.get<Options>(this.myAppUrl + this.myApiUrl + id);
@@ -120,20 +127,20 @@ export class OptionsService {
 
   deleteOptionByProduct(id: string): Observable<void> {
     let apiUrl = this.myAppUrl + this.myApiUrl + 'deleteProduct/' + id;
-    return this.http.delete<void>(apiUrl);
+    return this.http.delete<void>(apiUrl, { withCredentials: true });
   }
 
   deleteOption(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, { withCredentials: true });
   }
   deleteOptions(): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`, { withCredentials: true });
   }
   saveOptions(productAux: Options): Observable<void> {
     productAux.name = encodeURIComponent(productAux.name);
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux, { withCredentials: true });
   }
-  updateOptions(id: string, productAux: Options): Observable<void> {
-    return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);
+  updateOptions(productAux: Options, oldID: string): Observable<void> {
+    return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${oldID}`, productAux);
   }
 }

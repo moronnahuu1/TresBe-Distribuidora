@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
-    ///endpoint: 'https://tresbe-backend.onrender.com/',
-    endpoint: 'https://api.somostresbe.com/'
+    ///endpoint: 'https://api.somostresbe.com/' ///PRODUCTION;
+    endpoint: 'https://api.tresbedistribuidora.com/' ///TESTING;
 };

@@ -159,7 +159,7 @@ export class ProductService {
         case '3':
           return priceAux.priceList3;
         case '4':
-          return priceAux.priceList4;
+          return priceAux.costPrice;
         case 'E':
           return priceAux.priceListE;
         case 'G':

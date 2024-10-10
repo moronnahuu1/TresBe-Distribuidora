@@ -37,27 +37,27 @@ export class OrdersXProductsService {
     }
   }
   getOrdersXproducts(): Observable<OrderXproducts[]> {
-    return this.http.get<OrderXproducts[]>(this.myAppUrl + this.myApiUrl);
+    return this.http.get<OrderXproducts[]>(this.myAppUrl + this.myApiUrl, { withCredentials: true });
   }
   getOrderXproducts(id: string): Observable<OrderXproducts> {
-    return this.http.get<OrderXproducts>(this.myAppUrl + this.myApiUrl + id);
+    return this.http.get<OrderXproducts>(this.myAppUrl + this.myApiUrl + id, { withCredentials: true });
   }
   getOxpByOrders(orderID: string) {
     let urlAux = this.myAppUrl + this.myApiUrl + 'orders/'
     return this.http.get<OrderXproducts[]>(urlAux + orderID);
   }
   deleteOrderXproducts(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, { withCredentials: true });
   }
   deleteOrderXproductsByIDs(productID: string, orderID: string): Observable<void> {
     let urlAux = this.myAppUrl + this.myApiUrl + 'products/' + productID + '/' + orderID;
-    return this.http.delete<void>(urlAux);
+    return this.http.delete<void>(urlAux, { withCredentials: true });
   }
   deleteOrdersXproducts(): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`, { withCredentials: true });
   }
   saveOrderXproducts(productAux: OrderXproducts): Observable<void> {
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux, { withCredentials: true });
   }
   updateOrderXproducts(id: string, productAux: OrderXproducts): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);

@@ -399,12 +399,15 @@ getItemsPrice(optionID: string, toDo: string){ //Lee los input de la lista de pr
   async modifyOptions(optionAux: Options, index: number){
     if(this.options.length > 0){
     let optionName = this.getString(optionAux.id);
+    let optionID = this.getString('modifyIdInp');
       if(optionName.length > 0){
+        const optionOldID = optionAux.id;
         optionAux.name = optionName;
-        let pricesAux: PriceXproduct | null = this.getItemsPrice(optionAux.id, 'update'); //Mismo paso que el anterior pero con las listas de precios
+        optionAux.id = optionID;
+        let pricesAux: PriceXproduct | null = this.getItemsPrice(optionOldID, 'update'); //Mismo paso que el anterior pero con las listas de precios
         if(pricesAux != null){
           await this.pricesService.updateProduct(pricesAux.id, pricesAux).toPromise(); 
-          this.optionService.updateOneOption(index, optionAux);
+          await this.optionService.updateOneOption(index, optionAux, optionOldID);
           localStorage.setItem('updated', JSON.stringify(true));
           location.reload();
         }

@@ -56,23 +56,23 @@ export class UserdataService {
     }
   }
   getUsersdata(): Observable<Userdata[]> {
-    return this.http.get<Userdata[]>(this.myAppUrl + this.myApiUrl);
+    return this.http.get<Userdata[]>(this.myAppUrl + this.myApiUrl, { withCredentials: true });
   }
   getUserdata(id: string): Observable<Userdata> {
-    return this.http.get<Userdata>(this.myAppUrl + this.myApiUrl + id);
+    return this.http.get<Userdata>(this.myAppUrl + this.myApiUrl + id, { withCredentials: true });
   }
   getUserdataByUserID(userid: string): Observable<Userdata> {
     let urlAux = this.myAppUrl + this.myApiUrl + "userid/";
-    return this.http.get<Userdata>(urlAux + userid);
+    return this.http.get<Userdata>(urlAux + userid, { withCredentials: true });
   }
   deleteUserdata(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, { withCredentials: true });
   }
   deleteUsersdata(): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`, { withCredentials: true });
   }
   saveUserdata(productAux: Userdata): Observable<void> {
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux, { withCredentials: true });
   }
   updateUserdata(id: string, productAux: Userdata): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);

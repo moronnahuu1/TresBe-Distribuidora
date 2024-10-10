@@ -51,7 +51,7 @@ export class FeatureService {
     this._features.next(this.features);
   }
   getFeatures(): Observable<Feature[]> {
-    return this.http.get<Feature[]>(this.myAppUrl + this.myApiUrl);
+    return this.http.get<Feature[]>(this.myAppUrl + this.myApiUrl, { withCredentials: true });
   }
   getFeature(id: string): Observable<Feature> {
     return this.http.get<Feature>(this.myAppUrl + this.myApiUrl + id);
@@ -62,13 +62,13 @@ export class FeatureService {
 
   }
   deleteFeature(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, { withCredentials: true });
   }
   deleteFeatures(): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`, { withCredentials: true });
   }
   saveFeature(productAux: Feature): Observable<void> {
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux, { withCredentials: true });
   }
   updateFeature(id: string, productAux: Feature): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);

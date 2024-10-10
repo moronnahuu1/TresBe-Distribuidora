@@ -89,7 +89,7 @@ export class CartProductService {
   }
 
   getCartProducts(): Observable<CartProduct[]> {
-    return this.http.get<CartProduct[]>(this.myAppUrl + this.myApiUrl);
+    return this.http.get<CartProduct[]>(this.myAppUrl + this.myApiUrl, { withCredentials: true });
   }
   getCartProduct(id: string): Observable<CartProduct> {
     return this.http.get<CartProduct>(this.myAppUrl + this.myApiUrl + id);
@@ -103,13 +103,13 @@ export class CartProductService {
     return this.http.get<CartProduct[]>(urlAux + productID);
   }
   deleteCartProduct(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, { withCredentials: true });
   }
   deleteCartProducts(): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`, { withCredentials: true });
   }
   saveCartProduct(productAux: CartProduct): Observable<void> {
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux, { withCredentials: true });
   }
   updateCartProduct(id: string, productAux: CartProduct): Observable<void> {
     return this.http.patch<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, productAux);

@@ -24,7 +24,6 @@ export class ShipmentComponent implements OnInit{
   userdataService = inject(UserdataService);
   userID: string = "";
   user: PublicUser = new PublicUser("", "", "", "",false);
-  users: Array<Userdata> = [];
   userdata: Userdata = new Userdata("", "", "", "", "", "", "", "", "", "", 0, "", "false");
   saveData: boolean = false;
   cityService = inject(CityService);
@@ -43,13 +42,7 @@ export class ShipmentComponent implements OnInit{
     (await this.cookieService.getUser()).subscribe(data => {
       this.user = data;
     });
-    const usersAux = await this.getUserData();
-    if(usersAux != undefined){
-      for(let i=0; i<usersAux.length; i++){
-        this.users.push(usersAux[i]);
-      }
-    }
-      this.getUserdataInfo();
+      await this.getUserData();
       if(this.userdata.email != ''){
         this.userID = this.userdata.id;
         this.dataCreated = true;
@@ -106,21 +99,6 @@ export class ShipmentComponent implements OnInit{
       }else{
         toggleButton.setAttribute("data-checked", "false");
       }
-    }
-  }
-
-  getUserdataInfo(){
-    let i = 0;
-    let access: boolean = false;
-    while(i<this.users.length && !access){
-      if(this.user.id == this.users[i].userID){
-        access = true;
-      }else{
-        i++;
-      }
-    }
-    if(access){
-      this.userdata = this.users[i];
     }
   }
 
@@ -253,13 +231,8 @@ export class ShipmentComponent implements OnInit{
     localStorage.removeItem("dataCreated");
   }
   async getUserData(){
-    try {
-      const data = await this.userdataService.getUsersdata().toPromise();
-      console.log(data?.length);
-      return data;
-    } catch (error) {
-      console.error('Error obteniendo datos:', error);
-      throw error; // Puedes manejar el error de acuerdo a tus necesidades
-    }
+    (await this.userdataService.returnUserdata(this.user.id)).subscribe(data => {
+      this.userdata = data;
+    });
   }
 }

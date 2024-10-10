@@ -36,31 +36,17 @@ export class ButtonsDetailComponent implements OnInit{
       this.user = data;
     });
     this.orderID = this.activeRoute.snapshot.params['id'];
-    await this.readOXP();
-    await this.readUserdata();
+    await this.getOrderXproducts();
+    await this.getUserdata();
     (await this.cookieService.getAdmin()).subscribe(data => {
       this.admin = data;
     });
   }
 
-  async readUserdata(): Promise<void> {
-    const id = this.activeRoute.snapshot.params['id'];
-    if(id){
-      let UserdataAux = await this.getUserdata(this.user.id);
-      if(UserdataAux != undefined){
-        this.userdata = UserdataAux;
-      }
-    }
-  }
-
-  async getUserdata(userID: string): Promise<Userdata | undefined>{
-    try {
-      const data = await this.userdataService.getUserdataByUserID(userID).toPromise();
-      return data;
-    } catch (error) {
-      console.error('Error obteniendo datos:', error);
-      throw error;
-    }
+  async getUserdata(){
+    (await this.userdataService.returnUserdata(this.user.id)).subscribe(data => {
+      this.userdata = data;
+    });
   }
   async cancelOrder(){
     const userConfirmed: boolean = window.confirm("Desea cancelar la orden?");
@@ -98,23 +84,10 @@ export class ButtonsDetailComponent implements OnInit{
     }
   }
 
-  async readOXP(): Promise<void> {
-    const oxpAux = await this.getOrderXproducts();
-    if(oxpAux != undefined){
-      for(let i=0; i<oxpAux.length; i++){
-        this.oxp.push(oxpAux[i]);
-      }
-    }
-}
-
   async getOrderXproducts(){
-    try {
-      const data = await this.oxpService.getOrdersXproducts().toPromise();
-      return data;
-    } catch (error) {
-      console.error('Error obteniendo datos:', error);
-      throw error; // Puedes manejar el error de acuerdo a tus necesidades
-    }
+    (await this.oxpService.readOxp(this.orderID)).subscribe(data => {
+      this.oxp = data;
+    });
   }
 
   async deleteUserdata(){

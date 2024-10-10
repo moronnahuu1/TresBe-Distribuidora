@@ -94,7 +94,7 @@ export class CouponService {
   }
 
   getCoupons(): Observable<Cupon[]> {
-    return this.http.get<Cupon[]>(this.myAppUrl + this.myApiUrl);
+    return this.http.get<Cupon[]>(this.myAppUrl + this.myApiUrl, { withCredentials: true });
   }
   getCoupon(id: string): Observable<Cupon> {
     return this.http.get<Cupon>(this.myAppUrl + this.myApiUrl + id);
@@ -103,13 +103,13 @@ export class CouponService {
     return this.http.get<Cupon>(this.myAppUrl + this.myApiUrl + 'search/' + code);
   }
   deleteCoupon(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}${id}`, { withCredentials: true });
   }
   deleteCoupons(): Observable<void> {
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`);
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`, { withCredentials: true });
   }
   saveCoupon(productAux: Cupon): Observable<void> {
-    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux);
+    return this.http.post<void>(`${this.myAppUrl}${this.myApiUrl}`, productAux, { withCredentials: true });
   }
   updateCoupon(id: string, productAux: Cupon): Observable<void> {
     this.couponSearched = productAux;
