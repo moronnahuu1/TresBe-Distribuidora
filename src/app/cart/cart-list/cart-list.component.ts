@@ -22,8 +22,8 @@ export class CartListComponent {
   async ngOnInit() {
       this.cartService.getProducts().subscribe(products => {
         this.products = products;  ///Se lee la lista de productos que estan en el carrito y se inicializa en un array de productos
-      })
-      this.startQuantity(); 
+      });
+      this.startQuantity();
       await this.checkProductData();
   }
   async checkProductData(){

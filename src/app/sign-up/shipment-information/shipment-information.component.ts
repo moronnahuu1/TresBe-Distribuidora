@@ -102,7 +102,7 @@ enableOrDisableInputs(){
 }
 
 
-  createUserData(){
+  async createUserData(){
     let id = this.generateRandomId(16);
     this.userID = this.activeRoute.snapshot.params['id'];
     let firstname = this.getString("firstNameInp");
@@ -120,8 +120,7 @@ enableOrDisableInputs(){
     let countryAux = "Argentina";
     let saveIt = "true";
     const shipmentData: Userdata = new Userdata(id, firstname, lastname, company, phone, email, countryAux, province, city, address, addressNumb, this.userID, saveIt);
-    this.userdataService.saveUserdata(shipmentData).subscribe(() => {
-    })
+    await this.userdataService.saveUserdata(shipmentData).toPromise();
     this.dataCreated = true;
     this.enableOrDisableInputs();
     localStorage.setItem("dataCreated", JSON.stringify(true));

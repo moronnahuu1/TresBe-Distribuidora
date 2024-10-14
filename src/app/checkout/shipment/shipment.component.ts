@@ -196,8 +196,10 @@ export class ShipmentComponent implements OnInit{
 }
 
   createUserData(){
-    let id = this.generateRandomId(16);
-    this.userID = id;
+    let id = this.userdata.id
+    if(this.userdata.id == ''){
+      id = this.generateRandomId(16);
+    }
     let firstname = this.getString("firstNameInp");
     let lastname = this.getString("lastNameInp");
     let company = this.getString("companyInp");
@@ -218,14 +220,14 @@ export class ShipmentComponent implements OnInit{
       saveIt = "false";
     }
     const shipmentData: Userdata = new Userdata(id, firstname, lastname, company, phone, email, countryAux, province, city, address, addressNumb, this.user.id, saveIt);
-    this.userdataService.saveUserdata(shipmentData).subscribe(() => {
+    this.userdataService.updateUserdata(shipmentData.id, shipmentData).subscribe(() => {
     })
     this.dataCreated = true;
     this.enableOrDisableInputs();
     localStorage.setItem("dataCreated", JSON.stringify(true));
   }
   async deleteUserData(){
-    const data = await this.userdataService.deleteUserdata(this.userID).toPromise();
+    ///const data = await this.userdataService.deleteUserdata(this.userID).toPromise();
     this.dataCreated = false;
     this.enableOrDisableInputs();
     localStorage.removeItem("dataCreated");

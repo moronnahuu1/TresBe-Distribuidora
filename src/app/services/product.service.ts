@@ -159,7 +159,7 @@ export class ProductService {
         case '3':
           return priceAux.priceList3;
         case '4':
-          return priceAux.costPrice;
+          return priceAux.priceList4;
         case 'E':
           return priceAux.priceListE;
         case 'G':
@@ -167,6 +167,29 @@ export class ProductService {
         default:
           return priceAux.priceList4;
       }
+    }
+  }
+  async selectPriceList(optionID: string, priceList: string) {
+    let data = await this.getPrice(optionID);
+    let priceAux: PriceXproduct = new PriceXproduct('', '', 0, 0, 0, 0, 0, 0, 0);
+    if (data != undefined) {
+      priceAux = data;
+    }
+    switch (priceList) {
+      case '1':
+        return priceAux.priceList1;
+      case '2':
+        return priceAux.priceList2;
+      case '3':
+        return priceAux.priceList3;
+      case '4':
+        return priceAux.priceList4;
+      case 'E':
+        return priceAux.priceListE;
+      case 'G':
+        return priceAux.priceListG;
+      default:
+        return priceAux.priceList4;
     }
   }
   async getPrice(id: string) {
