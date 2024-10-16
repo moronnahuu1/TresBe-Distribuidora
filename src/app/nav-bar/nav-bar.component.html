@@ -1,4 +1,4 @@
-<body>
+
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <div class="navBar" [class.open]="!isHidden">
@@ -15,4 +15,3 @@
         <p class="point" routerLink="/cart" class="fa fa-shopping-cart cartLength" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0"> {{products.length}}</p>
         <i *ngIf="logged" class="fa fa-user fa-2x userlogo" aria-hidden="true" [routerLink]="['/user']" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0"></i>
     </div>
-</body>

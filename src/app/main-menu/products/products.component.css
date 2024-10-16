@@ -22,6 +22,9 @@ h2,h1{
     text-align: center;
     letter-spacing: 1px;
 }
+h1{
+    color: #4d7e98;
+}
 #containsAll{
     display: flex;
     flex-direction: column;

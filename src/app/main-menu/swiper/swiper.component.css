@@ -1,6 +1,5 @@
 #container{
-    margin-top: 1%;
-    width: 90%;
+    width: 100%;
 }
 #slide{
     display: flex;
