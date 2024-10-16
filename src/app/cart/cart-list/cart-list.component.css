@@ -41,17 +41,18 @@
   }
   
   .quantity-btn, .remove-btn {
-    background-color: #002855;
+    background-color: #4d7e98;
     color: #fff;
     border: none;
     width: 4.5vh;
     height: 4vh;
     margin: 0 5px;
     cursor: pointer;
+    transition: background-color 1s;
   }
   
   .quantity-btn:hover, .remove-btn:hover {
-    background-color: #001f40;
+    background-color: #a4bb43;
   }
 
   #decrement, .remove-btn{

@@ -1,7 +1,7 @@
 <body>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    <div class="navBar">
+    <div class="navBar" [class.open]="!isHidden">
         <button id="toggleButton" (click)="toggleNav()"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
         <p class="point" [style.opacity]="elementsVisible ? 1 : 0"><img src="../../assets/tresbe.png" alt="" [style.opacity]="elementsVisible ? 1 : 0"></p>
         <a href="" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"[style.opacity]="elementsVisible ? 1 : 0">Inicio</a>

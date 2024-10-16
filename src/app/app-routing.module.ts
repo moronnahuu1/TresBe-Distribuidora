@@ -22,7 +22,6 @@ import { userdataGuard } from './guards/userdata.guard';
 import { loginGuard } from './guards/login.guard';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { ChangePricesComponent } from './change-prices/change-prices.component';
-import { PayedDataComponent } from './payed-proof/payed-data/payed-data.component';
 import { PayedProofComponent } from './payed-proof/payed-proof.component';
 import { RecoverPasswordComponent } from './login/recover-password/recover-password.component';
 import { CreateCouponComponent } from './create-coupon/create-coupon.component';
