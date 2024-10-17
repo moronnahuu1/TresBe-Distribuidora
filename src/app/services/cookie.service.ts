@@ -59,7 +59,7 @@ export class CookieService {
   async getUser(){
     (await this.tokenExistTC('access_token')).subscribe(data => {
       this.isLogged = data;
-    });    
+    }); 
     if(this.isLogged){
       let userAux = await this.getTokenTC("access_token");
       if(userAux != null){

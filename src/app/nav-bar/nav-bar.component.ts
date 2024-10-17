@@ -11,38 +11,33 @@ import { UserService } from '../services/user.service';
 })
 export class NavBarComponent implements OnInit{
   cartService = inject(CartService);
-  products: Array<Product> = [];
-  areNavItemsVisible: boolean = true;
-  isHidden: boolean = false;
-  isTransitioning: boolean = false;
-  cookieService = inject(CookieService);
-  logged: boolean = false;
-  userService = inject(UserService);
-  elementsVisible: boolean = true;
-  async ngOnInit() {
-    this.logged = await this.isLogged();
-    setTimeout(() => {
-      this.elementsVisible = true;  // Esto aplicará la clase `show`
-    }, 200);
-    this.isTransitioning = true;
-    this.areNavItemsVisible = !this.areNavItemsVisible;
-    if (this.areNavItemsVisible) {
-      // Show items with transition
-      this.isHidden = false;
-      setTimeout(() => {
-        this.isTransitioning = false;
-      }, 500); // This duration should match your CSS transition duration
-    } else {
-      // Hide items with transition
-      setTimeout(() => {
-        this.isHidden = true;
-        this.isTransitioning = false;
-      }, 500); // This duration should match your CSS transition duration
-    }
-    this.cartService.getProducts().subscribe(products => { //Se leen los productos del carrito para poner la cantidad de productos en la barra
-      this.products = products;
-    })
+products: Array<Product> = [];
+areNavItemsVisible: boolean = true;
+isHidden: boolean = true;
+isTransitioning: boolean = false;
+cookieService = inject(CookieService);
+logged: boolean = false;
+userService = inject(UserService);
+elementsVisible: boolean = true;
+
+async ngOnInit() {
+  this.logged = await this.isLogged();
+
+  // Detectar resolución de pantalla y establecer isHidden
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  this.isHidden = isMobile;  // Ocultar menú si es mobile, mostrar si es desktop
+
+  // Leer los productos del carrito
+  this.cartService.getProducts().subscribe((products) => {
+    this.products = products;
+  });
+
+  // Escuchar cambios de resolución en tiempo real (opcional)
+  window.matchMedia("(max-width: 768px)").addEventListener("change", (e) => {
+    this.isHidden = e.matches;
+  });
 }
+
 async isLogged(){
   (await this.cookieService.tokenExistTC('access_token')).subscribe(data => {
     this.logged = data;

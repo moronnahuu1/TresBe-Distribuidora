@@ -19,7 +19,7 @@ export class UserService {
     this.myApiUrl = 'api/Users/'
   }
   async getUserLogged() {
-    (await this.cookieService.getUser()).subscribe(data => {
+    (await this.cookieService.returnUser()).subscribe(data => {
       this.user = data;
     });
     return this.user;

@@ -29,7 +29,7 @@ export class OrdersInfoCompletedComponent {
   admin: PublicUser = new PublicUser('','','','',false);
   
   async ngOnInit() {
-    (await this.cookieService.getUser()).subscribe(data => {
+    (await this.cookieService.returnUser()).subscribe(data => {
       this.user = data;
     });
      this.oxpService.getOap().subscribe(products => {

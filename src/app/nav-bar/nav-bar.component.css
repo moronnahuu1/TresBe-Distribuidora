@@ -136,12 +136,12 @@
 }
 @media (max-width: 480px) and (min-width: 280px) {
     .navBar {
+        /*max-height: fit-content;*/
+        height: fit-content;
         display: flex;
         flex-direction: column;
         align-items: center;
-        max-height: fit-content;
         padding-bottom: 2vh;
-        position: relative;
         width: 100%;
         img{
             margin-left: 0px;

@@ -1,17 +1,21 @@
 
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+      </head>
+      
     <div class="navBar" [class.open]="!isHidden">
         <button id="toggleButton" (click)="toggleNav()"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
         <p class="point" [style.opacity]="elementsVisible ? 1 : 0"><img src="../../assets/tresbe.png" alt="" [style.opacity]="elementsVisible ? 1 : 0"></p>
-        <a href="" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"[style.opacity]="elementsVisible ? 1 : 0">Inicio</a>
-        <a routerLink="/products" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Productos</a>
-        <a routerLink="/categories" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Catálogo</a>
-        <a routerLink="/brands" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Marcas</a>
-        <a routerLink="/company" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Nosotros</a>
-        <a routerLink="/company" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Artículos</a>
-        <button *ngIf="!logged" [routerLink]="['/login']" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Entrar</button>
-        <button *ngIf="logged" (click)="logout()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Salir</button>
-        <p class="point" routerLink="/cart" class="fa fa-shopping-cart cartLength" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0"> {{products.length}}</p>
-        <i *ngIf="logged" class="fa fa-user fa-2x userlogo" aria-hidden="true" [routerLink]="['/user']" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0"></i>
+        <a href="" *ngIf="!isHidden" [class.hidden]="isHidden" [class.collapsing]="isTransitioning"[style.opacity]="elementsVisible ? 1 : 0">Inicio</a>
+        <a routerLink="/products" *ngIf="!isHidden" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Productos</a>
+        <a routerLink="/categories" *ngIf="!isHidden" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Catálogo</a>
+        <a routerLink="/brands" *ngIf="!isHidden" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Marcas</a>
+        <a routerLink="/company" *ngIf="!isHidden" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Nosotros</a>
+        <a routerLink="/company" *ngIf="!isHidden" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Artículos</a>
+        <button *ngIf="!logged && !isHidden" [routerLink]="['/login']" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Entrar</button>
+        <button *ngIf="logged && !isHidden" (click)="logout()" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0">Salir</button>
+        <p class="point" *ngIf="!isHidden" routerLink="/cart" class="fa fa-shopping-cart cartLength" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0"> <span style="font-family: Arial, Helvetica, sans-serif; margin-left: 0.5vh;">{{products.length}}</span></p>
+        <i *ngIf="logged && !isHidden" class="fa fa-user fa-2x userlogo" aria-hidden="true" [routerLink]="['/user']" [class.hidden]="isHidden" [class.collapsing]="isTransitioning" [style.opacity]="elementsVisible ? 1 : 0"></i>
     </div>

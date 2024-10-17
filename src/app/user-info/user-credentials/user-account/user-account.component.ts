@@ -23,13 +23,13 @@ export class UserAccountComponent implements OnInit{
   admin: boolean = false;
 
   async ngOnInit() {
-    this.admin = await this.isAdmin();
       (this.cookieService.returnUser()).subscribe(data => {
         this.user = data;
       });
       (await this.userdataService.returnUserdata(this.user.id)).subscribe(userdata => {
         this.userdata = userdata;
       });
+      this.admin = await this.isAdmin();
   }
 
   changeDisplay(name: string){

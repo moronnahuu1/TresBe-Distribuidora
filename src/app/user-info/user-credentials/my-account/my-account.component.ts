@@ -10,40 +10,43 @@ import { UserdataService } from 'src/app/services/userdata.service';
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.css']
 })
-export class MyAccountComponent implements OnInit{
+export class MyAccountComponent implements OnInit {
   displayService = inject(UserDisplayService);
   userdataService = inject(UserdataService);
   displayed = this.displayService.displayed;
-  user: PublicUser = new PublicUser('','','','',false);
-  admin: PublicUser = new PublicUser('','','','',false);
-  userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
+  user: PublicUser = new PublicUser('', '', '', '', false);
+  admin: PublicUser = new PublicUser('', '', '', '', false);
+  userdata: Userdata = new Userdata('', '', '', '', '', '', '', '', '', '', 0, '', '');
   cookieService = inject(CookieService);
 
   async ngOnInit() {
+    if (this.displayed == 'adminSupport') {
+    } else {
       (await this.cookieService.getUser()).subscribe(data => {
         this.user = data;
       });
       const usersAux = await this.getUserData();
-      if(usersAux != undefined){
+      if (usersAux != undefined) {
         this.userdata = usersAux;
       }
       (await this.cookieService.getAdmin()).subscribe(data => {
         this.admin = data;
       });
+    }
   }
 
-  changeDisplay(name: string){
+  changeDisplay(name: string) {
     this.displayService.changeDisplay(name);
   }
-  isAdmin(){
-    if(this.admin.email != ''){
+  isAdmin() {
+    if (this.admin.email != '') {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
-  async getUserData(){
+  async getUserData() {
     /* La funcion se conecta con el servicio de userdata para leer la base de datos de la informacion del envio para los usuarios */
     try {
       const data = await this.userdataService.getUserdataByUserID(this.user.id).toPromise();
