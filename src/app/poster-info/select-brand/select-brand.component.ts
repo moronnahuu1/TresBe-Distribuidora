@@ -15,7 +15,7 @@ export class SelectBrandComponent implements OnInit {
   brandSelected: string = '';
   brandsArray: Array<Brand> = [];
   productService = inject(ProductService);
-  admin: PublicUser = new PublicUser('', '', '', '', false);
+  admin: PublicUser = new PublicUser('', '', '', '', false,'');
   cookieService = inject(CookieService);
   async ngOnInit() {
     this.readBrands();

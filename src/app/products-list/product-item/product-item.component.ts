@@ -32,7 +32,7 @@ export class ProductItemComponent implements OnInit {
   productSelected: Product = new Product('', '', '', '', 0, '', 0, '', 1, 0);
   allFeatures: Feature[] = [];
   activeRoute = inject(ActivatedRoute);
-  user: PublicUser = new PublicUser('', '', '', '', false);
+  user: PublicUser = new PublicUser('', '', '', '', false,'');
   onCart: Boolean = false;
   searchTerm: string = '';
   optionsSearched: Options[] = [];

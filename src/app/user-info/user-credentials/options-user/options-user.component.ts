@@ -13,8 +13,8 @@ export class OptionsUserComponent implements OnInit{
   displayService = inject(UserDisplayService);
   displayed = this.displayService.displayed;
   cookieService = inject(CookieService);
-  user: PublicUser = new PublicUser('','','','',false);
-  admin: PublicUser = new PublicUser('','','','',false);
+  user: PublicUser = new PublicUser('','','','',false,'');
+  admin: PublicUser = new PublicUser('','','','',false,'');
   displaySubmenu: boolean = false;
   displayCoupon: boolean = false;
 

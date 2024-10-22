@@ -33,7 +33,7 @@ export class ProductService {
   products: Array<Product> = [];
   _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   productXpriceService = inject(PricesService);
-  user: PublicUser = new PublicUser('', '', '', '', false);
+  user: PublicUser = new PublicUser('', '', '', '', false,'');
   loading: boolean = false;
   _loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.loading);
   constructor(private http: HttpClient) {

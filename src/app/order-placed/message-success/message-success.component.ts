@@ -11,8 +11,8 @@ import { UserService } from 'src/app/services/user.service';
 export class MessageSuccessComponent implements OnInit{
   userService = inject(UserService);
   cookieService = inject(CookieService);
-  user: PublicUser = new PublicUser('','','','',false);
-  admin: PublicUser = new PublicUser('','','','',false);
+  user: PublicUser = new PublicUser('','','','',false, '');
+  admin: PublicUser = new PublicUser('','','','',false,'');
 
   async ngOnInit() {
     (await this.cookieService.getUser()).subscribe(data => {

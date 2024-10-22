@@ -31,7 +31,7 @@ export class ProductsListComponent implements OnInit{
   onCart: Boolean = false;
   totalPages: number = 0;
   brandService = inject(BrandsService);
-  admin: PublicUser = new PublicUser('','','','',false);
+  admin: PublicUser = new PublicUser('','','','',false,'');
   cookieService = inject(CookieService);
   async ngOnInit() {
     window.scrollTo(0, 0);

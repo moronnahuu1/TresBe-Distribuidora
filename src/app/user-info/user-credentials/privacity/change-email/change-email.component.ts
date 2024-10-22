@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ChangeEmailComponent implements OnInit{
   userService = inject(UserService);
-  user: PublicUser = new PublicUser('','','','',false);
+  user: PublicUser = new PublicUser('','','','',false,'');
   updated: boolean = false;
   badEmail: boolean = false;
   async ngOnInit() {

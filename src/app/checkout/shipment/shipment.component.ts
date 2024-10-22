@@ -23,7 +23,7 @@ export class ShipmentComponent implements OnInit{
   dataCreated: boolean = false;
   userdataService = inject(UserdataService);
   userID: string = "";
-  user: PublicUser = new PublicUser("", "", "", "",false);
+  user: PublicUser = new PublicUser("", "", "", "",false,'');
   userdata: Userdata = new Userdata("", "", "", "", "", "", "", "", "", "", 0, "", "false");
   saveData: boolean = false;
   cityService = inject(CityService);

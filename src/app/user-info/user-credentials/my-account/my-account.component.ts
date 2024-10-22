@@ -14,8 +14,8 @@ export class MyAccountComponent implements OnInit {
   displayService = inject(UserDisplayService);
   userdataService = inject(UserdataService);
   displayed = this.displayService.displayed;
-  user: PublicUser = new PublicUser('', '', '', '', false);
-  admin: PublicUser = new PublicUser('', '', '', '', false);
+  user: PublicUser = new PublicUser('', '', '', '', false,'');
+  admin: PublicUser = new PublicUser('', '', '', '', false,'');
   userdata: Userdata = new Userdata('', '', '', '', '', '', '', '', '', '', 0, '', '');
   cookieService = inject(CookieService);
 

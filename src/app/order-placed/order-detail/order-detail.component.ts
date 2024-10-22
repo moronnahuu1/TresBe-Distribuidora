@@ -26,10 +26,10 @@ export class OrderDetailComponent implements OnInit{
 
   oxp: Array<OrderXproducts> = [];
   products: Array<Product> = [];
-  order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "", false, '');
+  order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "", false, '','','','');
   id: string = "";
-  user: PublicUser = new PublicUser("", "", "", "",false); //USER va a ser el usuario logueado en el momento
-  admin: PublicUser = new PublicUser("", "", "", "",false); //USER va a ser el usuario logueado en el momento
+  user: PublicUser = new PublicUser("", "", "", "",false,''); //USER va a ser el usuario logueado en el momento
+  admin: PublicUser = new PublicUser("", "", "", "",false,''); //USER va a ser el usuario logueado en el momento
   userdata: Userdata = new Userdata("", "", "", "", "", "", "", "", "", "", 0, "", "false"); //USERDATA va aser la informacion de envio DEL USUARIO LOGUEADO
   router = inject(Router);
   cookieService = inject(CookieService);

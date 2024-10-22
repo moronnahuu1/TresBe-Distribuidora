@@ -1,10 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { adminGuard } from 'src/app/guards/admin.guard';
 import { CartProduct } from 'src/app/models/CartProduct';
 import { Order } from 'src/app/models/Order';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
 import { PublicUser } from 'src/app/models/PublicUser';
-import { User } from 'src/app/models/User';
 import { Userdata } from 'src/app/models/Userdata';
 import { CookieService } from 'src/app/services/cookie.service';
 import { EmailService } from 'src/app/services/email.service';
@@ -19,15 +17,15 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
   templateUrl: './my-boughts.component.html',
   styleUrls: ['./my-boughts.component.css']
 })
-export class MyBoughtsComponent implements OnInit{
+export class MyBoughtsComponent implements OnInit {
   ordersAndProductsService = inject(OrderXProductsXOxpService);
-  selectedOrder: Order = new Order('','',0,0,0,0,new Date(),'', '', false, '');
+  selectedOrder: Order = new Order('', '', 0, 0, 0, 0, new Date(), '', '', false, '', '', '', '');
   selectedOXP: OrdersAndProducts = new OrdersAndProducts(this.selectedOrder, []);
   selectedProducts: CartProduct[] = [];
-  userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
+  userdata: Userdata = new Userdata('', '', '', '', '', '', '', '', '', '', 0, '', '');
   userdataService = inject(UserdataService);
   orderService = inject(OrdersService);
-  user: PublicUser = new PublicUser('','','','',false);
+  user: PublicUser = new PublicUser('', '', '', '', false, '');
   admin: boolean = false;
   emailService = inject(EmailService);
   userService = inject(UserService);
@@ -54,93 +52,93 @@ export class MyBoughtsComponent implements OnInit{
   getDates(orderDate: Date): string {
     let newDate = new Date(orderDate);
     if (!(newDate instanceof Date) || isNaN(newDate.getTime())) {
-        throw new Error("Invalid date");
+      throw new Error("Invalid date");
     }
-    
+
     let day = newDate.getDate().toString().padStart(2, '0');
     let month = (newDate.getMonth() + 1).toString().padStart(2, '0');
     let year = newDate.getFullYear().toString();
 
     return `${day}/${month}/${year}`;
-}
-
-async getOrderUser(userID: string){
-  try{
-    let userAux = await this.userService.getUser(userID).toPromise();
-    if(userAux){
-      this.userOrder = userAux.email;
-    }
-  }catch(error){
-    console.log(error);
   }
-}
 
-  isAdmin(){
-    if(this.admin){
+  async getOrderUser(userID: string) {
+    try {
+      let userAux = await this.userService.getUser(userID).toPromise();
+      if (userAux) {
+        this.userOrder = userAux.email;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  isAdmin() {
+    if (this.admin) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
-  async deleteUserOrder(orderID: string){
+  async deleteUserOrder(orderID: string) {
     let confirmation = confirm(`Esta seguro que desea borrar la orden #${orderID}?`);
-    if(confirmation){
+    if (confirmation) {
       await this.orderService.deleteOrder(this.selectedOrder.id).toPromise();
       alert('Orden de compra borrada exitosamente');
     }
   }
-  confirmAttend(type: string){
+  confirmAttend(type: string) {
     const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "btn btn-danger",
-      title: "custom-title",
-    },
-    buttonsStyling: true
-  });
-  swalWithBootstrapButtons.fire({
-    title: "Confirmas que la orden esta registrada en NUVIX?",
-    text: "Si te equivocas, se puede revertir luego!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Si, registrar!",
-    confirmButtonColor: 'rgb(0, 197, 0)',
-    cancelButtonColor: 'red',
-    cancelButtonText: "No, cancelar!",
-    reverseButtons: true
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      if(type == 'attend'){
-        await this.attendOrder();
-      }else if(type == 'unattend'){
-        await this.unattendOrder();
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+        title: "custom-title",
+      },
+      buttonsStyling: true
+    });
+    swalWithBootstrapButtons.fire({
+      title: "Confirmas que la orden esta registrada en NUVIX?",
+      text: "Si te equivocas, se puede revertir luego!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si, registrar!",
+      confirmButtonColor: 'rgb(0, 197, 0)',
+      cancelButtonColor: 'red',
+      cancelButtonText: "No, cancelar!",
+      reverseButtons: true
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        if (type == 'attend') {
+          await this.attendOrder();
+        } else if (type == 'unattend') {
+          await this.unattendOrder();
+        }
+        swalWithBootstrapButtons.fire({
+          title: "Registrada!",
+          text: "La orden se ha registrado.",
+          icon: "success"
+        });
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire({
+          title: "Operación cancelada",
+          text: "La orden queda sin registrar :)",
+          icon: "error"
+        });
       }
-      swalWithBootstrapButtons.fire({
-        title: "Registrada!",
-        text: "La orden se ha registrado.",
-        icon: "success"
-      });
-    } else if (
-      /* Read more about handling dismissals below */
-      result.dismiss === Swal.DismissReason.cancel
-    ) {
-      swalWithBootstrapButtons.fire({
-        title: "Operación cancelada",
-        text: "La orden queda sin registrar :)",
-        icon: "error"
-      });
-    }
-  });
+    });
 
   }
-  async attendOrder(){
+  async attendOrder() {
     ///let confirmation = confirm("Al dar click está confirmando que la orden ya fue registrada y cargada en NUVIX para luego ser preparada");
-      this.selectedOrder.attended = true;
-      await this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).toPromise();
-      await this.getOrderUser(this.selectedOrder.userID);
-      let to = this.userOrder;
-      let subject = 'Pedido Registrado'
-      let html = `<div style="display: flex; align-items: center; width: 100%; background-color: rgb(239, 239, 239);">
+    this.selectedOrder.attended = true;
+    await this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).toPromise();
+    await this.getOrderUser(this.selectedOrder.userID);
+    let to = this.userOrder;
+    let subject = 'Pedido Registrado'
+    let html = `<div style="display: flex; align-items: center; width: 100%; background-color: rgb(239, 239, 239);">
     <div style="font-family: sans-serif; border: 2px solid orange; padding: 1vi; height: fit-content; width: 35vi; background-color: white;">
         <div style="display: flex; flex-direction: column; align-items: center">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8NCmCrXwgexWDbhCLBeyLUpFBi4FxQA9Zhw&s" style="margin-left: 20%; margin-right: 20%;" alt="">
@@ -152,16 +150,46 @@ async getOrderUser(userID: string){
         <p>Total: $${this.selectedOrder.total.toLocaleString()}</p>
     </div>
 </div>`;
-      await this.emailService.sendEmailTC(to, subject, html);
+    await this.emailService.sendEmailTC(to, subject, html);
   }
-  async unattendOrder(){
+  async unattendOrder() {
     let confirmation = confirm("Al dar click está confirmando que la orden aún no fue registrada y necesita verla en este apartado");
-    if(confirmation){
+    if (confirmation) {
       this.selectedOrder.attended = false;
-      this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).subscribe(()=>{});
+      this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).subscribe(() => { });
     }
   }
   formatNumber(number: number): string { //Funcion de front, se usa en HTML para mostrar los numeros grandes de forma mas legible.
     return number.toLocaleString(); // Esto añadirá separadores de miles
+  }
+  async confirmPayment(type: string) {
+    if (type == 'payed') {
+      const { value: paymentMethod, isDismissed } = await Swal.fire({
+        title: 'Ingrese el método de pago',
+        input: 'text',
+        inputLabel: 'Método de pago',
+        inputPlaceholder: 'Ej. Tarjeta, Efectivo, Transferencia',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        cancelButtonColor: '#a4bb43',
+        confirmButtonColor: '#4d7e98',
+      });
+      // Verificar si el usuario canceló
+      if (isDismissed) {
+        Swal.fire('Operación cancelada', '', 'info');
+        return; // Salimos de la función si se cancela
+      }
+      ///let paymentMethod: string | null = prompt('Ingrese el método de pago (tarjeta, efectivo, etc.):');
+      if (paymentMethod && paymentMethod != '') {
+        this.selectedOrder.typeOfPayment = paymentMethod;
+      }
+      this.selectedOrder.payed = true;
+    } else if (type == 'notPayed') {
+      this.selectedOrder.typeOfPayment = '';
+      this.selectedOrder.payed = false;
+    }
+    if (type == 'payed' || type == 'notPayed') {
+      await this.orderService.updateOrder(this.selectedOrder.id, this.selectedOrder).toPromise();
+    }
   }
 }

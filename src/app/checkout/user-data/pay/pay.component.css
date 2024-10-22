@@ -28,3 +28,7 @@ button:hover{
 #spinner{
     animation: spin 1s linear infinite;
 }
+#form{
+    display: flex;
+    flex-direction: column;
+}

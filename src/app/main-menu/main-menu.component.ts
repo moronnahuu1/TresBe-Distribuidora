@@ -10,8 +10,8 @@ import { CookieService } from '../services/cookie.service';
 
 export class MainMenuComponent implements OnInit{
     cookieService = inject(CookieService);
-    user: PublicUser = new PublicUser('','','','', false);
-    admin: PublicUser = new PublicUser('','','','', false);
+    user: PublicUser = new PublicUser('','','','', false,'');
+    admin: PublicUser = new PublicUser('','','','', false,'');
   async ngOnInit() {
     window.scrollTo(0, 0);
     document.addEventListener("DOMContentLoaded", function () {

@@ -13,8 +13,8 @@ export class UserCredentialsComponent implements OnInit{
   displayService = inject(UserDisplayService);
   displayed: string = '';
   cookieService = inject(CookieService);
-  user: PublicUser = new PublicUser('','','','', false);
-  admin: PublicUser = new PublicUser('','','','', false);
+  user: PublicUser = new PublicUser('','','','', false,'');
+  admin: PublicUser = new PublicUser('','','','', false,'');
 
   async ngOnInit() {
     this.displayService._displayed.subscribe(data => {

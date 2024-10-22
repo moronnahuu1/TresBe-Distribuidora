@@ -25,21 +25,23 @@ export class OrdersInfoCompletedComponent {
   cookieService = inject(CookieService);
   cartProducts: CartProduct[] = [];
   orders: Order[] = [];
-  user: PublicUser = new PublicUser('','','','',false);
-  admin: PublicUser = new PublicUser('','','','',false);
-  
+  user: PublicUser = new PublicUser('', '', '', '', false, '');
+  admin: PublicUser = new PublicUser('', '', '', '', false, '');
+  sellers: string[] = ['Todos', 'Soledad Dorso', 'Juan Gabotto', 'Nicolas Mardones', 'Esteban Bazziano'];
+  seller: string = 'Todos';
+
   async ngOnInit() {
     (await this.cookieService.returnUser()).subscribe(data => {
       this.user = data;
     });
-     this.oxpService.getOap().subscribe(products => {
+    this.oxpService.getOap().subscribe(products => {
       this.ordersAndProducts = products;
-     });
-     (await this.cookieService.getAdmin()).subscribe(data => {
+    });
+    (await this.cookieService.getAdmin()).subscribe(data => {
       this.admin = data;
     });
   }
-  changeDisplay(name: string, orderID: string){
+  changeDisplay(name: string, orderID: string) {
     this.oxpService.selectOrder(orderID);
     this.displayService.changeDisplay(name);
   }
@@ -47,41 +49,60 @@ export class OrdersInfoCompletedComponent {
   getDates(orderDate: Date): string {
     let newDate = new Date(orderDate);
     if (!(newDate instanceof Date) || isNaN(newDate.getTime())) {
-        throw new Error("Invalid date");
+      throw new Error("Invalid date");
     }
-    
+
     let day = newDate.getDate().toString().padStart(2, '0');
     let month = (newDate.getMonth() + 1).toString().padStart(2, '0');
     let year = newDate.getFullYear().toString();
 
     return `${day}/${month}/${year}`;
-}
+  }
 
-isAdmin(){
-    if(this.admin.email != ''){
-        return true;
-    }else{
-        return false;
+  isAdmin() {
+    if (this.admin.email != '') {
+      return true;
+    } else {
+      return false;
     }
-}
-getInput(name: string){
-  if(name != undefined && name != ''){
-    let inpAux = document.getElementById(name) as HTMLInputElement;
-    if(inpAux){
-      let input = inpAux.value;
-      return input;
-    }else{
+  }
+  getInput(name: string) {
+    if (name != undefined && name != '') {
+      let inpAux = document.getElementById(name) as HTMLInputElement;
+      if (inpAux) {
+        let input = inpAux.value;
+        return input;
+      } else {
+        return '';
+      }
+    } else {
       return '';
     }
-  }else{
-    return '';
   }
-}
-async searchOrder(){
-  let input = this.getInput('searchInp');
-  (await this.oxpService.getProducts('search', input)).subscribe(orders => {
-    this.ordersAndProducts = orders;
-  });
-  ///this.orderService.searchOrder(input);
-}
+  async searchOrder() {
+    let input = this.getInput('searchInp');
+    (await this.oxpService.getProducts('search', input)).subscribe(orders => {
+      this.ordersAndProducts = orders;
+    });
+    ///this.orderService.searchOrder(input);
+  }
+  async changeSeller(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.seller = selectedValue;
+    if (this.seller == 'Todos') {
+      if (this.isAdmin()) {
+        (await this.oxpService.getProducts('admin', null)).subscribe(orders => {
+          this.ordersAndProducts = orders;
+        });
+      } else {
+        (await this.oxpService.getProducts('all', null)).subscribe(orders => {
+          this.ordersAndProducts = orders;
+        });
+      }
+    } else {
+      (await this.oxpService.getProducts('seller', this.seller)).subscribe(orders => {
+        this.ordersAndProducts = orders;
+      });
+    }
+  }
 }

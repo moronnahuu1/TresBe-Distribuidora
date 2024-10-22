@@ -167,6 +167,7 @@ const routes: Routes = [
   {
     path: 'modify/order/:orderID',
     component: ModifyOrderComponent,
+    canActivate: [adminGuard]
   }
 ]
 @NgModule({

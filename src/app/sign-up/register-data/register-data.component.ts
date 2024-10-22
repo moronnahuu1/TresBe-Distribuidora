@@ -24,7 +24,7 @@ export class RegisterDataComponent implements OnInit {
   dataCreated: boolean = false;
   sellerTerm: string = '';
   noSeller: boolean = false;
-  admin: PublicUser = new PublicUser('', '', '', '', false);
+  admin: PublicUser = new PublicUser('', '', '', '', false,'');
   cookieService = inject(CookieService);
 
   async ngOnInit() {

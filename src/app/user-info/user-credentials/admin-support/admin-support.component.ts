@@ -18,7 +18,7 @@ export class AdminSupportComponent{
   ordersAndProducts: OrdersAndProducts[] = [];
   orderService = inject(OrdersService);
   userService = inject(UserService);
-  user: PublicUser = new PublicUser('','','','',false);
+  user: PublicUser = new PublicUser('','','','',false,'');
   userdataService = inject(UserdataService);
   cookieService = inject(CookieService);
 

@@ -21,12 +21,12 @@ export class ButtonsDetailComponent implements OnInit{
   oxpService = inject(OrdersXProductsService);
   router = inject(Router);
   orderID: string = "";
-  order: Order = new Order("","",0,0,0,0,new Date(),"", "", false, '');
+  order: Order = new Order("","",0,0,0,0,new Date(),"", "", false, '','','','');
   activeRoute = inject(ActivatedRoute);
   oxp: Array<OrderXproducts> = [];
   userdataArray: Array<Userdata> = [];
-  user: PublicUser = new PublicUser("", "", "", "", false);
-  admin: PublicUser = new PublicUser("", "", "", "", false);
+  user: PublicUser = new PublicUser("", "", "", "", false,'');
+  admin: PublicUser = new PublicUser("", "", "", "", false,'');
   userdata: Userdata = new Userdata("", "","","","","","","","","",0,"","");
   users: Array<Userdata> = [];
   cookieService = inject(CookieService);

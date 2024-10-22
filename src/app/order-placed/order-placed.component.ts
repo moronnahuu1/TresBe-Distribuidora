@@ -12,7 +12,7 @@ import { PublicUser } from '../models/PublicUser';
 })
 export class OrderPlacedComponent implements OnInit{
     orderService = inject(OrdersService);
-    order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "", false, '');
+    order: Order = new Order("", "", 0, 0, 0, 0, new Date(), "", "", false, '','','', '');
     activeRoute = inject(ActivatedRoute);
     id = this.activeRoute.snapshot.params['id'];
     async ngOnInit() {

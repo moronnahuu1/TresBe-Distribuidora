@@ -26,7 +26,7 @@ export class CheckoutButtonsComponent implements OnInit{
   userXcoupon: UserXcoupon = new UserXcoupon('','','');
   couponSearched: Cupon = new Cupon('','',0,new Date(), false, 0);
   router = inject(Router);
-  user: PublicUser = new PublicUser('', '', '', '', false);
+  user: PublicUser = new PublicUser('', '', '', '', false,'');
   applied: boolean = false;
   used: boolean = false;
   notfound: boolean = false;

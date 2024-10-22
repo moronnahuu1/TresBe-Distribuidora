@@ -6,6 +6,7 @@
         <p>{{getDates(selectedOrder.orderDate)}}</p>
         <p>$ {{formatNumber(selectedOrder.total)}}</p>
         <p *ngIf="!(selectedOrder.payed) && !(user.client) && !isAdmin()">Transferencia pendiente</p>
+        <p *ngIf="selectedOrder.description != ''">{{selectedOrder.description}}</p>
       </div>
     </section>
     <section class="personal-info">
@@ -38,15 +39,22 @@
         <span *ngIf="selectedOrder.attended">Si</span>
         <span *ngIf="!selectedOrder.attended">No</span>
       </div>
+      <div class="info-row">
+        <span>Orden Pagada</span>
+        <span *ngIf="selectedOrder.payed">Si</span>
+        <span *ngIf="!selectedOrder.payed">No</span>
+      </div>
     </section>
 
     <div id="buttonsUser">
       <button style="cursor: auto;" *ngIf="!isAdmin() && selectedOrder.attended">Tu orden ya fue registrada!</button>
-      <button *ngIf="isAdmin()" (click)="deleteUserOrder(selectedOrder.code)">Eliminar</button>
+      <button id="deleteButton" *ngIf="isAdmin()" (click)="deleteUserOrder(selectedOrder.code)">Eliminar</button>
       <button *ngIf="isAdmin() && !selectedOrder.attended" (click)="confirmAttend('attend')" id="registerOrder">Orden Registrada</button>
-      <button *ngIf="isAdmin() && selectedOrder.attended" (click)="confirmAttend('unattend')">No está registrada</button>
-      <button *ngIf="isAdmin()" routerLink="/modify/order/{{selectedOrder.id}}">Modificar</button>
-      <button *ngIf="!(user.client) && !(selectedOrder.payed) && !isAdmin()">Ya hice la transferencia</button>
+      <button id="noRegisterButton" *ngIf="isAdmin() && selectedOrder.attended" (click)="confirmAttend('unattend')">No está registrada</button>
+      <button id="payedButton" *ngIf="isAdmin() && selectedOrder.attended && !selectedOrder.payed" (click)="confirmPayment('payed')">Orden Pagada</button>
+      <button id="notPayedButton" *ngIf="isAdmin() && selectedOrder.attended && selectedOrder.payed" (click)="confirmPayment('notPayed')">No está pagada</button>
+      <button id="mofifyButton" *ngIf="isAdmin()" routerLink="/modify/order/{{selectedOrder.id}}">Modificar</button>
+      <!--<button *ngIf="!(user.client) && !(selectedOrder.payed) && !isAdmin()">Ya hice la transferencia</button>!-->
     </div>
   </main>
   <div id="containerNoOrders" *ngIf="selectedOrder.code == ''">

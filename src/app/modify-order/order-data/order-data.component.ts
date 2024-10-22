@@ -4,6 +4,7 @@ import { CartProduct } from 'src/app/models/CartProduct';
 import { Order } from 'src/app/models/Order';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
 import { OrderXproducts } from 'src/app/models/OrderXproduct';
+import { Product } from 'src/app/models/Product';
 import { CartProductService } from 'src/app/services/cart-product.service';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { OrdersXProductsService } from 'src/app/services/orders-x-products.service';
@@ -18,7 +19,7 @@ export class OrderDataComponent implements OnInit{
   activeRoute = inject(ActivatedRoute);
   orderID = this.activeRoute.snapshot.params['orderID']; //Se busca mediante la ruta el ID del producto al que se quiere acceder
   orderService = inject(OrdersService);
-  orderSelected: Order = new Order('','',0,0,0,0,new Date(), '','',false,'');
+  orderSelected: Order = new Order('','',0,0,0,0,new Date(), '','',false,'','','','');
   cartProductsService = inject(CartProductService);
   cartProducts: CartProduct[] = [];
   orderXproductsService = inject(OrderXProductsXOxpService);
@@ -59,6 +60,48 @@ export class OrderDataComponent implements OnInit{
       this.deletedProductsID.push(this.cartProducts[i].id);
       this.cartProducts.splice(i, 1);
       this.deleted = true;
+    }
+  }
+  async incrementQuantity(product: CartProduct, index: number){
+    /* Cuando el usuario hace click en el boton +, se llama a esta funcion para que primero recorra la lista de productos, luego
+    encuentre el producto y una vez que lo encuentra le cambia la cantidad, en este caso incrementando, pero realiza comprobaciones
+    antes para no caer en fallos como por ejemplo revisar que la cantidad que el usuario desea no sea mayor a la del stock disponible */
+    //if(product.quantity < product.stock){
+      let i=0;
+      let access = false;
+      while(i<this.cartProducts.length && !access){
+        if(this.cartProducts[i].id == product.id){
+          access = true;
+        }else{
+          i++;
+        }
+      }
+      if(access){
+        this.cartProducts[i].quantity = this.cartProducts[i].quantity + 1;
+        await this.cartProductsService.updateCartProduct(this.cartProducts[i].id, this.cartProducts[i]).toPromise();
+      }
+    //}
+  }
+
+  async decrementQuantity(product: CartProduct, index: number){
+ /* Cuando el usuario hace click en el boton -, se llama a esta funcion para que primero recorra la lista de productos, luego
+    encuentre el producto y una vez que lo encuentra le cambia la cantidad, en este caso decrementando, pero realiza comprobaciones
+    antes para no caer en fallos como por ejemplo revisar que la cantidad que el usuario desea no sea menor a 1 unidad, ya que podria
+    caer en numeros menores a 0, lo que implicaria fallos a la hora de realizar la compra */
+    if(product.quantity > 1){
+      let i=0;
+      let access = false;
+      while(i<this.cartProducts.length && !access){
+        if(this.cartProducts[i].id == product.id){
+          access = true;
+        }else{
+          i++;
+        }
+      }
+      if(access){
+        this.cartProducts[i].quantity = this.cartProducts[i].quantity - 1;
+        await this.cartProductsService.updateCartProduct(this.cartProducts[i].id, this.cartProducts[i]).toPromise();
+      }
     }
   }
   getDates(orderDate: Date): string {

@@ -87,7 +87,6 @@
     }
   }
   button{
-    background-color: #007bff !important;
     color: white !important;
     border: none !important;
     border-radius: 5px !important;
@@ -98,14 +97,14 @@
     display: flex !important;
     gap: 10px !important;
   }
-  #registerOrder{
-    background-color: white !important;
-    color: black !important;
-    padding: 8px 18px !important;
-    border: 2px solid #007bff !important;
-  }
   .btn-success{
-    background-color: rgb(0, 197, 0) !important;
+    background-color: rgb(110, 166, 110) !important;
+  }
+  #deleteButton, #registerOrder, #noRegisterButton{
+    background-color: #4d7e98;
+  }
+  #payedButton, #notPayedButton, #mofifyButton{
+    background-color: #a4bb43;
   }
   /* Tablets (portrait and landscape) */
 @media (min-width: 768px) and (max-width: 1199px) {

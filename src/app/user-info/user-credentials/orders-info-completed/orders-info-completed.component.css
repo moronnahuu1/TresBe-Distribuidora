@@ -11,6 +11,17 @@
     overflow-y: auto;
     overflow-x: auto;
 }
+#formAux{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    select{
+        border-radius: 30px;
+        padding: 0.5vh 1vh;
+        color: black;
+    }
+}
 h1{
     letter-spacing: 2px;
     text-align: center;
@@ -37,6 +48,9 @@ h1{
     button:hover{
         transform: scale(1.07);
     }
+}
+select{
+    border: 0;
 }
 .items{
     padding-left: 3vi;

@@ -12,7 +12,7 @@ import { CookieService } from './cookie.service';
 export class UserService {
   private myAppUrl: string;
   private myApiUrl: string;
-  user: PublicUser = new PublicUser('', '', '', '', false);
+  user: PublicUser = new PublicUser('', '', '', '', false,'');
   cookieService = inject(CookieService);
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint;

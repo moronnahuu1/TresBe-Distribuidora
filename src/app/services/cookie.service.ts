@@ -10,9 +10,9 @@ import { PublicUser } from '../models/PublicUser';
 export class CookieService {
   private myAppUrl: string;
   private myApiUrl: string;
-  user: PublicUser = new PublicUser('','','','', false);
+  user: PublicUser = new PublicUser('','','','', false,'');
   _user: BehaviorSubject<PublicUser> = new BehaviorSubject<PublicUser>(this.user);
-  admin: PublicUser = new PublicUser('','','','', false);
+  admin: PublicUser = new PublicUser('','','','', false,'');
   _admin: BehaviorSubject<PublicUser> = new BehaviorSubject<PublicUser>(this.admin);
   isLogged: boolean = false;
   isAdmin: boolean = false;
