@@ -122,7 +122,7 @@ select{
 
 /* Mobile devices (landscape) */
 @media (min-width: 481px) and (max-width: 767px) {
-    #container {
+    /*#container {
         width: 50vi;
         height: 65vi;
         padding: 2.5vi;
@@ -137,6 +137,22 @@ select{
     #noOrders p {
         width: 80%;
         font-size: 22px;
+    }*/
+    #container {
+        width: calc(100vi - 4vi);
+        height: 90vh;
+        padding: 2vi;
+    }
+    .items {
+        padding-left: 5vi;
+        padding-right: 5vi;
+        padding-top: 3vi;
+        padding-bottom: 4vi;
+        font-size: 15px;
+    }
+    #noOrders p {
+        width: 90%;
+        font-size: 24px;
     }
 }
 

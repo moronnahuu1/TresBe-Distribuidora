@@ -15,7 +15,15 @@
     display: flex;
     justify-content: space-between;
   }
-@media (min-width: 768px) and (max-width: 1199px) {}
+@media (min-width: 768px) and (max-width: 1199px) {
+  #checkoutContainer{
+    .checkout{
+      width: fit-content;
+      min-width: 15vh;
+      gap: 10px;
+    }
+  }
+}
 @media (min-width: 481px) and (max-width: 767px) {
   #checkoutContainer{
     display: grid;
