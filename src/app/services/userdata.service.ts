@@ -25,6 +25,16 @@ export class UserdataService {
     }
     return this._userData.asObservable();
   }
+
+  async readUserdataAdmin(userID: string) {
+    let userdataAux = await this.setUserdataID(userID);
+    if (userdataAux) {
+      return userdataAux
+    }else{
+      return null;
+    }
+  }
+
   async returnUserID(id: string) {
     let userdataAux = await this.getUserdataByID(id);
     if (userdataAux) {

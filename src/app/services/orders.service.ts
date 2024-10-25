@@ -1,7 +1,7 @@
 import { Injectable, OnInit, inject } from '@angular/core';
 import { Order } from '../models/Order';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
 import { OrdersXProductsService } from './orders-x-products.service';
@@ -208,10 +208,25 @@ export class OrdersService {
     let urlAux = this.myAppUrl + this.myApiUrl + 'user/debt/'
     return this.http.get<Order[]>(urlAux + this.user.id, { withCredentials: true });
   }
-  getOrdersByID() {
+  /*getOrdersByID() {
     let urlAux = this.myAppUrl + this.myApiUrl + 'user/'
     return this.http.get<Order[]>(urlAux + this.user.id, { withCredentials: true });
-  }
+  }*/
+    getOrdersByID() {
+      const urlAux = this.myAppUrl + this.myApiUrl + 'user/';
+      return this.http.get<Order[]>(urlAux + this.user.id, { withCredentials: true })
+        .pipe(
+          catchError(error => {
+            if (error.status === 404) {
+              console.error('Error 404: Usuario no encontrado.');
+              // Aquí puedes ejecutar algún código adicional o retornar un valor vacío.
+              return of([]); // Retorna un arreglo vacío o un valor por defecto.
+            }
+            // Si el error es otro, puedes volver a lanzarlo o manejarlo de forma diferente
+            throw error;
+          })
+        );
+    }
   getOrdersAdmin() {
     let urlAux = this.myAppUrl + this.myApiUrl;
     return this.http.get<Order[]>(urlAux + 'admin/attended', { withCredentials: true });

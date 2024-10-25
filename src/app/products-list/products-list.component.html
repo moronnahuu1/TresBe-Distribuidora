@@ -27,7 +27,7 @@
             </div>
             <div id="containerButtons">
                 <button routerLink="/products/{{product.id}}" class="buttonProducts fa fa-credit-card" *ngIf="!isAdmin()"> <span style="font-family: Arial, Helvetica, sans-serif; margin-left: 0.5vh;">COMPRAR</span></button>
-                <button routerLink="/modify/product/{{product.id}}" class="buttonProducts fa fa-pencil-square-o" *ngIf="isAdmin()"> <span style="font-family: Arial, Helvetica, sans-serif; margin-left: 0.5vh;">MODIFICAR</span></button>
+                <button (click)="goToModify()" class="buttonProducts fa fa-pencil-square-o" *ngIf="isAdmin()"> <span style="font-family: Arial, Helvetica, sans-serif; margin-left: 0.5vh;">MODIFICAR</span></button>
                 <button routerLink="/products/{{product.id}}" id="watch" class="buttonProducts fa fa-eye" *ngIf="!isAdmin()"> <span style="font-family: Arial, Helvetica, sans-serif; margin-left: 0.5vh;">VER</span></button>
                 <button routerLink="/products" id="delete" class="buttonProducts fa fa-eye" (click)="deleteProduct(product.id)" *ngIf="isAdmin()"> <span style="font-family: Arial, Helvetica, sans-serif; margin-left: 0.5vh;">ELIMINAR</span></button>
             </div>

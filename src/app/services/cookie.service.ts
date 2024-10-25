@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PublicUser } from '../models/PublicUser';
 
@@ -98,9 +98,19 @@ export class CookieService {
       withCredentials: true // Esto permite que las cookies se envíen y se reciban
     });
   }
-  getToken(cookieName: string): Observable<PublicUser> {
+  /*getToken(cookieName: string): Observable<PublicUser> {
     return this.http.get<PublicUser>(this.myAppUrl + this.myApiUrl + 'get/' + cookieName, {
       withCredentials: true // Esto permite que las cookies se envíen y se reciban
     });
-  }
+  }*/
+    getToken(cookieName: string): Observable<PublicUser | null> {
+      return this.http.get<PublicUser>(`${this.myAppUrl}${this.myApiUrl}get/${cookieName}`, {
+        withCredentials: true // Esto permite que las cookies se envíen y se reciban
+      }).pipe(
+        catchError(error => {
+          console.error(`Error al obtener el token para ${cookieName}:`, error);
+          return of(null); // Retorna `null` en caso de error para manejarlo de forma segura
+        })
+      );
+    }
 }

@@ -38,13 +38,18 @@ export class OrderDetailComponent implements OnInit{
     (await this.cookieService.getUser()).subscribe(data => {
       this.user = data;
     });
+    (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
+    });
       this.id = this.activeRoute.snapshot.params['id'];      
       await this.getOXP();
       await this.getProducts();
       let orderAux = await this.getOrder();
       if(orderAux != undefined){
         this.order = orderAux;
-        this.checkOrderByUser();
+        if(!this.isAdmin()){
+          this.checkOrderByUser();
+        }
       }
       await this.getUserData();
       (await this.cookieService.getAdmin()).subscribe(data => {
@@ -99,8 +104,11 @@ async getOXP(){
 }
 
 async getUserData(){
-  (await this.userdataService.returnUserdata(this.user.id)).subscribe(data => {
+  (await this.userdataService.returnUserID(this.order.userdataId)).subscribe(data => {
     this.userdata = data;
   });
+}
+isAdmin(){
+  return (this.admin.email != '');
 }
 }

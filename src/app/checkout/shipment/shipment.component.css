@@ -29,12 +29,13 @@ button{
     width: 25vh;
     height: 5vh;
     cursor: pointer;
-    background-color: #002855;
+    background-color: #4d7e98;
     color: white;
-    transition: transform 1s ease;
+    transition: transform 1s ease, background-color 1s;
 }
 button:hover{
     transform: scale(1.07);
+    background-color: #a4bb43;
 }
 #checked{
     display: flex;

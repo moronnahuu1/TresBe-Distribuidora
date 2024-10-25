@@ -40,7 +40,8 @@ h1{
         border: 0;
         padding: 1vh 2vh;
         border-radius: 10px;
-        background-color: rgb(217, 255, 47);
+        background-color: #a4bb43;
+        color: white;
         cursor: pointer;
         font-family: sans-serif;
         transition: transform 1s ease;

@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | Tresbe Distribuidora</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Tresbe Distribuidora</title>
 </head>
+
 <body>
-    <app-nav-bar></app-nav-bar>
-    <div class="details">
+  <app-nav-bar></app-nav-bar>
+  <div class="details">
+    <div id="align">
       <app-shipment></app-shipment>
-      <app-user-data></app-user-data>
+      <app-select-user *ngIf="isAdmin()"></app-select-user>
     </div>
-    <app-footer></app-footer>
+    <app-user-data></app-user-data>
+  </div>
+  <app-footer></app-footer>
 </body>
+
 </html>

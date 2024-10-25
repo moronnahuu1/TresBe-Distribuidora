@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { CookieService } from '../services/cookie.service';
+import { PublicUser } from '../models/PublicUser';
 
 @Component({
   selector: 'app-checkout',
@@ -6,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit{
-  ngOnInit() {
+  cookieService = inject(CookieService);
+  admin: PublicUser = new PublicUser('', '', '', '', false, '');
+  async ngOnInit() {
     window.scrollTo(0, 0);
+    (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
+    });
+  }
+  isAdmin(){
+    return (this.admin.email != '');
   }
 }

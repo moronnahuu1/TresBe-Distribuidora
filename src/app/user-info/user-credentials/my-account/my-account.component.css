@@ -34,12 +34,17 @@
   }
   
   .edit-button {
-    background-color: #007bff;
+    background-color: #4d7e98;
     color: white;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
+    transition: background-color 1s, transform 1s ease;
+  }
+  .edit-button:hover{
+    transform: scale(1.07);
+    background-color: #a4bb43;
   }
   
   .personal-info, .address-info {

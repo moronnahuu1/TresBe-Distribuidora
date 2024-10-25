@@ -32,7 +32,7 @@ export class ProductItemComponent implements OnInit {
   productSelected: Product = new Product('', '', '', '', 0, '', 0, '', 1, 0);
   allFeatures: Feature[] = [];
   activeRoute = inject(ActivatedRoute);
-  user: PublicUser = new PublicUser('', '', '', '', false,'');
+  user: PublicUser = new PublicUser('', '', '', '', false, '');
   onCart: Boolean = false;
   searchTerm: string = '';
   optionsSearched: Options[] = [];
@@ -126,8 +126,10 @@ export class ProductItemComponent implements OnInit {
       let optionAux1 = await this.optionService.returnProductByName(this.optionSelected.id);
       if (optionAux1 != null) {
         this.optionSelected = optionAux1;
-        this.productSelected.price = await this.productService.setProductPrice(this.optionSelected.id);
-        this.productSelected.priceDiscount = (this.productSelected.price - (this.productSelected.price * this.productSelected.discount));
+        if (!this.admin) {
+          this.productSelected.price = await this.productService.setProductPrice(this.optionSelected.id);
+          this.productSelected.priceDiscount = (this.productSelected.price - (this.productSelected.price * this.productSelected.discount));
+        }
       }
     }
   }
@@ -227,7 +229,7 @@ export class ProductItemComponent implements OnInit {
     return numerator / denominator;
   }
   async updatePriceList(priceList: string) {
-    if(this.admin){
+    if (this.admin) {
       this.productSelected.price = await this.productService.selectPriceList(this.optionSelected.id, priceList);
     }
   }

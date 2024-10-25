@@ -74,6 +74,14 @@ export class UserService {
     }
     return user;
   }
+  async readUsersBySeller(seller: string) {
+    let usersAux = await this.getBySellerTC(seller);
+    let users: User[] = []
+    if (usersAux) {
+      users = usersAux;
+    }
+    return users;
+  }
   async getUserTC(id: string) {
     try {
       const data = await this.getUser(id).toPromise();
@@ -108,16 +116,6 @@ export class UserService {
       throw error; // Puedes manejar el error de acuerdo a tus necesidades
     }
   }
-  getUser(id: string): Observable<User> {
-    return this.http.get<User>(this.myAppUrl + this.myApiUrl + id, { withCredentials: true });
-  }
-  getUserByEmail(email: string): Observable<User> {
-    let urlAux = this.myAppUrl + this.myApiUrl + "email/";
-    if (this.user.email == '') {
-      this.user.email = 'null';
-    }
-    return this.http.get<User>(urlAux + email + '/' + this.user.email, { withCredentials: true });
-  }
   async readLogin(email: string, password: string) {
     let userAux = await this.loginTC(email, password);
     if (userAux != null) {
@@ -147,6 +145,45 @@ export class UserService {
       return null;
     }
   }
+  async logoutTC() {
+    try {
+      let access = await this.logout().toPromise();
+      return access;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
+      return false;
+    }
+  }
+  async getBySellerTC(seller: string) {
+    try {
+      let usersAux = await this.getUsersBySeller(seller).toPromise();
+      return usersAux;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error obteniendo datos:', error.message);
+      }
+      return false;
+    }
+  }
+  getUser(id: string): Observable<User> {
+    return this.http.get<User>(this.myAppUrl + this.myApiUrl + id, { withCredentials: true });
+  }
+  getUserByEmail(email: string): Observable<User> {
+    let urlAux = this.myAppUrl + this.myApiUrl + "email/";
+    if (this.user.email == '') {
+      this.user.email = 'null';
+    }
+    return this.http.get<User>(urlAux + email + '/' + this.user.email, { withCredentials: true });
+  }
+  getUsersBySeller(seller: string): Observable<User[]> {
+    let urlAux = this.myAppUrl + this.myApiUrl + "seller/";
+    if (this.user.email == '') {
+      this.user.email = 'null';
+    }
+    return this.http.get<User[]>(urlAux + seller + '/' + this.user.email, { withCredentials: true });
+  }
   getUserByName(username: string): Observable<User> {
     let urlAux = this.myAppUrl + this.myApiUrl + "username/";
     return this.http.get<User>(urlAux + username, { withCredentials: true });
@@ -170,17 +207,6 @@ export class UserService {
     return this.http.post<User>(urlAux, userdata, {
       withCredentials: true // Esto permite que las cookies se envíen y se reciban
     });
-  }
-  async logoutTC() {
-    try {
-      let access = await this.logout().toPromise();
-      return access;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error obteniendo datos:', error.message);
-      }
-      return false;
-    }
   }
 
   logout(): Observable<void> {

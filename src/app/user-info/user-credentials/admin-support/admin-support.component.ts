@@ -29,11 +29,11 @@ export class AdminSupportComponent{
       this.cookieService.changeUser(this.user).subscribe(data => {
         this.user = data;
       });
+      (await this.userdataService.returnUserdata(this.user.id)).subscribe(userdata => {
+      }); ///LA INFO DE USUARIO SE ACTUAlIZA PARA VER LA INFO DEL USUARIO BUSCADO
       (await this.orderxproductsxoxpService.getProducts('', null)).subscribe(products => {
         this.ordersAndProducts = products;
       });
-      (await this.userdataService.returnUserdata(this.user.id)).subscribe(userdata => {
-      }); ///LA INFO DE USUARIO SE ACTUAlIZA PARA VER LA INFO DEL USUARIO BUSCADO
     }
   }
 

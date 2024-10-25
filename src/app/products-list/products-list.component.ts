@@ -41,6 +41,9 @@ export class ProductsListComponent implements OnInit{
     });
     ///this.hasCostPrice();
   }
+  goToModify(){
+    window.location.href = "/modify/product/{{product.id}}";
+  }
 
   async readCounts(value: string, type: string){
     (await this.productService.readCounts(value, type)).subscribe(pages => {

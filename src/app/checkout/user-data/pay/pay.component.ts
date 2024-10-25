@@ -27,7 +27,7 @@ export class PayComponent {
   orderService = inject(OrdersService);
   userXcouponService = inject(UserXcouponService);
   oxpService = inject(OrdersXProductsService);
-  userdata: Userdata = new Userdata('','','','','','','','','','',0,'','');
+  userdata: Userdata = new Userdata('', '', '', '', '', '', '', '', '', '', 0, '', '');
   userdataService = inject(UserdataService);
   cartProducts: Array<Product> = [];
   cookieService = inject(CookieService);
@@ -35,7 +35,8 @@ export class PayComponent {
   subtotal: number = 0;
   total: number = 0;
   dataCreated: boolean = false;
-  user: PublicUser = new PublicUser("", "", "", "", false,'');
+  user: PublicUser = new PublicUser("", "", "", "", false, '');
+  admin: PublicUser = new PublicUser("", "", "", "", false, '');
   creating: boolean = false;
   coupon: string = '';
   isLogged: boolean = false;
@@ -60,22 +61,34 @@ export class PayComponent {
     (await this.userdataService.returnUserdata(this.user.id)).subscribe(userdata => {
       this.userdata = userdata;
     });
-    
+
     this.coupon = this.getCouponID();
+
+    (await this.cookieService.getAdmin()).subscribe(data => {
+      this.admin = data;
+    });
   }
-  getCouponID(){
+  getCouponID() {
     let idAux = localStorage.getItem('coupon');
     let couponID = '';
-    if(idAux){
+    if (idAux) {
       couponID = idAux;
     }
     localStorage.removeItem('coupon');
     return couponID;
   }
 
-  modifyStock(){
-    for(let i=0; i<this.cartProducts.length; i++){ //Se recorre la lista de los productos UNICAMENTE en el CARRITO
-      if(this.cartProducts[i].stock >= this.cartProducts[i].quantity){ //Se comprueba que el stock no sea menor a la cantidad pedida
+  isAdmin() {
+    if (this.admin.email != '') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  modifyStock() {
+    for (let i = 0; i < this.cartProducts.length; i++) { //Se recorre la lista de los productos UNICAMENTE en el CARRITO
+      if (this.cartProducts[i].stock >= this.cartProducts[i].quantity) { //Se comprueba que el stock no sea menor a la cantidad pedida
         this.cartProducts[i].stock = this.cartProducts[i].stock - this.cartProducts[i].quantity; //Se actualiza el stock
         this.updateProducts(this.cartProducts[i].latestID, this.cartProducts[i]); //Se actualiza el producto en la base de datos
       }
@@ -86,31 +99,52 @@ export class PayComponent {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     const charactersLength = characters.length;
-    
+
     for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
 
     return result;
-}
+  }
   generateRandomCode(length: number = 5): string {
     const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let result = '';
     const charactersLength = characters.length;
-    
+
     for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
 
     return result;
-}
-  async createOrder(){
+  }
+  async getUserAdmin() {
+    if(this.isAdmin()){
+      let infoAux = localStorage.getItem('userSelected');
+      if(infoAux){
+        this.user = JSON.parse(infoAux);
+        (await this.userdataService.returnUserdata(this.user.id)).subscribe(data => {
+          this.userdata = data;          
+        });
+      }
+      localStorage.removeItem('userSelected');
+    }
+  }
+  async test(){
+    await this.getUserAdmin();
+    console.log(this.user);
+    console.log(this.userdata);
+  }
+  async createOrder() {
     /* La funcion se encarga de manejar la base de datos creando la nueva orden del usuario y agregandola a la base de datos */
+    await this.getUserAdmin();
     let orderID = this.generateRandomId(); //Se crea un ID de la orden
     let textArea = document.getElementById('descriptionInp') as HTMLTextAreaElement;
     let textDescription: string = '';
-    if(textArea){
-      textDescription = textArea.value;
+    if (textArea) {
+      if(this.isAdmin()){
+        textDescription += "Pedido realizado por su respectivo vendedor | "
+      }
+      textDescription += textArea.value;
     }
     let order: Order = new Order(orderID, this.generateRandomCode(), 0, 0, this.subtotal, this.total, new Date(), this.user.id, this.userdata.id, false, this.user.username, '', textDescription, this.user.seller); //Se crea la orden con los datos de la reserva
     let to = this.user.email;
@@ -143,15 +177,15 @@ export class PayComponent {
     </div>
 </div>;`
     this.creating = true;
-    await this.orderService.saveOrder(order, to, subject, text, textAux).toPromise(); //Se guarda la orden creada en la base de datos
-    for(let i=0; i<this.cartProducts.length; i++){ //Se recorre el arreglo de productos DEL CARRITO
+    await this.orderService.saveOrder(order, to, subject, text, textAux).toPromise(); //Se guarda la orden creada en la base de datos    
+    for (let i = 0; i < this.cartProducts.length; i++) { //Se recorre el arreglo de productos DEL CARRITO
       let oxpAux: OrderXproducts = new OrderXproducts(this.generateRandomId(), orderID, this.cartProducts[i].id, this.cartProducts[i].quantity); //Se agregan los productos a una tabla de la base de datos (SOLO EL ID DEL PRODUCTO) y se lo relaciona con la orden de la misma manera (SOLO EL ID DE LA ORDEN)
-      this.oxpService.saveOrderXproducts(oxpAux).subscribe(() => {}); //Se guardan los datos creados en la base de datos
+      this.oxpService.saveOrderXproducts(oxpAux).subscribe(() => { }); //Se guardan los datos creados en la base de datos
       await this.addSellProduct(this.cartProducts[i]);
     }
     return orderID; //Se retorna el ID de la orden creada
   }
-  async verifyDebts(){
+  async verifyDebts() {
     try {
       const data = await this.orderService.getOrdersNotPayed().toPromise();
       console.log(data?.length);
@@ -162,60 +196,60 @@ export class PayComponent {
     }
   }
 
-  async getDebts(){
+  async getDebts() {
     let ordersAux = await this.verifyDebts();
     let totalDebt = 0;
-    if(ordersAux){
-      for(let i = 0; i<ordersAux.length; i++){
+    if (ordersAux) {
+      for (let i = 0; i < ordersAux.length; i++) {
         totalDebt += ordersAux[i].total;
       }
     }
     return totalDebt;
   }
-  noDebt(totalDebt: number){
-    if(totalDebt < 50000000){
+  noDebt(totalDebt: number) {
+    if (totalDebt < 50000000) {
       let totalAmount = totalDebt + this.total;
-      if(totalAmount < 50000000){
+      if (totalAmount < 50000000) {
         return true;
-      }else{
+      } else {
         return false;
       }
-    }else{
+    } else {
       return false;
     }
   }
 
-  async placeOrder(){
+  async placeOrder() {
     /* La funcion es la principal del componente, cuando el usuario reserva la orden se llama a esta funcion, y la funcion se encarga
     de llamar a las demas funciones para realizar las acciones que correspondan */
-    if(localStorage.getItem("dataCreated")){ //Verifica que el carrito tenga productos cargados
+    if (localStorage.getItem("dataCreated")) { //Verifica que el carrito tenga productos cargados
       ///this.modifyStock();
       let totalDebt = 0///await this.getDebts();
-      if(this.noDebt(totalDebt)){
-        if(this.coupon != ''){
+      if (this.noDebt(totalDebt)) {
+        if (this.coupon != '') {
           const userXcoupon = new UserXcoupon(this.generateRandomId(16), this.user.id, this.coupon);
           await this.userXcouponService.saveUser(userXcoupon).toPromise();
         }
         let orderID = await this.createOrder();
         this.cartService.saveCartAfterOrder(orderID);
         this.router.navigate([`/checkout/${orderID}`]); //Se redirecciona a la ruta del componente 'placed' para informarle al usuario que su orden fue creada
-      }else{
+      } else {
         this.router.navigate([`/checkout/amount/exceeded`])
       }
-      
-    }else{
+
+    } else {
       alert("Por favor, guarde los datos de envio antes de confirmar el pedido");
     }
   }
-  async addSellProduct(productAux: Product){
+  async addSellProduct(productAux: Product) {
     /* La funcion se encarga de sumar una nueva venta al producto que se compra */
     let productReturned = await this.productService.returnOneProduct(productAux.latestID);
-    if(productReturned){
+    if (productReturned) {
       productReturned.sells = (productReturned.sells + 1);
       await this.updateProducts(productReturned.id, productReturned);
     }
   }
-  async updateProducts(productID: string, productAux: Product): Promise<void>{
+  async updateProducts(productID: string, productAux: Product): Promise<void> {
     /* La funcion se encarga de actualizar los productos de la base de datos */
     try {
       const data = await this.productService.updateProduct(productID, productAux).toPromise();

@@ -51,7 +51,7 @@ img{
     margin: 20px 0;
 }
 .add-to-bag {
-    background-color: #3e8aab;
+    background-color: #4d7e98;
     color: #fff;
     padding: 10px;
     text-align: center;
@@ -91,7 +91,7 @@ img{
     background-color: #f0f0f0;
 }
 .delivery-info {
-    background-color: #8bc34a;
+    background-color: #a4bb43;
     color: #fff;
     padding: 15px;
     text-align: center;
@@ -196,6 +196,16 @@ select{
     .product-page{
         width: 90%;
         height: 70vh;
+    }
+    #optionSearchInp{
+        height: 2vh;
+        width: 10vh;
+        font-size: 10px;
+    }
+    #optionContainer{
+        display: flex;
+        flex-direction: column;
+        max-height: 7vh;
     }
 }
 @media (max-width: 279px) {}
