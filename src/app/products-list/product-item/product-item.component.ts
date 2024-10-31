@@ -49,7 +49,6 @@ export class ProductItemComponent implements OnInit {
     });
     const id = this.activeRoute.snapshot.params['id']; //Se busca mediante la ruta el ID del producto al que se quiere acceder
     this.productSelected = await this.productService.returnOneProduct(id); //Se busca el producto con el ID del parametro y se retorna desde la BDD
-
     (await this.optionService.readProductOptions(this.productSelected.id)).subscribe(options => { //Se leen las opciones asignadas que tiene este producto
       this.options = options;
       if (options.length > 0) { //Se asigna al producto la primer opcion que se encuentra para que, en caso de no elegir opcion, tenga esa primera opcion como default
@@ -57,7 +56,6 @@ export class ProductItemComponent implements OnInit {
         this.productSelected.optionSelected = this.optionSelected.name;
       }
     });
-
     this.productSelected.priceDiscount = (this.productSelected.price - (this.productSelected.price * this.productSelected.discount)); //Se calcula el descuento(Si es que tiene)
 
     (await this.featureService.readProductFeatures(this.productSelected.id)).subscribe(features => { //Se leen las caracteristicas asociadas que tiene el producto
@@ -126,10 +124,8 @@ export class ProductItemComponent implements OnInit {
       let optionAux1 = await this.optionService.returnProductByName(this.optionSelected.id);
       if (optionAux1 != null) {
         this.optionSelected = optionAux1;
-        if (!this.admin) {
-          this.productSelected.price = await this.productService.setProductPrice(this.optionSelected.id);
-          this.productSelected.priceDiscount = (this.productSelected.price - (this.productSelected.price * this.productSelected.discount));
-        }
+        this.productSelected.price = await this.productService.setProductPrice(this.optionSelected.id);
+        this.productSelected.priceDiscount = (this.productSelected.price - (this.productSelected.price * this.productSelected.discount));
       }
     }
   }

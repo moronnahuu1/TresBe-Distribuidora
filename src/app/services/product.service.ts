@@ -33,7 +33,7 @@ export class ProductService {
   products: Array<Product> = [];
   _products: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   productXpriceService = inject(PricesService);
-  user: PublicUser = new PublicUser('', '', '', '', false,'');
+  user: PublicUser = new PublicUser('', '', '', '', false, '');
   loading: boolean = false;
   _loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.loading);
   constructor(private http: HttpClient) {
@@ -90,20 +90,25 @@ export class ProductService {
     if (productsAux != undefined) {
       this.options = [];
       for (let i = 0; i < productsAux.length; i++) {
-        (await this.optionService.readProductOptions(productsAux[i].id)).subscribe(products => {
-          this.options = products;
-        });
-        if (this.options.length > 0) {
-          productsAux[i].optionSelected = this.options[0].name;
-          productsAux[i].price = await this.setProductPrice(this.options[0].id);
-        }
-        productsAux[i].priceDiscount = this.getDiscounts(productsAux[i]);
+        productsAux[i] = await this.setOptionPrice(productsAux[i]);
         this.products.push(productsAux[i]);
       }
       this._products.next(this.products);
       this.hasCostPrice();
     }
     return this._products.asObservable();
+  }
+
+  async setOptionPrice(productAux: Product) {
+    (await this.optionService.readProductOptions(productAux.id)).subscribe(products => {
+      this.options = products;
+    });
+    if (this.options.length > 0) {
+      productAux.optionSelected = this.options[0].name;
+      productAux.price = await this.setProductPrice(this.options[0].id);
+    }
+    productAux.priceDiscount = this.getDiscounts(productAux);
+    return productAux;
   }
 
   async getByCategory(category: string) {
@@ -142,31 +147,48 @@ export class ProductService {
     }
   }
 
-  async setProductPrice(optionID: string) {
+  async setProductPrice(optionID: string, userAux?: PublicUser) {
     let data = await this.getPrice(optionID);
     let priceAux: PriceXproduct = new PriceXproduct('', '', 0, 0, 0, 0, 0, 0, 0);
+    if (userAux) {
+      this.user = userAux;
+    }
     if (data != undefined) {
       priceAux = data;
     }
     if (this.user.email == '') {
       return priceAux.priceList4;
     } else {
+      let priceListUser: number = 0;
       switch (this.user.priceList) {
         case '1':
-          return priceAux.priceList1;
+          priceListUser = priceAux.priceList1;
+          break;
         case '2':
-          return priceAux.priceList2;
+          priceListUser = priceAux.priceList2;
+          break;
         case '3':
-          return priceAux.priceList3;
+          priceListUser = priceAux.priceList3;
+          break;
         case '4':
-          return priceAux.priceList4;
+          priceListUser = priceAux.priceList4;
+          break;
         case 'E':
-          return priceAux.priceListE;
+          priceListUser = priceAux.priceListE;
+          break;
         case 'G':
-          return priceAux.priceListG;
+          priceListUser = priceAux.priceListG;
+          break;
         default:
-          return priceAux.priceList4;
+          priceListUser = priceAux.priceList4;
+          break;
       }
+      if (userAux) {
+        (await this.cookieService.getUser()).subscribe(data => {
+          this.user = data;
+        });
+      }
+      return priceListUser;
     }
   }
   async selectPriceList(optionID: string, priceList: string) {
@@ -238,6 +260,7 @@ export class ProductService {
     let productReturn: Product = new Product('', '', '', '', 0, '', 0, '', 0, 0);
     if (productAux != undefined) {
       productReturn = productAux;
+      productReturn = await this.setOptionPrice(productReturn);
     }
     return productReturn;
   }

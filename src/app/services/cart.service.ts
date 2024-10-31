@@ -98,6 +98,11 @@ export class CartService {
       this.subTotal += (priceProduct * this.cartProducts[i].quantity);
       this._subTotal.next(this.subTotal);
     }
+    if(this.discount>0){
+      this.discount = 0;
+      this._discount.next(this.discount);
+      localStorage.removeItem("coupon");
+    }
     this.total = 0;
     this.total = this.subTotal + this.delivery - this.discount;
     this._Total.next(this.total);
@@ -117,6 +122,11 @@ export class CartService {
       }
       this.subTotal += (priceProduct * this.cartProducts[i].quantity);
       this._subTotal.next(this.subTotal);
+    }
+    if(this.discount>0){
+      this.discount = 0;
+      this._discount.next(this.discount);
+      localStorage.removeItem("coupon");
     }
     this.total = 0;
     this.total = this.subTotal + this.delivery - this.discount;

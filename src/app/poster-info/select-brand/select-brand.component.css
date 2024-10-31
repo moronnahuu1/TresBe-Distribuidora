@@ -47,6 +47,12 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
     }
+    .brands{
+        min-height: 5vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 @media (max-width: 480px) and (min-width: 280px) {
     #container{

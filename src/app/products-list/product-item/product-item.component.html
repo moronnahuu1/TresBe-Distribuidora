@@ -11,7 +11,7 @@
   <app-nav-bar></app-nav-bar>
   <div id="container">
     <div class="imageDiv">
-      <img src="{{productSelected.image}}" alt="">
+      <img src="{{productSelected.image}}" alt="{{productSelected.name}}">
     </div>
     <div class="product-page">
       <div class="product-title">{{productSelected.name}}</div>
@@ -21,7 +21,7 @@
       <div class="price" *ngIf="productSelected.discount > 0">${{productSelected.priceDiscount.toFixed(1)}}</div>
       <div class="add-to-bag" (click)="addToCart()" *ngIf="!onCart">Añadir al carrito</div>
       <div class="add-to-bag" [routerLink]="['/cart']" *ngIf="onCart">En carrito</div>
-      <div class="form">
+      <div class="form" id="formMeasure">
         <label for="optionSearch" class="option-title">MEDIDA </label>
         <input id="optionSearchInp" type="text" [(ngModel)]="searchTerm" (input)="updateSearchResults()"
           placeholder="Busque la medida que desea">
@@ -37,13 +37,13 @@
           <option *ngFor="let option of options" value="{{option.id}}">{{option.name}}</option>
         </select>
       </div>
-      <div class="form" *ngIf="admin">
+      <!--<div class="form" *ngIf="admin">
         <label for="priceList" class="option-title">LISTA DE PRECIOS </label>
         <select *ngIf="admin" [(ngModel)]="priceList" name="pricesList" (change)="updatePriceList(priceList)"
           id="priceOptions">
           <option *ngFor="let priceList of prices" value="{{priceList}}">{{priceList}}</option>
         </select>
-      </div>
+      </div>!-->
       <div class="product-options">
         <div class="option-title" *ngIf="productSelected.description != ''">DESCRIPCIÓN</div>
         <div id="description">{{productSelected.description}}</div>

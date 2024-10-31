@@ -25,12 +25,11 @@ img{
 }
 .product-page {
     width: 70vh;
-    height: 70vh;
+    min-height: 70vh;
+    height: fit-content;
     background: #fff;
     padding: 2vh;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-x: auto;
-    overflow-y: auto;
 }
 .product-title {
     font-size: 24px;
@@ -144,6 +143,13 @@ select{
         font-size: 10px;
     }
 }
+select{
+    border: 1px solid rgb(206, 206, 206);
+    border-radius: 15px;
+    padding: 5px;
+    color: black;
+    background-color: white;
+}
 @media (min-width: 1200px) {}
 @media (min-width: 768px) and (max-width: 1199px) {
     #container{
@@ -152,6 +158,14 @@ select{
     img{
         width: 35vh;
         height: 35vh;
+    }
+    #formMeasure{
+        display: flex;
+        flex-direction: column;
+    }
+    #optionSearchInp{
+        height: 8vh;
+        width: 30vh;
     }
     .imageDiv{
         height: 40vh;
@@ -179,6 +193,22 @@ select{
         width: 90%;
         height: 50vh;
     }
+    #formMeasure{
+        display: flex;
+        flex-direction: column;
+    }
+    #optionSearchInp{
+        height: 8vh;
+        width: 30vh;
+    }
+    #optionContainer{
+        grid-template-columns: repeat(1, 1fr);
+        max-height: 10vh;
+    }
+    #prodOptions{
+        height: 5vh;
+        width: 30vh;
+    }
 }
 @media (max-width: 480px) and (min-width: 280px) {
     #container{
@@ -197,15 +227,22 @@ select{
         width: 90%;
         height: 70vh;
     }
-    #optionSearchInp{
-        height: 2vh;
-        width: 10vh;
-        font-size: 10px;
-    }
-    #optionContainer{
+    #formMeasure{
         display: flex;
         flex-direction: column;
-        max-height: 7vh;
+    }
+    #optionSearchInp{
+        height: 7vh;
+        width: 25vh;
+        margin-bottom: 10px;
+    }
+    #optionContainer{
+        grid-template-columns: repeat(1, 1fr);
+        max-height: 10vh;
+    }
+    #prodOptions{
+        height: 5vh;
+        width: 30vh;
     }
 }
 @media (max-width: 279px) {}
