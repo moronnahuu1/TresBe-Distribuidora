@@ -97,6 +97,7 @@ import { ArticlesComponent } from './company/articles/articles.component';
 import { ModifyOrderComponent } from './modify-order/modify-order.component';
 import { OrderDataComponent } from './modify-order/order-data/order-data.component';
 import { SelectUserComponent } from './checkout/select-user/select-user.component';
+import { ListsComponent } from './company/lists/lists.component';
 
 @NgModule({
   declarations: [
@@ -193,6 +194,7 @@ import { SelectUserComponent } from './checkout/select-user/select-user.componen
     ModifyOrderComponent,
     OrderDataComponent,
     SelectUserComponent,
+    ListsComponent,
   ],
   imports: [
     BrowserModule,
