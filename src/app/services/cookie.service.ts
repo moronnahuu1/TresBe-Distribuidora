@@ -93,6 +93,20 @@ export class CookieService {
     return this._islogged.asObservable();
   }
 
+  async setSuperAdmin(admin: string): Promise<boolean>{
+    try{
+      let adminAux = await this.getSuperAdmin(admin).toPromise();
+      if(adminAux){
+        return adminAux;
+      } else {
+        return false;
+      }
+    }catch(Error){
+      console.log(Error);
+      return false;
+    }
+  }
+
   tokenExist(cookieName: string): Observable<boolean> {
     return this.http.get<boolean>(this.myAppUrl + this.myApiUrl + 'check/' + cookieName, {
       withCredentials: true // Esto permite que las cookies se envíen y se reciban
@@ -112,5 +126,8 @@ export class CookieService {
           return of(null); // Retorna `null` en caso de error para manejarlo de forma segura
         })
       );
+    }
+    getSuperAdmin(admin: string): Observable<boolean>{
+      return this.http.get<boolean>(this.myAppUrl + this.myApiUrl + 'superadmin/'+ admin, { withCredentials: true });
     }
 }

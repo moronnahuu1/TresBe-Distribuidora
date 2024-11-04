@@ -210,6 +210,8 @@ export class ProductService {
         return priceAux.priceListE;
       case 'G':
         return priceAux.priceListG;
+      case 'costo':
+        return priceAux.costPrice;
       default:
         return priceAux.priceList4;
     }

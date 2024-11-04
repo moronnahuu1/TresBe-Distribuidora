@@ -13,7 +13,7 @@ export class NavBarComponent implements OnInit{
   cartService = inject(CartService);
 products: Array<Product> = [];
 areNavItemsVisible: boolean = true;
-isHidden: boolean = true;
+isHidden: boolean = false;
 isTransitioning: boolean = false;
 cookieService = inject(CookieService);
 logged: boolean = false;

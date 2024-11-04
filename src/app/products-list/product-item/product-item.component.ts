@@ -37,7 +37,7 @@ export class ProductItemComponent implements OnInit {
   searchTerm: string = '';
   optionsSearched: Options[] = [];
   cookieService = inject(CookieService);
-  prices: string[] = ['E', 'G', '1', '2', '3', '4'];
+  prices: string[] = ['1', '2', '3', '4'];
   priceList: string = '';
   admin: boolean = false;
 
@@ -68,6 +68,12 @@ export class ProductItemComponent implements OnInit {
     this.isOnCart();
     this.options = this.sortDimensions(this.options);
     await this.isAdmin();
+    if(this.admin){
+      const access = await this.cookieService.setSuperAdmin(this.user.email);
+      if(access){
+        this.prices.push('G', 'E', 'costo');
+      }
+    }
 
   }
   getSelected() {
