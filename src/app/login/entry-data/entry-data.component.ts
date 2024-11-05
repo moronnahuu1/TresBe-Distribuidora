@@ -11,6 +11,7 @@ export class EntryDataComponent {
   userService = inject(UserService);
   incorrectEmail: boolean = false;
   incorrectPassword: boolean = false;
+  somethingWrong: string = '';
   users: Array<User> = [];
   viewPass: boolean = false;
   async validateUser() {
@@ -26,6 +27,8 @@ export class EntryDataComponent {
       let access = await this.userService.readLogin(email, password);
       if (access) {
         window.location.href = ''; //Se redirecciona al menu de inicio, con el usuario ya logueado
+      } else {
+        this.somethingWrong = 'El email o la contraseña son incorrectos';
       }
     }
   }
