@@ -11,6 +11,24 @@
     align-items: center;
     position: absolute;
 }
+#users{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 15vh;
+    height: 30vh;
+    max-height: 30vh;
+    background-color: white;
+    padding: 1vh 2vh;
+    border: 2px solid rgb(190, 190, 190);
+    overflow: auto;
+    p{
+        padding-bottom: 1vh;
+        border-bottom: 1px solid rgb(190, 190, 190);
+        cursor: pointer;
+    }
+}
 input{
     width: 20vi;
     height: 2vi;

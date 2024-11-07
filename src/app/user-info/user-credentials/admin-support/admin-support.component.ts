@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { OrdersAndProducts } from 'src/app/models/OrdersAndProducts';
 import { PublicUser } from 'src/app/models/PublicUser';
-import { User } from 'src/app/models/User';
 import { CookieService } from 'src/app/services/cookie.service';
 import { OrderXProductsXOxpService } from 'src/app/services/order-x-products-x-oxp.service';
 import { OrdersService } from 'src/app/services/orders.service';
@@ -21,9 +20,21 @@ export class AdminSupportComponent{
   user: PublicUser = new PublicUser('','','','',false,'');
   userdataService = inject(UserdataService);
   cookieService = inject(CookieService);
+  searchTerm: string = ''
+  users: PublicUser[] = [];
+  userAux: PublicUser = new PublicUser('','','','',false, '');
 
-  async searchUser(){
-    let username = this.getInput('userInp');
+  async searchUserInput(){
+    if(this.searchTerm != ""){
+      this.users = await this.userService.readUsersBySearch(this.searchTerm);
+    } else {
+      this.users = []
+    }
+  }
+
+  async searchUserClick(username: string){
+    this.users = [];
+    this.searchTerm = '';
     if(username != ''){
       this.user = await this.userService.readUserByName(username);
       this.cookieService.changeUser(this.user).subscribe(data => {

@@ -71,7 +71,7 @@ export class ProductItemComponent implements OnInit {
     if(this.admin){
       const access = await this.cookieService.setSuperAdmin(this.user.email);
       if(access){
-        this.prices.push('G', 'E', 'costo');
+        this.prices.unshift('costo', 'E', 'G');
       }
     }
 

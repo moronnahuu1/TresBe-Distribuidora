@@ -37,7 +37,7 @@
           <option *ngFor="let option of options" value="{{option.id}}">{{option.name}}</option>
         </select>
       </div>
-      <div class="form" *ngIf="admin">
+      <div class="form" style="display: flex; flex-direction: column;" *ngIf="admin">
         <label for="priceList" class="option-title">LISTA DE PRECIOS </label>
         <select *ngIf="admin" [(ngModel)]="priceList" name="pricesList" (change)="updatePriceList(priceList)"
           id="priceOptions">
@@ -49,7 +49,7 @@
         <div id="description">{{productSelected.description}}</div>
       </div>
       <div class="product-options">
-        <div class="option-title" *ngIf="productSelected.features.length > 0">CARACTERISTICAS</div>
+        <div class="option-title" *ngIf="productSelected.features != undefined && productSelected.features.length > 0">CARACTERISTICAS</div>
         <div class="size-options">
           <div *ngFor="let feature of productSelected.features">
             <p>{{feature.name}}</p>
